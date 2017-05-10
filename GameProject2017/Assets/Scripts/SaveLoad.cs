@@ -7,7 +7,7 @@ using System.IO;
 
 public class SaveLoad : MonoBehaviour {
 
-    public float health;
+    public float health;        //change to health and collectibles of actual player
     public float collectibles;
     // Use this for initialization
     void Start () {
@@ -18,30 +18,17 @@ public class SaveLoad : MonoBehaviour {
 	void Update () {
 		
 	}
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, 100, 100, 30), "Save"))
-        {
-            Save();
-        }
-        if (GUI.Button(new Rect(10, 200, 100, 30), "Load"))
-        {
-            Load();
-        }
-        GUI.Label(new Rect(10, 300, 100, 30), health.ToString());
-        GUI.Label(new Rect(10, 400, 100, 30), collectibles.ToString());
-
-    }
+  
     public void Save()
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");
+        FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");    //create a file or overwrite if exists to save data too
 
         PlayerData data = new PlayerData();
-        data.health = health;
+        data.health = health;       //change the serialized file data for health and collectibles to what the current health and collectibles is
         data.collectibles = collectibles;
-
-        bf.Serialize(file, data);
+        
+        bf.Serialize(file, data);       //serialize and save the data
         file.Close();
     }
 
@@ -49,20 +36,21 @@ public class SaveLoad : MonoBehaviour {
     {
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
+            //if the file exists open and load
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/SaveFile.dat", FileMode.Open);
-            PlayerData data = (PlayerData)bf.Deserialize(file);
+            FileStream file = File.Open(Application.persistentDataPath + "/SaveFile.dat", FileMode.Open);   
+            PlayerData data = (PlayerData)bf.Deserialize(file);     //load the data from the class
             file.Close();
 
-            health = data.health;
+            health = data.health;       //set health and collectibles to saved data
             collectibles = data.collectibles;
         }
     }
     
 }
-[Serializable]
+[Serializable]      //serialize the data to be saved to file
 class PlayerData
 {
-    public float health;
-    public float collectibles;
+    public float health;        //player health value
+    public float collectibles;      //collectibles gained value
 }

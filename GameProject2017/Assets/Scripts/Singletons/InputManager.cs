@@ -5,7 +5,7 @@ using UnityEngine;
 public class InputManager : MonoSingleton {
 
     // Read or not from player
-    bool active;
+    static bool active = true;
 
 
 
@@ -21,7 +21,7 @@ public class InputManager : MonoSingleton {
     //
     // Parameters:
     //   axisName:
-    public float GetAxis(string axisName)
+    public static float GetAxis(string axisName)
     {
 
         if (active)
@@ -43,10 +43,10 @@ public class InputManager : MonoSingleton {
     //
     // Parameters:
     //   buttonName:
-    public bool GetButton(string buttonName)
+    public static bool GetButton(string buttonName)
     {
 
-        if (active)
+        if (InputManager.active)
         {
             return Input.GetButton(buttonName);
         }
@@ -66,10 +66,10 @@ public class InputManager : MonoSingleton {
     //
     // Parameters:
     //   buttonName:
-    public bool GetButtonDown(string buttonName)
+    public static bool GetButtonDown(string buttonName)
     {
 
-        if (active)
+        if (InputManager.active)
         {
             return Input.GetButtonDown(buttonName);
         }

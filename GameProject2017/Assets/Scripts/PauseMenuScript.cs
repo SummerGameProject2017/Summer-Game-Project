@@ -13,12 +13,14 @@ public class PauseMenuScript : MonoBehaviour
     public Image LoadingBar;
     private AsyncOperation async;
     bool levelbutton = false;
+    Animator anim;
     //end of ASYNC
 
     // Use this for initialization
     void Start()
     {
         Time.timeScale = 1;
+        anim = GetComponent<Animator>();
         pauseObjects = GameObject.FindGameObjectsWithTag("GamePaused");
         hidePaused();
 
@@ -75,7 +77,13 @@ public class PauseMenuScript : MonoBehaviour
     //controls the pausing of the scene - function used for Play button and escape
     public void pauseGameControl()
     {
-        if (Time.timeScale == 1)
+
+
+
+        anim.SetBool("isPaused", true);
+
+
+            if (Time.timeScale == 1)
         {
             Time.timeScale = 0;
             showPaused();

@@ -10,6 +10,7 @@ public class JPGameManager : MonoBehaviour {
     public KeyCode backward { get; set; }
     public KeyCode left { get; set; }
     public KeyCode right { get; set; }
+    public KeyCode joyJump { get; set;}
 
     void Awake()
     {
@@ -28,15 +29,7 @@ public class JPGameManager : MonoBehaviour {
         backward = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("backwardKey", "S"));
         left = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("leftKey", "A"));
         right = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("rightKey", "D"));
-
+        joyJump = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("joyJumpKey", "JoystickButton0"));
     }
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+   
 }

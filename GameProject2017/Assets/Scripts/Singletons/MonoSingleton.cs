@@ -50,4 +50,13 @@ public abstract class MonoSingleton<T> : MonoBehaviour, IChildEvents where T: Mo
         OnStart();
 
 	}
+
+
+    void Update()
+    {
+
+
+        OnUpdate();
+    }
+
 }

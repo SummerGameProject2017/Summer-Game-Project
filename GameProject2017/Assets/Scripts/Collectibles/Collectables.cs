@@ -49,4 +49,11 @@ public abstract class Collectables : MonoBehaviour, IChildEvents
         OnUpdate();
 	}
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

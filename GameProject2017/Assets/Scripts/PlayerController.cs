@@ -34,21 +34,21 @@ public class PlayerController : MonoBehaviour {
             verticalVelocity -= gravity * Time.deltaTime;
             moveVector = lastMove;
         }
-
+        
         moveVector = Vector3.zero;
-		if (Input.GetKey(JPGameManager.GM.forward))
+		if (Input.GetKey(JPGameManager.GM.forward) || Input.GetAxis("Vertical") > 0.5)
         {
             moveVector.x = 5;
         }
-         if (Input.GetKey(JPGameManager.GM.backward))
+         if (Input.GetKey(JPGameManager.GM.backward) || Input.GetAxis("Vertical") < -0.5)
          {
             moveVector.x = -5;
         }
-         if (Input.GetKey(JPGameManager.GM.left))
+         if (Input.GetKey(JPGameManager.GM.left) || Input.GetAxis("Horizontal") < -0.5)
          {
             moveVector.z = 5;
         }
-         if (Input.GetKey(JPGameManager.GM.right))
+         if (Input.GetKey(JPGameManager.GM.right) || Input.GetAxis("Horizontal") > 0.5)
          {
             moveVector.z = -5;
         }
@@ -59,6 +59,10 @@ public class PlayerController : MonoBehaviour {
             verticalVelocity = jumpForce;
         }
 
+       
+      
+
+
         moveVector.y = 0;
         moveVector.Normalize();
         moveVector *= moveSpeed;
@@ -66,6 +70,9 @@ public class PlayerController : MonoBehaviour {
 
         controller.Move(moveVector * Time.deltaTime);
         lastMove = moveVector;
+
+
+
     }
     
     

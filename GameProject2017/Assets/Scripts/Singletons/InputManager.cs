@@ -1,16 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoSingleton {
+public class InputManager : MonoSingleton<InputManager> {
 
     // Read or not from player
     bool active;
 
-
-
-    // Use this for initialization
-    public override void StartChild() { }
+    public override void OnStart(){ }
+    public override void OnUpdate(){ }
 
 
     //

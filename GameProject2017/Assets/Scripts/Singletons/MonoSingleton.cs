@@ -2,14 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MonoSingleton : MonoBehaviour {
+public abstract class MonoSingleton<T> : MonoBehaviour, IChildEvents where T: MonoSingleton<T>, new() {
 
-    static MonoSingleton instance;
-
-
+    static protected T instance;
 
 
-    public abstract void StartChild();
+
+    /*
+  *------------------------------------
+    Pure virtual functions.
+  *------------------------------------
+  */
+    public abstract void OnStart();
+    public abstract void OnUpdate();
+    //====================================
+
+
+    /*
+     *------------------------------------
+       Virtual functions.
+     *------------------------------------
+     */
+    public virtual void OnAwake() { }
+
+    public virtual void OnFixedUpdate() { }
+    //====================================
+
+
+   // public abstract void StartChild();
 
 
 
@@ -19,7 +39,7 @@ public abstract class MonoSingleton : MonoBehaviour {
         if (instance == null)
         {
             DontDestroyOnLoad(gameObject);
-            instance = this;
+            instance = this as T;
         }
         else
         {
@@ -27,7 +47,7 @@ public abstract class MonoSingleton : MonoBehaviour {
         }
 
 
-        StartChild();
+        OnStart();
 
 	}
 }

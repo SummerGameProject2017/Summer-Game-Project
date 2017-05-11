@@ -1,16 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoSingleton {
+public class InputManager : MonoSingleton<InputManager> {
 
     // Read or not from player
-    bool active;
+    static bool active = true;
 
-
-
-    // Use this for initialization
-    public override void StartChild() { }
+    public override void OnStart(){ }
+    public override void OnUpdate(){ }
 
 
     //
@@ -21,7 +20,7 @@ public class InputManager : MonoSingleton {
     //
     // Parameters:
     //   axisName:
-    public float GetAxis(string axisName)
+    public static float GetAxis(string axisName)
     {
 
         if (active)
@@ -43,10 +42,10 @@ public class InputManager : MonoSingleton {
     //
     // Parameters:
     //   buttonName:
-    public bool GetButton(string buttonName)
+    public static bool GetButton(string buttonName)
     {
 
-        if (active)
+        if (InputManager.active)
         {
             return Input.GetButton(buttonName);
         }
@@ -66,10 +65,10 @@ public class InputManager : MonoSingleton {
     //
     // Parameters:
     //   buttonName:
-    public bool GetButtonDown(string buttonName)
+    public static bool GetButtonDown(string buttonName)
     {
 
-        if (active)
+        if (InputManager.active)
         {
             return Input.GetButtonDown(buttonName);
         }

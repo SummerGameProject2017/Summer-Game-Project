@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoSingleton {
+public class GameManager : MonoSingleton<GameManager> {
 
 
-    // Use this for initialization
-    public override void StartChild()
+
+
+    public override void OnStart()
     {
 
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    public override void OnUpdate()
+    {
+
+    }
+
 }

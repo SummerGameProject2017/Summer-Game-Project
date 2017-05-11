@@ -5,12 +5,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+
 		if (Input.GetKey(JPGameManager.GM.forward))
         {
             transform.position += Vector3.forward / 2;
@@ -32,4 +35,6 @@ public class PlayerController : MonoBehaviour {
             transform.position += Vector3.up / 2;
         }
     }
+
+
 }

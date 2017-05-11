@@ -4,54 +4,76 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     public float moveSpeed = 5;
-    public Rigidbody rb;
-    bool onGround = false;
+
+
     int jump = 2;
+    Vector3 moveVector;
+    Vector3 lastMove;
+    float jumpForce = 8;
+    float gravity = 25;
+    float verticalVelocity;
+    CharacterController controller;
+
     // Use this for initialization
     void Start () {
-        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
 	}
 
     // Update is called once per frame
     void Update() {
 
-        RaycastHit hit;
-        Debug.DrawRay(transform.position, Vector3.down * 0.5f, Color.red, 1);   //change last variable to adjust for height of player later
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.5f))    //change last variable to adjust for height of player later
+        if (controller.isGrounded)
         {
-            if (hit.transform.gameObject.tag != "Player")
-            {
-                jump = 2;
-            }
-        }
+            verticalVelocity = -1;
+            jump = 2;
+            
+         }
+
         else
         {
-            onGround = false;
+            verticalVelocity -= gravity * Time.deltaTime;
+            moveVector = lastMove;
         }
         
+        moveVector = Vector3.zero;
+		if (Input.GetKey(JPGameManager.GM.forward) || Input.GetAxis("Vertical") > 0.5)
+        {
+            moveVector.x = 5;
+        }
+         if (Input.GetKey(JPGameManager.GM.backward) || Input.GetAxis("Vertical") < -0.5)
+         {
+            moveVector.x = -5;
+        }
+         if (Input.GetKey(JPGameManager.GM.left) || Input.GetAxis("Horizontal") < -0.5)
+         {
+            moveVector.z = 5;
+        }
+         if (Input.GetKey(JPGameManager.GM.right) || Input.GetAxis("Horizontal") > 0.5)
+         {
+            moveVector.z = -5;
+        }
 
-		if (Input.GetKey(JPGameManager.GM.forward))
-        {
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(JPGameManager.GM.backward))
-        {
-            transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(JPGameManager.GM.left))
-        {
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(JPGameManager.GM.right))
-        {
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetKeyDown(JPGameManager.GM.jump) && jump >= 1)
+        if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
         {
             jump--;
-            rb.AddForce(Vector3.up*200);
+            verticalVelocity = jumpForce;
         }
 
+       
+      
+
+
+        moveVector.y = 0;
+        moveVector.Normalize();
+        moveVector *= moveSpeed;
+        moveVector.y = verticalVelocity;
+
+        controller.Move(moveVector * Time.deltaTime);
+        lastMove = moveVector;
+
+
+
     }
+    
+    
 }

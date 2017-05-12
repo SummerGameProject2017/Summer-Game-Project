@@ -59,6 +59,12 @@ public class PlayerController : MonoBehaviour {
             verticalVelocity = jumpForce;
         }
 
+        if (Input.GetKeyDown(JPGameManager.GM.attack) || Input.GetKeyDown(JPGameManager.GM.joyAttack))
+        {
+            Debug.Log("Attack");
+
+            //attack code here;
+        }
        
       
 

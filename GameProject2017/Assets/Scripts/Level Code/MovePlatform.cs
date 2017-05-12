@@ -21,7 +21,7 @@ public class MovePlatform : MonoBehaviour {
     IEnumerator MoveObject(Transform thisTransform, Vector3 startPos, Vector3 endPos, float time)
     {
         float i = 0.0f;
-        float rate = 0.75f / time;
+        float rate = 0.7f / time;
         while (i < 1.0f)
         {
             i += Time.deltaTime * rate;

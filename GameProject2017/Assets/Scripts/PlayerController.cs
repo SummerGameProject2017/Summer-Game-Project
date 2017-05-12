@@ -14,10 +14,13 @@ public class PlayerController : MonoBehaviour {
     float verticalVelocity;
     CharacterController controller;
 
+
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         controller = GetComponent<CharacterController>();
-	}
+
+    }
 
     // Update is called once per frame
     void Update() {

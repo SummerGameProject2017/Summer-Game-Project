@@ -42,7 +42,8 @@ public class MainMenuScript : MonoBehaviour {
 
     public void StartButtonFunction()
     {
-        levelbutton = true;
+
+        ScreenManager.LoadScene("Level1");
     }
 
     public void LoadButtonFunction()

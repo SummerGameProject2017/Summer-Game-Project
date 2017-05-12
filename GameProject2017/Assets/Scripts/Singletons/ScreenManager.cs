@@ -50,7 +50,7 @@ public class ScreenManager : MonoSingleton<ScreenManager>
         while (newScene.progress < 0.9f)
         {
         }
-
+        
         newScene.allowSceneActivation = true;
 
         yield return 0;

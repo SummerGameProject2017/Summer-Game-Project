@@ -17,14 +17,22 @@ public class PlayerController : MonoBehaviour {
     public Vector3 pushVector;
     public bool OnBelt;
     public bool OffBelt;
-
+    int i;
 
     // Use this for initialization
     void Start ()
     {
 
         controller = GetComponent<CharacterController>();
-        
+        for (i = 0; i < belt.Length; i++)
+        {
+            otherscript = belt[i].GetComponent<Conveyor>();
+            //pushVector = otherscript.pushVector;
+        }
+        if (i == null)
+        {
+            pushVector = new Vector3(0, 0, 0);
+        }
         moveVector.x = 0;
         moveVector.y = 0;
         moveVector.z = 0;
@@ -33,12 +41,11 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < belt.Length; i++)
+        if (i > 0)
         {
-            otherscript = belt[i].GetComponent<Conveyor>();
-            //pushVector = otherscript.pushVector;
+            OnBelt = otherscript.OnBelt;
         }
-        OnBelt = otherscript.OnBelt;
+
         if (OnBelt == true)
         {
             //pushVector.x = otherscript.pushVector.x;

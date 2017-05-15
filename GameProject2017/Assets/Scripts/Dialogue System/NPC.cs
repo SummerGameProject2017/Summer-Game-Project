@@ -19,10 +19,15 @@ public class NPC : MonoBehaviour
     }
 
 
-    public void Interact()
+    private void OnTriggerStay(Collider other)
     {
-        DialogueSystem.Instance.AddNewDialogue(textLines, name);
-
-    
+        if (Input.GetKeyDown(JPGameManager.GM.jump))
+            {
+                DialogueSystem.Instance.AddNewDialogue(textLines, name);
+        }
     }
+
+   
+
+
 }

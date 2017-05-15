@@ -19,7 +19,7 @@ public class Conveyor : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-       // otherscript = Player.GetComponent<PlayerController>();
+       //otherscript = Player.GetComponent<PlayerController>();
         OnBelt = false;
         OffBelt = false;
     }

@@ -4,9 +4,7 @@ using UnityEngine;
 
 public abstract class Collectables : MonoBehaviour, IChildEvents
 {
-
     public float rotationSpeed = 1;
-
 
     /*
      *------------------------------------

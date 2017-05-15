@@ -21,7 +21,7 @@ public class DialogueSystem : MonoBehaviour
     void Awake()
     {
         continueButton = dialoguePanel.transform.FindChild("Continue").GetComponent<Button>();
-        dialogueText = dialoguePanel.GetComponentInChildren<Text>();
+        dialogueText = dialoguePanel.transform.FindChild("Text").GetComponent<Text>(); ;
         nameText = dialoguePanel.transform.FindChild("Name").GetChild(0).GetComponent<Text>();
         continueButton.onClick.AddListener(delegate { ContinueDialogue(); });
         dialoguePanel.SetActive(false);
@@ -58,7 +58,7 @@ public class DialogueSystem : MonoBehaviour
 
     public void ContinueDialogue()
     {
-        if (dialogueIndex < dialogueLines.Count)
+        if (dialogueIndex < dialogueLines.Count - 1)
         {
             dialogueIndex++;
             dialogueText.text = dialogueLines[dialogueIndex];

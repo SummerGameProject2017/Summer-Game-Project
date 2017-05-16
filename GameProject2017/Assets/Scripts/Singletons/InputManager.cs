@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class InputManager : MonoSingleton<InputManager> {
 
-    // Read or not from player
-    static bool active = true;
 
-    public override void OnStart(){ }
+    static readonly float DEADZONE = 0.5f;
+
+    // Read or not from player
+    static bool active;// {
+
+    //    get { return active; }
+    //    set { active = value; }
+
+    //}
+
+
+    public override void OnStart(){ active = true;  }
     public override void OnUpdate(){ }
 
 
@@ -19,13 +28,24 @@ public class InputManager : MonoSingleton<InputManager> {
     //     ///
     //
     // Parameters:
-    //   axisName:
-    public static float GetAxis(string axisName)
+    //   axisName: Name of the axis on Unity's Input Manager
+    //   deadzone (default: true): Should it consider a DeadZone? 
+    public static float GetAxis(string axisName, bool deadzone = true)
     {
 
         if (active)
         {
-            return Input.GetAxis(axisName);
+            float axis = Input.GetAxis(axisName);
+
+            if (deadzone)
+            {
+                return (axis > DEADZONE || axis < -DEADZONE) ? axis : 0.0f;
+            }
+            else
+            {
+                return axis;
+            }
+            
         }
         else
         {
@@ -53,7 +73,6 @@ public class InputManager : MonoSingleton<InputManager> {
         {
             return false;
         }
-
     }
 
     //
@@ -76,7 +95,6 @@ public class InputManager : MonoSingleton<InputManager> {
         {
             return false;
         }
-
     }
 
     //
@@ -88,7 +106,7 @@ public class InputManager : MonoSingleton<InputManager> {
     //
     // Parameters:
     //   buttonName:
-    public bool GetButtonUp(string buttonName)
+    public static bool GetButtonUp(string buttonName)
     {
 
         if (active)
@@ -101,5 +119,34 @@ public class InputManager : MonoSingleton<InputManager> {
         }
 
     }
+
+    //
+    // Summary:
+    //     ///
+    //     Disables input readings for an amount of time
+    //     ///
+    //
+    // Parameters:
+    //   seconds: Amount of seconds the input should be disabled
+    public static void DisableBytime(float seconds)
+    {
+        active = false;
+        instance.StartCoroutine(instance.EnableInput(Time.time + seconds));
+
+    }
+
+
+    IEnumerator EnableInput(float time)
+    {
+
+        while (Time.time < time)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        active = true;
+
+    }
+
 
 }

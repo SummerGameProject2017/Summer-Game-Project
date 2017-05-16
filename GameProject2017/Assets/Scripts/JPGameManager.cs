@@ -31,7 +31,7 @@ public class JPGameManager : MonoBehaviour {
         backward = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("backwardKey", "S"));
         left = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("leftKey", "A"));
         right = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("rightKey", "D"));
-        joyJump = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("joyJumpKey", "Space"));
+        joyJump = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("joyJumpKey", "JoystickButton1"));
         attack = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("attackKey", "Return"));
         joyAttack = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("joyAttackKey", "JoystickButton0"));
 

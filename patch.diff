@@ -1,0 +1,779 @@
+diff --git a/GameProject2017/Assets/John Stuff/Ground.mat b/GameProject2017/Assets/John Stuff/Ground.mat
+new file mode 100644
+index 0000000..6fd3b6a
+Binary files /dev/null and b/GameProject2017/Assets/John Stuff/Ground.mat differ
+diff --git a/GameProject2017/Assets/John Stuff/Ground.mat.meta b/GameProject2017/Assets/John Stuff/Ground.mat.meta
+new file mode 100644
+index 0000000..9a0bcd5
+--- /dev/null
++++ b/GameProject2017/Assets/John Stuff/Ground.mat.meta	
+@@ -0,0 +1,9 @@
++fileFormatVersion: 2
++guid: 5b1b0327bb020114aacf8958c828bbe3
++timeCreated: 1494855849
++licenseType: Free
++NativeFormatImporter:
++  mainObjectFileID: 2100000
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/Assets/John Stuff/Obstacle.mat b/GameProject2017/Assets/John Stuff/Obstacle.mat
+new file mode 100644
+index 0000000..657b0ac
+Binary files /dev/null and b/GameProject2017/Assets/John Stuff/Obstacle.mat differ
+diff --git a/GameProject2017/Assets/John Stuff/Obstacle.mat.meta b/GameProject2017/Assets/John Stuff/Obstacle.mat.meta
+new file mode 100644
+index 0000000..90142fd
+--- /dev/null
++++ b/GameProject2017/Assets/John Stuff/Obstacle.mat.meta	
+@@ -0,0 +1,9 @@
++fileFormatVersion: 2
++guid: 4840bd24ef91a2c4eb708302b74c1f82
++timeCreated: 1494855842
++licenseType: Free
++NativeFormatImporter:
++  mainObjectFileID: 2100000
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/Assets/New Terrain.asset b/GameProject2017/Assets/New Terrain.asset
+new file mode 100644
+index 0000000..51febe9
+Binary files /dev/null and b/GameProject2017/Assets/New Terrain.asset differ
+diff --git a/GameProject2017/Assets/New Terrain.asset.meta b/GameProject2017/Assets/New Terrain.asset.meta
+new file mode 100644
+index 0000000..412bbeb
+--- /dev/null
++++ b/GameProject2017/Assets/New Terrain.asset.meta	
+@@ -0,0 +1,9 @@
++fileFormatVersion: 2
++guid: 95e25b2d1d2102247b2c28ded0fbccce
++timeCreated: 1494937201
++licenseType: Free
++NativeFormatImporter:
++  mainObjectFileID: 15600000
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/Assets/Scripts/PathFinding.meta b/GameProject2017/Assets/Scripts/PathFinding.meta
+new file mode 100644
+index 0000000..8192e99
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding.meta
+@@ -0,0 +1,9 @@
++fileFormatVersion: 2
++guid: f8f129db622ca0948960aa951dda3867
++folderAsset: yes
++timeCreated: 1494856169
++licenseType: Free
++DefaultImporter:
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Grid.cs b/GameProject2017/Assets/Scripts/PathFinding/Grid.cs
+new file mode 100644
+index 0000000..97f7d13
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Grid.cs
+@@ -0,0 +1,109 @@
++﻿using System.Collections;
++using System.Collections.Generic;
++using UnityEngine;
++
++public class Grid : MonoBehaviour
++{
++    public bool displayGridGizmos;
++    public Vector3 gridWorldSize;
++    public float nodeRadius;
++    public LayerMask unWalkableMask;
++    Node[,,] grid;
++
++    float nodeDiameter;
++    int gridSizeX, gridSizeY, gridSizeZ;
++
++
++    private void Awake()
++    {
++        nodeDiameter = nodeRadius * 2;
++        gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
++        gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
++        gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
++        CreateGrid();
++
++    }
++
++    public int MaxSize
++    {
++        get {return gridSizeX* gridSizeY; }
++    }
++
++    void CreateGrid()
++    {
++        grid = new Node[gridSizeX, gridSizeY, gridSizeZ];
++
++        Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
++        for (int x = 0; x < gridSizeX; x++)
++        {
++            for (int y = 0; y < gridSizeY; y++)
++            {
++                for (int z = 0; z < gridSizeZ; z++)
++                {
++                    Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) +
++                   Vector3.forward * (y * nodeDiameter + nodeRadius) + Vector3.up * (z * nodeDiameter + nodeRadius);
++                    bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unWalkableMask));
++                    grid[x, y, z] = new Node(walkable, worldPoint, x, y, z);
++                }
++            }
++        }
++    }
++    public List<Node> GetNeighbours(Node node)
++    {
++        List<Node> neighbours = new List<Node>();
++        for (int x = -1; x <= 1; x++)
++        {
++            for (int y = -1; y <= 1; y++)
++            {
++                for (int z = -1; z <= 1; z++)
++                {
++                    if (x == 0 && y == 0 && z == 0)
++                    {
++                        continue;
++                    }
++
++                    int checkX = node.gridX + x;
++                    int checkY = node.gridY + y;
++                    int checkZ = node.gridZ + z;
++
++                    if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY && checkZ >= 0 && checkZ < gridSizeZ)
++                    {
++                        neighbours.Add(grid[checkX, checkY, checkZ]);
++                    }
++                }
++            }
++            }
++        return neighbours;
++
++    }
++
++    public Node NodeFromWorldPoint(Vector3 worldPosition)
++    {
++        float percentX = (worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x;
++        float percentY = (worldPosition.z + gridWorldSize.y / 2) / gridWorldSize.y;
++        float percentZ = (worldPosition.y + gridWorldSize.z / 2) / gridWorldSize.z;
++        percentX = Mathf.Clamp01(percentX);
++        percentY = Mathf.Clamp01(percentY);
++        percentZ = Mathf.Clamp01(percentZ);
++
++        int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
++        int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
++        int z = Mathf.RoundToInt((gridSizeZ - 1) * percentZ);
++        return grid[x, y, z];
++
++    }
++
++    private void OnDrawGizmos()
++    {
++        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.z, gridWorldSize.y));
++
++       if (grid != null && displayGridGizmos)
++        {
++            foreach (Node n in grid)
++            {
++                Gizmos.color = (n.walkable) ? Color.white : Color.red;  
++                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
++            }
++        }
++    }
++}
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Grid.cs.meta b/GameProject2017/Assets/Scripts/PathFinding/Grid.cs.meta
+new file mode 100644
+index 0000000..183c405
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Grid.cs.meta
+@@ -0,0 +1,12 @@
++fileFormatVersion: 2
++guid: fb7e38bb1ae45674eb2eb2295d769ad2
++timeCreated: 1494856176
++licenseType: Free
++MonoImporter:
++  serializedVersion: 2
++  defaultReferences: []
++  executionOrder: 0
++  icon: {instanceID: 0}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Heap.cs b/GameProject2017/Assets/Scripts/PathFinding/Heap.cs
+new file mode 100644
+index 0000000..f85a14a
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Heap.cs
+@@ -0,0 +1,126 @@
++﻿using System.Collections;
++using System.Collections.Generic;
++using UnityEngine;
++using System;
++
++public class Heap<T> where T : IHeapItem<T>
++{
++
++    T[] items;
++    int currentItemCount;
++
++    public Heap(int maxHeapSize)
++    {
++        items = new T[maxHeapSize];
++    }
++
++    public void Add(T item)
++    {
++        item.HeapIndex = currentItemCount;
++        items[currentItemCount] = item;
++        SortUp(item);
++        currentItemCount++;
++
++    }
++
++    public T RemoveFirst()
++    {
++        T firstItem = items[0];
++        currentItemCount--;
++        items[0] = items[currentItemCount];
++        items[0].HeapIndex = 0;
++        SortDown(items[0]);
++        return firstItem;
++    }
++
++    public void UpdateItem(T item)
++    {
++        SortUp(item);
++    }
++
++    public int Count
++    {
++        get { return currentItemCount; }
++    }
++
++    public bool Contains(T item)
++    {
++        return Equals(items[item.HeapIndex], item);
++    }
++
++    void SortDown(T item)
++    {
++        while (true)
++        {
++            int childIndexLeft = item.HeapIndex * 2 + 1;
++            int childIndexRight = item.HeapIndex * 2 + 2;
++            int swapIndex = 0;
++
++            if (childIndexLeft < currentItemCount)
++            {
++                swapIndex = childIndexLeft;
++                if (childIndexRight < currentItemCount)
++            {
++
++                    if (items[childIndexLeft].CompareTo(items[childIndexRight]) < 0)
++                    {
++                        swapIndex = childIndexRight;
++                    }
++            }
++            
++                if (item.CompareTo(items[swapIndex]) < 0)
++                {
++                    Swap(item, items[swapIndex]);
++                }
++                else
++                {
++                    return;
++                }
++
++            }
++
++            else
++            {
++                return;
++            }
++        }
++    }
++    void SortUp(T item)
++    {
++        int parentIndex = (item.HeapIndex - 1) / 2;
++
++        while (true)
++        {
++            T parentItem = items[parentIndex];
++            if (item.CompareTo(parentItem) > 0)
++            {
++                Swap(item, parentItem);
++            }
++            else
++            {
++                break;
++            }
++            parentIndex = (item.HeapIndex - 1) / 2;
++        }
++    }
++
++    void Swap(T itemA, T itemB)
++    {
++        items[itemA.HeapIndex] = itemB;
++        items[itemB.HeapIndex] = itemA;
++        int itemAIndex = itemA.HeapIndex;
++        itemA.HeapIndex = itemB.HeapIndex;
++        itemB.HeapIndex = itemAIndex;
++    }
++
++}
++
++
++public interface IHeapItem<T> : IComparable<T>
++{
++    int HeapIndex
++    {
++        get;
++        set;
++    }
++}
+\ No newline at end of file
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Heap.cs.meta b/GameProject2017/Assets/Scripts/PathFinding/Heap.cs.meta
+new file mode 100644
+index 0000000..58f833d
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Heap.cs.meta
+@@ -0,0 +1,12 @@
++fileFormatVersion: 2
++guid: 2ceadfcfc2fb69f42b3057c03947baf4
++timeCreated: 1494863541
++licenseType: Free
++MonoImporter:
++  serializedVersion: 2
++  defaultReferences: []
++  executionOrder: 0
++  icon: {instanceID: 0}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Node.cs b/GameProject2017/Assets/Scripts/PathFinding/Node.cs
+new file mode 100644
+index 0000000..4635899
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Node.cs
+@@ -0,0 +1,47 @@
++﻿using System.Collections;
++using System.Collections.Generic;
++using UnityEngine;
++
++public class Node : IHeapItem<Node> {
++
++    public bool walkable;
++    public Vector3 worldPosition;
++    public int gridX;
++    public int gridY;
++    public int gridZ;
++
++    public int gCost;
++    public int hCost;
++    public Node parent;
++    int heapIndex;
++
++    public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY, int _gridZ)
++    {
++        walkable = _walkable;
++        worldPosition = _worldPos;
++        gridX = _gridX;
++        gridY = _gridY;
++        gridZ = _gridZ;
++    }
++    public int fCost
++    {
++        get {
++            return gCost + hCost;
++        }
++    }
++    public int HeapIndex
++    {
++        get { return heapIndex; }
++        set { heapIndex = value; }
++    }
++
++    public int CompareTo(Node nodeToCompare)
++    {
++        int compare = fCost.CompareTo(nodeToCompare.fCost);
++        if (compare == 0)
++        {
++            compare = hCost.CompareTo(nodeToCompare.hCost);
++        }
++        return -compare;
++    }
++}
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Node.cs.meta b/GameProject2017/Assets/Scripts/PathFinding/Node.cs.meta
+new file mode 100644
+index 0000000..7ff60e5
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Node.cs.meta
+@@ -0,0 +1,12 @@
++fileFormatVersion: 2
++guid: d2114a86dcf6b6c4ca117f9a8c4421fb
++timeCreated: 1494856184
++licenseType: Free
++MonoImporter:
++  serializedVersion: 2
++  defaultReferences: []
++  executionOrder: 0
++  icon: {instanceID: 0}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/PathRequestManager.cs b/GameProject2017/Assets/Scripts/PathFinding/PathRequestManager.cs
+new file mode 100644
+index 0000000..7be38b6
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/PathRequestManager.cs
+@@ -0,0 +1,67 @@
++﻿using System.Collections;
++using System.Collections.Generic;
++using UnityEngine;
++using System;
++
++public class PathRequestManager : MonoBehaviour {
++
++    Queue<PathRequest> pathRequestQueue = new Queue<PathRequest>();
++    PathRequest currentPathRequest;
++
++    static PathRequestManager instance;
++    Pathfinding pathfinding;
++
++    bool isProcessingPath;
++
++    private void Awake()
++    {
++        instance = this;
++        pathfinding = GetComponent<Pathfinding>();
++    }
++
++
++    public static void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action<Vector3[], bool> callback)
++    {
++        PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback);
++
++        instance.pathRequestQueue.Enqueue(newRequest);
++        instance.TryProcessNext();
++    }
++
++    void TryProcessNext()
++    {
++        if (!isProcessingPath && pathRequestQueue.Count > 0)
++        {
++            currentPathRequest = pathRequestQueue.Dequeue();
++            isProcessingPath = true;
++            pathfinding.StartFindPath(currentPathRequest.pathStart, currentPathRequest.pathEnd);
++
++        }
++    }
++    public void FinishProcessingPath(Vector3[] path, bool success)
++    {
++        currentPathRequest.callback(path, success);
++        isProcessingPath = false;
++        TryProcessNext();
++    }
++
++
++
++
++    struct PathRequest
++    {
++        public Vector3 pathStart;
++        public Vector3 pathEnd;
++        public Action<Vector3[], bool> callback;
++
++        public PathRequest(Vector3 _start, Vector3 _end, Action<Vector3[], bool> _callback)
++        {
++            pathStart = _start;
++            pathEnd = _end;
++            callback = _callback;
++        }
++    }
++
++
++
++}
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/PathRequestManager.cs.meta b/GameProject2017/Assets/Scripts/PathFinding/PathRequestManager.cs.meta
+new file mode 100644
+index 0000000..c8a4b2f
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/PathRequestManager.cs.meta
+@@ -0,0 +1,12 @@
++fileFormatVersion: 2
++guid: 0614d2a8f9945b64fb937a4c3bf4be77
++timeCreated: 1494870380
++licenseType: Free
++MonoImporter:
++  serializedVersion: 2
++  defaultReferences: []
++  executionOrder: 0
++  icon: {instanceID: 0}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Pathfinding.cs b/GameProject2017/Assets/Scripts/PathFinding/Pathfinding.cs
+new file mode 100644
+index 0000000..33b8d02
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Pathfinding.cs
+@@ -0,0 +1,142 @@
++﻿using System.Collections;
++using System.Collections.Generic;
++using UnityEngine;
++using System.Diagnostics;
++using System;
++
++public class Pathfinding : MonoBehaviour {
++
++    PathRequestManager requestManager;
++    Grid grid;
++
++    private void Awake()
++    {
++        requestManager = GetComponent<PathRequestManager>();
++        grid = GetComponent<Grid>();
++    }
++
++   
++
++    public void StartFindPath(Vector3 startPos, Vector3 targetPos)
++    {
++        StartCoroutine(FindPath(startPos, targetPos));
++    }
++
++    IEnumerator FindPath(Vector3 startPos, Vector3 targetPos)
++    {
++        Stopwatch sw = new Stopwatch();
++        sw.Start();
++
++        Vector3[] wayPoints = new Vector3[0];
++        bool pathSuccess = false;
++
++        Node startNode = grid.NodeFromWorldPoint(startPos);
++        Node targetNode = grid.NodeFromWorldPoint(targetPos);
++
++        if (startNode.walkable && targetNode.walkable)
++
++        {
++            Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
++            HashSet<Node> closedSet = new HashSet<Node>();
++            openSet.Add(startNode);
++
++            while (openSet.Count > 0)
++            {
++                Node currentNode = openSet.RemoveFirst();
++
++                closedSet.Add(currentNode);
++
++                if (currentNode == targetNode)
++                {
++                    sw.Stop();
++
++                    print("Path Found: " + sw.ElapsedMilliseconds + "ms");
++                    pathSuccess = true;
++                    break;
++                }
++
++                foreach (Node neighbours in grid.GetNeighbours(currentNode))
++                {
++                    if (!neighbours.walkable || closedSet.Contains(neighbours))
++                    {
++                        continue;
++                    }
++                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbours);
++                    if (newMovementCostToNeighbour < neighbours.gCost || !openSet.Contains(neighbours))
++                    {
++                        neighbours.gCost = newMovementCostToNeighbour;
++                        neighbours.hCost = GetDistance(neighbours, targetNode);
++                        neighbours.parent = currentNode;
++
++                        if (!openSet.Contains(neighbours))
++                        {
++                            openSet.Add(neighbours);
++                        }
++                        else
++                        {
++                            openSet.UpdateItem(neighbours);
++                                }
++                    }
++                }
++
++            }
++        }
++        yield return null;
++        if (pathSuccess)
++        {
++            wayPoints = RetracePath(startNode, targetNode);
++        }
++        requestManager.FinishProcessingPath(wayPoints, pathSuccess);
++    }
++
++
++    Vector3[] RetracePath(Node startNode, Node endNode)
++    {
++        List<Node> path = new List<Node>();
++        Node currentNode = endNode;
++
++        while (currentNode != startNode)
++        {
++            path.Add(currentNode);
++            currentNode = currentNode.parent;
++        }
++        Vector3[] waypoints = SimplifyPath(path);
++        Array.Reverse(waypoints);
++        return waypoints;
++
++      
++    }
++
++    Vector3[] SimplifyPath(List<Node> path)
++    {
++        List<Vector3> waypoints = new List<Vector3>();
++        Vector3 directionOld = Vector3.zero;
++
++        for (int i = 1; i < path.Count; i++)
++        {
++            Vector3 directionNew = new Vector3(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY, path[i - 1].gridZ - path[i].gridZ);
++            if (directionNew != directionOld)
++            {
++                waypoints.Add(path[i].worldPosition);
++            }
++            directionOld = directionNew;
++        }
++
++        return waypoints.ToArray();
++    }
++
++    int GetDistance(Node nodeA, Node nodeb)
++    {
++        int dstX = Mathf.Abs(nodeA.gridX - nodeb.gridX);
++        int dstY = Mathf.Abs(nodeA.gridY - nodeb.gridY);
++
++        if (dstX > dstY)
++        {
++            return 14 * dstY + 10 * (dstX - dstY);
++        }
++            return 14 * dstX + 10 * (dstY - dstX);
++        
++    }
++
++
++}
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Pathfinding.cs.meta b/GameProject2017/Assets/Scripts/PathFinding/Pathfinding.cs.meta
+new file mode 100644
+index 0000000..5bf89de
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Pathfinding.cs.meta
+@@ -0,0 +1,12 @@
++fileFormatVersion: 2
++guid: b0d1306cb73f694448a96c8937625d43
++timeCreated: 1494859943
++licenseType: Free
++MonoImporter:
++  serializedVersion: 2
++  defaultReferences: []
++  executionOrder: 0
++  icon: {instanceID: 0}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Unit.cs b/GameProject2017/Assets/Scripts/PathFinding/Unit.cs
+new file mode 100644
+index 0000000..971b579
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Unit.cs
+@@ -0,0 +1,68 @@
++﻿using System.Collections;
++using System.Collections.Generic;
++using UnityEngine;
++
++public class Unit : MonoBehaviour {
++
++    public Transform target;
++    public float speed = 20;
++    Vector3[] path;
++    int targetIndex;
++
++    void Start()
++    {
++        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
++    }
++
++    public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
++    {
++        if (pathSuccessful)
++        {
++            path = newPath;
++            StopCoroutine("FollowPath");
++            StartCoroutine("FollowPath");
++        }
++    }
++
++    IEnumerator FollowPath()
++    {
++        Vector3 currentWaypoint = path[0];
++
++        while (true)
++        {
++            if (transform.position == currentWaypoint)
++            {
++                targetIndex++;
++                if (targetIndex >= path.Length)
++                {
++                    yield break;
++                }
++                currentWaypoint = path[targetIndex];
++            }
++            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
++            yield return null;
++        }
++    }
++
++    public void OnDrawGizmos()
++    {
++        if (path != null)
++        {
++            for (int i = targetIndex; i < path.Length; i++)
++            {
++                Gizmos.color = Color.black;
++                Gizmos.DrawCube(path[i], Vector3.one);
++
++
++                if (i == targetIndex)
++                {
++                    Gizmos.DrawLine(transform.position, path[i]);
++                }
++                else
++                {
++                    Gizmos.DrawLine(path[i - 1], path[i]);
++                }
++            }
++        }
++    }
++}
+diff --git a/GameProject2017/Assets/Scripts/PathFinding/Unit.cs.meta b/GameProject2017/Assets/Scripts/PathFinding/Unit.cs.meta
+new file mode 100644
+index 0000000..a0e9ba0
+--- /dev/null
++++ b/GameProject2017/Assets/Scripts/PathFinding/Unit.cs.meta
+@@ -0,0 +1,12 @@
++fileFormatVersion: 2
++guid: 0fafd41ac6c3a1d449e9e088802a5ba9
++timeCreated: 1494873505
++licenseType: Free
++MonoImporter:
++  serializedVersion: 2
++  defaultReferences: []
++  executionOrder: 0
++  icon: {instanceID: 0}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git a/GameProject2017/ProjectSettings/TagManager.asset b/GameProject2017/ProjectSettings/TagManager.asset
+index 35ca54d..17d37dd 100644
+Binary files a/GameProject2017/ProjectSettings/TagManager.asset and b/GameProject2017/ProjectSettings/TagManager.asset differ

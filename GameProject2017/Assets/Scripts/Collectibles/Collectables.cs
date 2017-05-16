@@ -12,8 +12,6 @@ public abstract class Collectables : MonoBehaviour, IChildEvents
     Vector3 PosOffset = new Vector3();
     Vector3 TempPos = new Vector3();
 
-
-
     /*
      *------------------------------------
        Pure virtual functions.
@@ -64,12 +62,12 @@ public abstract class Collectables : MonoBehaviour, IChildEvents
 
     void OnTriggerEnter(Collider other)
     {
-        //Collectibles will disappear with player collides with them
+        //Collectibles will disappear when player collides with them
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject Collected = Instantiate(par_pickup, transform.position, Quaternion.identity) as GameObject;
             gameObject.SetActive(false);
-            Destroy(Collected, 2); // delete the explosion after 2 seconds
+            Destroy(Collected, 2); //Deletes the particles after 2 seconds
         }
     }
 }

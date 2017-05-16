@@ -43,7 +43,7 @@ public class MainMenuScript : MonoBehaviour {
     public void StartButtonFunction()
     {
 
-        ScreenManager.LoadScene("Factory_Level");
+        ScreenManager.LoadScene("Junkyard");
     }
 
     public void LoadButtonFunction()

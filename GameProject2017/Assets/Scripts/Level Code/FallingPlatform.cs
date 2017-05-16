@@ -21,6 +21,7 @@ public class FallingPlatform : MonoBehaviour
         if (isFalling)
         {
             TimeStood += Time.deltaTime;
+            //Make platform shake
             if (TimeStood >= 0.75f && TimeStood <= 1.49f)
             {
                 if (Shake == true && HasFallen == false)
@@ -34,6 +35,7 @@ public class FallingPlatform : MonoBehaviour
                     Shake = true;
                 }
             }
+            //Make platform fall
             else if (TimeStood > 1.5f)
             {
                 HasFallen = true;
@@ -44,6 +46,7 @@ public class FallingPlatform : MonoBehaviour
         {
             TimeFallen += Time.deltaTime;
         }
+        //Make platform respawn after 10 seconds
         if (HasFallen == true && TimeFallen >= 10)
         {
             transform.position = new Vector3(399.08f, 6.456f, 227.947f);

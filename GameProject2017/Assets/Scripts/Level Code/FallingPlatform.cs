@@ -9,10 +9,13 @@ public class FallingPlatform : MonoBehaviour
     bool HasFallen = false;
     float TimeStood = 0.0f;
     float TimeFallen = 0.0f;
+    public GameObject Platform;
+    Vector3 Startpos;
 
     // Use this for initialization
     void Start ()
     {
+        Startpos = transform.position;
     }
 	
 	// Update is called once per frame
@@ -35,7 +38,7 @@ public class FallingPlatform : MonoBehaviour
                     Shake = true;
                 }
             }
-            //Make platform fall
+            //Make platform fall after being stood on for 1.5 seconds
             else if (TimeStood > 1.5f)
             {
                 HasFallen = true;
@@ -49,8 +52,9 @@ public class FallingPlatform : MonoBehaviour
         //Make platform respawn after 10 seconds
         if (HasFallen == true && TimeFallen >= 10)
         {
-            transform.position = new Vector3(399.08f, 6.456f, 227.947f);
             GetComponent<Rigidbody>().useGravity = false;
+            Instantiate(Platform, Startpos, transform.rotation);
+            Destroy(Platform);
             HasFallen = false;
             TimeFallen = 0;
         }

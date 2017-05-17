@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5;
+
+    [Range(3.0f, 10.0f)]
+    public float speed = 5.0f;
+
+
+    Vector3 additionalmovement;
 
 
     int jump = 2;
@@ -79,14 +84,36 @@ public class PlayerController : MonoBehaviour
 
 
         moveVector.y = 0;
-        moveVector.Normalize();
-        moveVector *= moveSpeed;
+        //moveVector.Normalize();
+        moveVector *= speed;
         moveVector.y = verticalVelocity;
+
+        // Add Aditional movement from level
+        moveVector += additionalmovement;
+
+        // Clear
+        additionalmovement = Vector3.zero;
 
         controller.Move(moveVector * Time.deltaTime);
         lastMove = moveVector;
 
 
+
+    }
+
+
+    //
+    // Summary:
+    //     ///
+    //     Add a movement direction to the player
+    //     ///
+    //
+    // Parameters:
+    //   movement: Direction the player have to be moved
+    public void AddMovement(Vector3 movement)
+    {
+
+        additionalmovement += movement;
 
     }
 

@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gear : Collectables {
-
+public class Robot : Collectables
+{
 
 
     public override void OnStart()
     {
-        SetGearCountText();
+        SetRobotCountText();
     }
 
     public override void OnUpdate()
     {
 
     }
-
 
     void OnTriggerEnter(Collider other)
     {
@@ -24,19 +23,18 @@ public class Gear : Collectables {
         {
             Player player = Player.Instance;
 
-            player.CollectGear();
+            player.CollectRobot();
 
             GameObject Collected = Instantiate(par_pickup, transform.position, Quaternion.identity) as GameObject;
-            SetGearCountText();
+            SetRobotCountText();
             gameObject.SetActive(false);
             Destroy(Collected, 2); //Deletes the particles after 2 seconds
         }
     }
 
-    //Display to the screen the amount of gears collected
-    void SetGearCountText()
+    void SetRobotCountText()
     {
-        GearCountText.text = "Gears: " + Player.Instance.gear;
+        RobotCountText.text = "Robots Collected: " + Player.Instance.robot;
     }
 
 }

@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour {
         playerbody = GetComponent<Rigidbody>();
         moveVector = new Vector3(0, 0, 0);
         Belt = GetComponent<Conveyor>();
-        InputManager.DisableBytime(6);
+        //InputManager.DisableBytime(2);
 
     }
 

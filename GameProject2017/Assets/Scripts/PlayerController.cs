@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour {
     [Range(1.0f, 10.0f)]
     public float speed = 1.0f;
 
+    public Conveyor Belt;
+    public Vector3 speedVector;
+    public bool OnBelt;
+   
 
     // Use this for initialization
     void Start ()
@@ -31,7 +35,7 @@ public class PlayerController : MonoBehaviour {
         controller = GetComponent<CharacterController>();
         playerbody = GetComponent<Rigidbody>();
         moveVector = new Vector3(0, 0, 0);
-
+        Belt = GetComponent<Conveyor>();
         InputManager.DisableBytime(6);
 
     }
@@ -90,7 +94,7 @@ public class PlayerController : MonoBehaviour {
         // Read from Input
         moveVector.z = InputManager.GetAxis("Vertical") * speed;
         moveVector.x = InputManager.GetAxis("Horizontal") * speed;
-
+       
 
         // Add Aditional movement from level
         moveVector += additionalmovement;
@@ -105,6 +109,13 @@ public class PlayerController : MonoBehaviour {
         controller.Move(moveVector * Time.deltaTime);
         //lastMove = moveVector;
 
+        if (OnBelt == true)
+        {
+             
+
+        }
+        AddMovement(speedVector);
+
     }
 
     //
@@ -117,9 +128,10 @@ public class PlayerController : MonoBehaviour {
     //   movement: Direction the player have to be moved
     public void AddMovement(Vector3 movement)
     {
-
         additionalmovement += movement;
-
+        movement = speedVector;
     }
+
+    
     
 }

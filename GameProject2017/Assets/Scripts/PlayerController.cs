@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5;
+    public float moveSpeed = 20;
 
 
     int jump = 2;
@@ -13,15 +13,7 @@ public class PlayerController : MonoBehaviour
     float jumpForce = 10;
     float gravity = 25;
     float verticalVelocity;
-<<<<<<< HEAD
-
-
-    [Range(1.0f, 10.0f)]
-    public float speed = 20.0f;
-
-=======
     CharacterController controller;
->>>>>>> e479ed68bd14c683d0e10017c6abeefb6024a22f
 
     // Use this for initialization
     void Start()
@@ -32,7 +24,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(controller.isGrounded);
+
 
         if (controller.isGrounded)
         {
@@ -69,7 +61,7 @@ public class PlayerController : MonoBehaviour
         moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
         moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
 
-       // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
+        // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
         if (InputManager.GetButtonDown("Jump") && jump >= 1)
         {
             jump--;

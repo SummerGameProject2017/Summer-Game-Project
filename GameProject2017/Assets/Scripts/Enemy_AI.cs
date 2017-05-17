@@ -101,7 +101,6 @@ public class Enemy_AI : MonoBehaviour {
     }
     IEnumerator OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
             
            
             patrolPoint.transform.position = new Vector3(transform.position.x, -500, transform.position.z);

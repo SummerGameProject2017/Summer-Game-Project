@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class DialogueSystem : MonoBehaviour
 {
-   
-
-
-
     public static DialogueSystem Instance { get; set; }
     public List<string> dialogueLines = new List<string>();
     public string npcName;
     public GameObject dialoguePanel;
+
+    public float secondsBetweenDialogue = 0.15f;
 
     Button continueButton;
     Text dialogueText, nameText;
@@ -45,15 +44,14 @@ public class DialogueSystem : MonoBehaviour
         this.npcName = npcName;
 
 
-        Debug.Log(dialogueLines.Count);
         CreateDialogue();
     }
 
     public void CreateDialogue()
     {
-        dialogueText.text = dialogueLines[dialogueIndex];
         nameText.text = npcName;
         dialoguePanel.SetActive(true);
+        StartCoroutine(DisplayString(dialogueLines[dialogueIndex]));
     }
 
     public void ContinueDialogue()
@@ -61,11 +59,36 @@ public class DialogueSystem : MonoBehaviour
         if (dialogueIndex < dialogueLines.Count - 1)
         {
             dialogueIndex++;
-            dialogueText.text = dialogueLines[dialogueIndex];
+            StartCoroutine(DisplayString(dialogueLines[dialogueIndex]));
         }
         else
         {
             dialoguePanel.SetActive(false);
+            
+        }
+    }
+
+
+    IEnumerator DisplayString(string stringToDisplay)
+    {
+        int stringLength = stringToDisplay.Length;
+        int currentCharacterIndex = 0;
+
+        dialogueText.text = "";
+
+        while (currentCharacterIndex < stringLength)
+        {
+            dialogueText.text += stringToDisplay[currentCharacterIndex];
+            currentCharacterIndex++;
+            if (currentCharacterIndex < stringLength)
+            {
+                yield return new WaitForSeconds(secondsBetweenDialogue);
+            }
+            else
+            {
+                break;
+            }
+
         }
     }
 }

@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour {
 
 
     [Range(1.0f, 10.0f)]
-    public float speed = 1.0f;
+    public float speed = 20.0f;
 
 
     // Use this for initialization

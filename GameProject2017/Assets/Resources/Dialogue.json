@@ -1,0 +1,22 @@
+{
+  "Character": [
+    {
+      "id": 0,
+      "name": "Bilbo",
+      "Dialogue": [
+        "Hello my name is Bilbo",
+        "How are you"
+      ]
+
+    },
+    {
+      "id": 1,
+      "name": "Bob",
+      "Dialogue": [
+        "Hello My name is Bob",
+        "How are you today"
+      ]
+    }
+      
+  ]
+}

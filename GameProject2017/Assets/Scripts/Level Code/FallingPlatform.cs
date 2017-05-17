@@ -73,5 +73,4 @@ public class FallingPlatform : MonoBehaviour
         TimeStood = 0.0f;
         isFalling = false;
     }
-    
 }

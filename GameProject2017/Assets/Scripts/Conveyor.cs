@@ -45,8 +45,9 @@ public class Conveyor : MonoBehaviour
         anim.SetFloat("Speed", BeltVelocity);
         if(OnBelt == true)
         {
+            
            // PlayerScript.playerbody.transform.position += BeltVelocity * speedVector / 10;
-            //Debug.Log("Belt Move" + BeltVelocity + ' ' + PlayerScript.playerbody.transform.name);
+           //Debug.Log("Belt Move" + BeltVelocity + ' ' + PlayerScript.playerbody.transform.name);
         }
     }
 

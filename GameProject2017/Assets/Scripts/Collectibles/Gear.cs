@@ -29,7 +29,7 @@ public class Gear : Collectables {
             GameObject Collected = Instantiate(par_pickup, transform.position, Quaternion.identity) as GameObject;
             SetGearCountText();
             gameObject.SetActive(false);
-            Destroy(Collected, 2); //Deletes the particles after 2 seconds
+            Destroy(Collected, 1); //Deletes the particles after 2 seconds
         }
     }
 

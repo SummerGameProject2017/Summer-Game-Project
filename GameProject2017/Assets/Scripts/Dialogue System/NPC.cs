@@ -32,7 +32,7 @@ public class NPC : MonoBehaviour
     }
 
 
-    private void OnTriggerStay(Collider other)
+    void Update()
     {
             if (Input.GetKeyDown(JPGameManager.GM.jump))
                 {

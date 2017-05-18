@@ -16,7 +16,6 @@ public class Enemy_AI : MonoBehaviour {
     float maxPositionX;
     float minPositionZ;
     float maxPositionZ;
-    bool playerRan = false;
     public GameObject target;
     private Transform player;
  //   public Animator anim;

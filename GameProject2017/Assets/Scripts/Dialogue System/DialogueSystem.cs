@@ -10,12 +10,13 @@ public class DialogueSystem : MonoBehaviour
     public List<string> dialogueLines = new List<string>();
     public string npcName;
     public GameObject dialoguePanel;
-
     public float secondsBetweenDialogue = 0.15f;
-
+    public int stringLength = 0;
     Button continueButton;
     Text dialogueText, nameText;
-    int dialogueIndex;
+    public int dialogueIndex;
+
+        public bool isStringBeingShown = false;
 
     void Awake()
     {
@@ -39,6 +40,7 @@ public class DialogueSystem : MonoBehaviour
     public void AddNewDialogue(string[] lines, string npcName)
     {
         dialogueIndex = 0;
+        dialogueText.text = "";
         dialogueLines = new List<string>(lines.Length);
         dialogueLines.AddRange(lines);
         this.npcName = npcName;
@@ -49,17 +51,35 @@ public class DialogueSystem : MonoBehaviour
 
     public void CreateDialogue()
     {
+        //   dialogueText.text = dialogueLines[dialogueIndex];      
+        StartCoroutine(DisplayString(dialogueLines[dialogueIndex]));
+        isStringBeingShown = true;
+
         nameText.text = npcName;
         dialoguePanel.SetActive(true);
-        StartCoroutine(DisplayString(dialogueLines[dialogueIndex]));
     }
 
     public void ContinueDialogue()
     {
-        if (dialogueIndex < dialogueLines.Count - 1)
-        {
-            dialogueIndex++;
-            StartCoroutine(DisplayString(dialogueLines[dialogueIndex]));
+        
+
+            if (isStringBeingShown == false && dialogueIndex < dialogueLines.Count - 1)
+            {
+                isStringBeingShown = true;
+                stringLength = 0;
+                dialogueText.text = "";
+
+                dialogueIndex++;
+                StartCoroutine(DisplayString(dialogueLines[dialogueIndex]));
+            }
+           else if (isStringBeingShown == true)
+            {
+                secondsBetweenDialogue = 0;
+                
+
+                //   dialogueText.text = dialogueLines[dialogueIndex];
+            
+            
         }
         else
         {
@@ -71,10 +91,8 @@ public class DialogueSystem : MonoBehaviour
 
     IEnumerator DisplayString(string stringToDisplay)
     {
-        int stringLength = stringToDisplay.Length;
+        stringLength = stringToDisplay.Length;
         int currentCharacterIndex = 0;
-
-        dialogueText.text = "";
 
         while (currentCharacterIndex < stringLength)
         {
@@ -90,5 +108,7 @@ public class DialogueSystem : MonoBehaviour
             }
 
         }
+        isStringBeingShown = false;
+        secondsBetweenDialogue = 0.15f;
     }
 }

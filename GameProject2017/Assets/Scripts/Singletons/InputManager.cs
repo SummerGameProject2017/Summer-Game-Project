@@ -32,7 +32,6 @@ public class InputManager : MonoSingleton<InputManager> {
     //   deadzone (default: true): Should it consider a DeadZone? 
     public static float GetAxis(string axisName, bool deadzone = true)
     {
-
         if (active)
         {
             float axis = Input.GetAxis(axisName);
@@ -45,7 +44,6 @@ public class InputManager : MonoSingleton<InputManager> {
             {
                 return axis;
             }
-            
         }
         else
         {

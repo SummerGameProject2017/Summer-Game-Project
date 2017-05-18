@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Collectables : MonoBehaviour, IChildEvents
 {
     public float rotationSpeed = 1;
     public float amplitude = 0.5f;
     public float frequency = 1f;
+
     public GameObject par_pickup;
+    public Text GearCountText;
+    public Text RobotCountText;
 
     Vector3 PosOffset = new Vector3();
     Vector3 TempPos = new Vector3();
@@ -60,14 +64,4 @@ public abstract class Collectables : MonoBehaviour, IChildEvents
         OnUpdate();
 	}
 
-    void OnTriggerEnter(Collider other)
-    {
-        //Collectibles will disappear when player collides with them
-        if (other.gameObject.CompareTag("Player"))
-        {
-            GameObject Collected = Instantiate(par_pickup, transform.position, Quaternion.identity) as GameObject;
-            gameObject.SetActive(false);
-            Destroy(Collected, 2); //Deletes the particles after 2 seconds
-        }
-    }
 }

@@ -10,9 +10,10 @@ public class DialogueSystem : MonoBehaviour
     public List<string> dialogueLines = new List<string>();
     public string npcName;
     public GameObject dialoguePanel;
+    public GameObject savePanel;
     public float secondsBetweenDialogue = 0.15f;
     public int stringLength = 0;
-    Button continueButton;
+    Button yesButton, noButton;
     Text dialogueText, nameText;
     public int dialogueIndex;
     public bool startTalking = true;
@@ -20,13 +21,23 @@ public class DialogueSystem : MonoBehaviour
     public bool isStringBeingShown = false;
     public bool isTalking = false;
     PlayerController playerScript;
+    bool yes = false;
+    bool no = false;
+    NPC npcScript;
 
     void Awake()
     {
+        npcScript = GameObject.Find("SaveBot").GetComponent<NPC>();
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         dialogueText = dialoguePanel.transform.FindChild("Text").GetComponent<Text>(); ;
         nameText = dialoguePanel.transform.FindChild("Name").GetChild(0).GetComponent<Text>();
         dialoguePanel.SetActive(false);
+
+        yesButton = savePanel.transform.FindChild("Yes").GetComponent<Button>();
+        noButton = savePanel.transform.FindChild("No").GetComponent<Button>();
+        savePanel.SetActive(false);
+        yesButton.onClick.AddListener(delegate { YesButtonPushed(); });
+        noButton.onClick.AddListener(delegate { NoButtonPushed(); });
 
 
 
@@ -51,6 +62,35 @@ public class DialogueSystem : MonoBehaviour
             startTalking = false;
         }
 
+        if (savePanel.activeSelf)
+        {
+            playerScript.enabled = false;
+            npcScript.enabled = false;
+            if (InputManager.GetKeyDown(KeyCode.A) || InputManager.GetKeyDown(KeyCode.LeftArrow))
+            {
+                yesButton.image.color = new Color(255, 0, 0);
+                noButton.image.color = new Color(255, 255, 255);
+                yes = true;
+                no = false;
+            }
+            if (InputManager.GetKeyDown(KeyCode.D) || InputManager.GetKeyDown(KeyCode.RightArrow))
+            {
+                noButton.image.color = new Color(255, 0, 0);
+                yesButton.image.color = new Color(255, 255, 255);
+                no = true;
+                yes = false;
+            }
+            if (yes == true && InputManager.GetButtonDown("Jump"))
+            {
+                YesButtonPushed();
+            }
+            if (no == true && InputManager.GetButtonDown("Jump"))
+            {
+                NoButtonPushed();
+            }
+
+        }
+       
 
 
     }
@@ -95,12 +135,15 @@ public class DialogueSystem : MonoBehaviour
         }
         else 
         {
+            if (npcName == "SaveBot")
+            {
+                savePanel.SetActive(true);
+            }
             currentCharacterIndex = 0;
             startTalking = true;
             dialoguePanel.SetActive(false);
             isTalking = false;
             playerScript.enabled = true;
-
             
         }
     }
@@ -133,5 +176,25 @@ public class DialogueSystem : MonoBehaviour
         isStringBeingShown = false;
         secondsBetweenDialogue = 0.15f;
 
+    }
+
+    public void NoButtonPushed()
+    {
+        npcScript.enabled = true;
+        savePanel.SetActive(false);
+        playerScript.enabled = true;
+        noButton.image.color = new Color(255, 255, 255);
+        yesButton.image.color = new Color(255, 255, 255);
+        no = false;
+    }
+    public void YesButtonPushed()
+    {
+        npcScript.enabled = true;
+        Debug.Log("Saved Game");
+        savePanel.SetActive(false);
+        playerScript.enabled = true;
+        noButton.image.color = new Color(255, 255, 255);
+        yesButton.image.color = new Color(255, 255, 255);
+        yes = false;
     }
 }

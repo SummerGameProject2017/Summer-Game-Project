@@ -94,6 +94,18 @@ public class InputManager : MonoSingleton<InputManager> {
             return false;
         }
     }
+    public static bool GetKeyDown(KeyCode buttonName)
+    {
+
+        if (InputManager.active)
+        {
+            return Input.GetKeyDown(buttonName);
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     //
     // Summary:

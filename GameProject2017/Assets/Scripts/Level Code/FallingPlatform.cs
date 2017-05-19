@@ -56,7 +56,7 @@ public class FallingPlatform : MonoBehaviour
             Instantiate(Platform, Startpos, transform.rotation);
             Destroy(Platform);
             HasFallen = false;
-            TimeFallen = 0;
+            TimeFallen = 0.0f;
         }
 	}
 
@@ -73,5 +73,4 @@ public class FallingPlatform : MonoBehaviour
         TimeStood = 0.0f;
         isFalling = false;
     }
-    
 }

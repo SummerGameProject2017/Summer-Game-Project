@@ -16,7 +16,6 @@ public class Enemy_AI : MonoBehaviour {
     float maxPositionX;
     float minPositionZ;
     float maxPositionZ;
-    bool playerRan = false;
     public GameObject target;
     private Transform player;
  //   public Animator anim;
@@ -101,7 +100,6 @@ public class Enemy_AI : MonoBehaviour {
     }
     IEnumerator OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
             
            
             patrolPoint.transform.position = new Vector3(transform.position.x, -500, transform.position.z);

@@ -16,6 +16,13 @@
         "Hello My name is Bob",
         "How are you today"
       ]
+    },
+    {
+      "id": 3,
+      "name": "SaveBot",
+      "Dialogue": [
+        "Would you like to save?"
+      ]
     }
       
   ]

@@ -36,11 +36,15 @@ public class NPC : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         float offset = Vector3.Distance(transform.position, player.position);
+        if (playerScript.isTalking == true)
+        {
             if (InputManager.GetButtonDown("Jump") && offset < 3 && dialogueScript.isTalking == false)
-                {
-            playerScript.enabled = false;
-            dialogueScript.isTalking = true;
+            {
+                playerScript.enabled = false;
+                dialogueScript.isTalking = true;
                 DialogueSystem.Instance.AddNewDialogue(textLines, this.name);
+                playerScript.isTalking = false;
+            }
         }
 
           

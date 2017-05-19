@@ -190,7 +190,7 @@ public class DialogueSystem : MonoBehaviour
     public void YesButtonPushed()
     {
         npcScript.enabled = true;
-        Debug.Log("Saved Game");
+        SaveLoad.Save();
         savePanel.SetActive(false);
         playerScript.enabled = true;
         noButton.image.color = new Color(255, 255, 255);

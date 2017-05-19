@@ -13,10 +13,10 @@ public class Conveyor : MonoBehaviour
     Animator anim;
     public PlayerController PlayerScript;
     public Rigidbody playerbody;
-
+    
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         OnBelt = false;
         anim = GetComponent<Animator>();
         
@@ -45,7 +45,11 @@ public class Conveyor : MonoBehaviour
         anim.SetFloat("Speed", BeltVelocity);
         if(OnBelt == true)
         {
-            
+
+            Vector3 direction = transform.TransformDirection(speedVector);
+
+            PlayerScript.AddMovement(BeltVelocity * direction);
+
            // PlayerScript.playerbody.transform.position += BeltVelocity * speedVector / 10;
            //Debug.Log("Belt Move" + BeltVelocity + ' ' + PlayerScript.playerbody.transform.name);
         }

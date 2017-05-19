@@ -41,6 +41,7 @@ public class NPC : MonoBehaviour
             playerScript.enabled = false;
             dialogueScript.isTalking = true;
                 DialogueSystem.Instance.AddNewDialogue(textLines, this.name);
+            playerScript.isTalking = false;
         }
 
           

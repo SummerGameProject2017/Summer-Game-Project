@@ -8,9 +8,7 @@ public class PlayerController : MonoBehaviour
     [Range(3.0f, 10.0f)]
     public float speed = 5.0f;
 
-
     Vector3 additionalmovement;
-
 
     int jump = 2;
     Vector3 moveVector;

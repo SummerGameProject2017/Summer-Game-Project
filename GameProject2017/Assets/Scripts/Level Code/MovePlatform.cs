@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovePlatform : MonoBehaviour {
+public class MovePlatform : MonoBehaviour
+{
 
 
     public Vector3 pointB;
+    public PlayerController PlayerScript;
+    public bool onplatform;
+    public Vector3 speedVector;
+    private Vector3 platformmove;
 
     IEnumerator Start()
     {
@@ -13,7 +18,9 @@ public class MovePlatform : MonoBehaviour {
         while (true)
         {
             yield return StartCoroutine(MoveObject(transform, pointA, pointB, 3.0f));
+            transform.Rotate(0, 180, 0);
             yield return StartCoroutine(MoveObject(transform, pointB, pointA, 3.0f));
+            transform.Rotate(0, 180, 0);
         }
     }
 
@@ -25,8 +32,34 @@ public class MovePlatform : MonoBehaviour {
         while (i < 1.0f)
         {
             i += Time.deltaTime * rate;
-            thisTransform.position = Vector3.Lerp(startPos, endPos, i);
+            thisTransform.position = platformmove = Vector3.Lerp(startPos, endPos, i);
             yield return null;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            onplatform = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            onplatform = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (onplatform == true)
+        {
+            Vector3 direction = transform.TransformDirection(speedVector );
+
+            PlayerScript.AddMovement(direction);
         }
     }
 }

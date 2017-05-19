@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FenceGate : MonoBehaviour {
     //Antonio Quesnel code
+
+    public Object lAeftGate;
+    public Object rightGate;
 	// Use this for initialization
 	void Start () {
 		
@@ -11,7 +14,17 @@ public class FenceGate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Rotate(new Vector3(0, Time.deltaTime * 300, 0));
-		
-	}
+
+        if (lAeftGate)
+        {
+           transform.Rotate(new Vector3(0, Time.deltaTime * 300, 0));
+        }
+
+        if (rightGate)
+        {
+            transform.Rotate(new Vector3(0, Time.deltaTime * 100, 0));
+        }
+
+
+    }
 }

@@ -9,6 +9,7 @@ public class SaveLoad : MonoBehaviour {
 
     public float health;        //change to health and collectibles of actual player
     public float collectibles;
+    public bool saveGame = false;
     // Use this for initialization
     void Start () {
 		
@@ -16,7 +17,10 @@ public class SaveLoad : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (saveGame == true)
+        {
+            Save();
+        }
 	}
   
     public void Save()
@@ -46,7 +50,9 @@ public class SaveLoad : MonoBehaviour {
             collectibles = data.collectibles;
         }
     }
-    
+
+   
+
 }
 [Serializable]      //serialize the data to be saved to file
 class PlayerData

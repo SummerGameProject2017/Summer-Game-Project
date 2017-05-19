@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     float jumpForce = 10;
     float gravity = 25;
     float verticalVelocity;
+    public bool isTalking = false;
     CharacterController controller;
 
     // Use this for initialization
@@ -64,8 +65,8 @@ public class PlayerController : MonoBehaviour
         moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
         moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
 
-       // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
-        if (InputManager.GetButtonDown("Jump") && jump >= 1)
+        // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
+        if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
         {
             jump--;
             verticalVelocity = jumpForce;

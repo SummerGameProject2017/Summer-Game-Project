@@ -7,18 +7,20 @@ using LitJson;
 
 public class NPC : MonoBehaviour
 {
-    public TextAsset textFile;
     public string loadLines;
     public List<string> textLines = new List<string>();
-    public string[] dialogueText;
 
 
     private JsonData stringData;
     private int count = 0;
+    Transform player;
+    DialogueSystem dialogueScript;
+    PlayerController playerScript;
+
     private void Start()
     {
-        if (textFile != null)
-        {
+        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        dialogueScript = GameObject.Find("DialogueSystem").GetComponent<DialogueSystem>(); 
             loadLines = File.ReadAllText(Application.dataPath + "/Resources/Dialogue.json");
             stringData = JsonMapper.ToObject(loadLines);
 
@@ -27,19 +29,32 @@ public class NPC : MonoBehaviour
             {
                 textLines.Add(GetString()["Dialogue"][i].ToString());
             }
-            dialogueText = textLines.ToArray();
-        }
     }
 
 
     void Update()
     {
-            if (Input.GetKeyDown(JPGameManager.GM.jump))
+        player = GameObject.FindWithTag("Player").transform;
+        float offset = Vector3.Distance(transform.position, player.position);
+            if (InputManager.GetButtonDown("Jump") && offset < 3 && dialogueScript.isTalking == false)
                 {
-                DialogueSystem.Instance.AddNewDialogue(dialogueText, this.name);
+            playerScript.enabled = false;
+            dialogueScript.isTalking = true;
+                DialogueSystem.Instance.AddNewDialogue(textLines, this.name);
+            playerScript.isTalking = false;
         }
-    }
 
+          
+       
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        playerScript.isTalking = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        playerScript.isTalking = false;
+    }
 
     JsonData GetString()
     {

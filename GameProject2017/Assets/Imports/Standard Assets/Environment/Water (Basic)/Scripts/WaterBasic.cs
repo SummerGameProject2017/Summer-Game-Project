@@ -6,6 +6,7 @@ namespace UnityStandardAssets.Water
     [ExecuteInEditMode]
     public class WaterBasic : MonoBehaviour
     {
+        public Transform respawn;
         void Update()
         {
             Renderer r = GetComponent<Renderer>();
@@ -27,6 +28,14 @@ namespace UnityStandardAssets.Water
             Vector4 offsetClamped = new Vector4(Mathf.Repeat(offset4.x, 1.0f), Mathf.Repeat(offset4.y, 1.0f),
                 Mathf.Repeat(offset4.z, 1.0f), Mathf.Repeat(offset4.w, 1.0f));
             mat.SetVector("_WaveOffset", offsetClamped);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.tag == "Player")
+            {
+                other.transform.position = respawn.transform.position;
+            }
         }
     }
 }

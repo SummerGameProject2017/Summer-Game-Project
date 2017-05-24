@@ -26,7 +26,7 @@ public class FallingPlatform : MonoBehaviour
         {
             TimeStood += Time.deltaTime;
             //Make platform shake
-            if (TimeStood >= 0.75f && TimeStood <= 1.49f)
+            if (TimeStood >= 0.5f && TimeStood <= 0.99f)
             {
                 if (Shake == true && HasFallen == false)
                 {
@@ -42,7 +42,7 @@ public class FallingPlatform : MonoBehaviour
                 }
             }
             //Make platform fall after being stood on for 1.5 seconds
-            else if (TimeStood > 1.5f)
+            else if (TimeStood > 1.0f)
             {
                 HasFallen = true;
                 GetComponent<Rigidbody>().useGravity = true;

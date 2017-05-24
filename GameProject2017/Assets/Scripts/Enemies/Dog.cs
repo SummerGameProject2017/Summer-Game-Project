@@ -89,7 +89,7 @@ public class Dog : Enemy
             idle = false;
             aiState = States.Chase;
         }
-        if (offset <= 6)
+        if (offset <= 6 && player.transform.position.y <= transform.position.y)
         {
             aiState = States.Attack;
         }
@@ -102,7 +102,8 @@ public class Dog : Enemy
             aiState = States.Idle;
         }
 
-
+        Debug.Log("Player" + player.transform.position.y);
+        Debug.Log("Enemy" + transform.position.y);
         switch (aiState)
         {
             case States.Patrol:
@@ -154,7 +155,6 @@ public class Dog : Enemy
             anim.SetBool("Run", false);
             anim.SetBool("Bite", true);
             Player.Instance.LoseLife();
-            Debug.Log(Player.Instance.lives);
             firstAttack = false;
         }
         transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
@@ -162,7 +162,6 @@ public class Dog : Enemy
        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
         {
             Player.Instance.LoseLife();
-            Debug.Log(Player.Instance.lives);
             anim.Play("Bite", -1, 0);
             anim.SetBool("Idle", false);
         }
@@ -172,7 +171,7 @@ public class Dog : Enemy
             anim.SetBool("Bite", false);
         }
 
-        Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+
         
        
     }

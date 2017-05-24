@@ -149,21 +149,31 @@ public class Dog : Enemy
     {
         if (firstAttack == true)
         {
+            anim.Play("Bite", -1, 0);
+            anim.SetBool("Walk", false);
+            anim.SetBool("Run", false);
+            anim.SetBool("Bite", true);
             Player.Instance.LoseLife();
             Debug.Log(Player.Instance.lives);
             firstAttack = false;
         }
         transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
-        anim.SetBool("Walk", false);
-        anim.SetBool("Run", false);
-        anim.SetBool("Bite", true);
-        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 3)
+        
+       if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
         {
-            
             Player.Instance.LoseLife();
             Debug.Log(Player.Instance.lives);
             anim.Play("Bite", -1, 0);
+            anim.SetBool("Idle", false);
         }
+       else
+        {
+            anim.SetBool("Idle", true);
+            anim.SetBool("Bite", false);
+        }
+
+        Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        
        
     }
     void Idle()

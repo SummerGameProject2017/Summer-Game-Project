@@ -18,11 +18,18 @@ public class PlayerController : MonoBehaviour
     float verticalVelocity;
     public bool isTalking = false;
     CharacterController controller;
-
+    int health;
+    float hideplayerinfo;
+    public GameObject[] Healthpoints;
+    Gear collectable;
+    public GameObject PlayerGear;
+    
     // Use this for initialization
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        health = 3;
+        collectable = GetComponent<Gear>();
     }
 
     // Update is called once per frame
@@ -43,7 +50,7 @@ public class PlayerController : MonoBehaviour
             //verticalVelocity += Physics.gravity.y * Time.deltaTime;
             moveVector = lastMove;
         }
-
+      
         //moveVector = Vector3.zero;
         //if (Input.GetKey(JPGameManager.GM.forward) || Input.GetAxis("Vertical") > 0.5)
         //{
@@ -70,8 +77,10 @@ public class PlayerController : MonoBehaviour
         {
             jump--;
             verticalVelocity = jumpForce;
+            health -= 1;
+            HealthChange();
         }
-
+        
         //if (Input.GetButtonDown("Attack") || Input.GetKeyDown(JPGameManager.GM.joyAttack))
         //{
         //    Debug.Log("Attack");
@@ -95,11 +104,30 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(moveVector * Time.deltaTime);
         lastMove = moveVector;
+        hideplayerinfo += Time.deltaTime;
 
-
+        //hides health after 3 seconds
+        if (hideplayerinfo > 3)
+        {
+            Healthpoints[2].SetActive(false);
+            Healthpoints[1].SetActive(false);
+            Healthpoints[0].SetActive(false);
+            PlayerGear.SetActive(false);
+        }
+        //does the meme for collecting a gear
+        if (collectable.collected == true)
+        {
+            CollectedGear();
+        }
 
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Collectible")
+        {
+            CollectedGear();
+        }
+    }
 
     //
     // Summary:
@@ -116,5 +144,34 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //When health is added or subtracted this is called to display current health
+    public void HealthChange()
+    {
+        hideplayerinfo = 0;
+        if (health == 3)
+        {
+            Healthpoints[2].SetActive(true);
+            Healthpoints[1].SetActive(true);
+            Healthpoints[0].SetActive(true);
+
+        }
+        if(health == 2)
+        {
+            Healthpoints[1].SetActive(true);
+            Healthpoints[0].SetActive(true);
+        }
+        if(health == 1)
+        {
+            Healthpoints[0].SetActive(true);
+        }
+     
+        
+    }
+
+    public void CollectedGear()
+    {
+        hideplayerinfo = 0;
+        PlayerGear.SetActive(true);
+    }
 
 }

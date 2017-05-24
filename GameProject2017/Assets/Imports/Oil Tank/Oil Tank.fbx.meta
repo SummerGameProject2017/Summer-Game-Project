@@ -1,9 +1,16 @@
 fileFormatVersion: 2
-guid: 3a6a14c35e34a97468cfebfdac16b488
+guid: 16e04686e9f136e4296ecc420b22c174
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: oiltank
+    400000: //RootNode
+    400002: oiltank
+    2300000: oiltank
+    3300000: oiltank
     4300000: oiltank
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3

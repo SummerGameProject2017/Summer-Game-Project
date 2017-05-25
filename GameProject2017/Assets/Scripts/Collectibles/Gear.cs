@@ -8,7 +8,7 @@ public class Gear : Collectables {
     public bool collected;
     public override void OnStart()
     {
-        GearCountText.canvasRenderer.SetAlpha(0.0f);
+        //GearCountText.canvasRenderer.SetAlpha(0.0f);
         //SetGearCountText();
     }
 

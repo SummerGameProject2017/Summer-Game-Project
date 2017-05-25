@@ -8,7 +8,7 @@ public class Robot : Collectables {
 
     public override void OnStart()
     {
-        RobotCountText.canvasRenderer.SetAlpha(0.0f);
+        //RobotCountText.canvasRenderer.SetAlpha(0.0f);
         //SetRobotCountText();
     }
 

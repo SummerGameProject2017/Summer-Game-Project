@@ -13,9 +13,9 @@ public class PlayerController : MonoBehaviour
     int jump = 2;
     Vector3 moveVector;
     Vector3 lastMove;
-    float jumpForce = 10;
+    public float jumpForce = 10;
     float gravity = 25;
-    float verticalVelocity;
+    public float verticalVelocity;
     public bool isTalking = false;
     CharacterController controller;
     int health;
@@ -29,12 +29,16 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         health = 3;
-        collectable = GetComponent<Gear>();
+    //    collectable = GetComponent<Gear>();
     }
 
     // Update is called once per frame
     void Update()
     {
+       
+
+     
+
         Debug.Log(controller.isGrounded);
 
         if (controller.isGrounded)
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour
             //verticalVelocity += Physics.gravity.y * Time.deltaTime;
             moveVector = lastMove;
         }
-      
+
         //moveVector = Vector3.zero;
         //if (Input.GetKey(JPGameManager.GM.forward) || Input.GetAxis("Vertical") > 0.5)
         //{
@@ -69,8 +73,16 @@ public class PlayerController : MonoBehaviour
         //    moveVector.z = -5;
         //}
 
-        moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
-        moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
+        Vector3 rotationVector = Vector3.zero;
+
+        rotationVector.z = moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
+        rotationVector.x = moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
+
+       
+
+        transform.rotation = Quaternion.LookRotation(rotationVector);
+
+
 
         // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
         if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
@@ -107,7 +119,7 @@ public class PlayerController : MonoBehaviour
         hideplayerinfo += Time.deltaTime;
 
         //hides health after 3 seconds
-        if (hideplayerinfo > 3)
+/*        if (hideplayerinfo > 3)
         {
             Healthpoints[2].SetActive(false);
             Healthpoints[1].SetActive(false);
@@ -119,7 +131,7 @@ public class PlayerController : MonoBehaviour
         {
             CollectedGear();
         }
-
+        */
     }
     private void OnTriggerEnter(Collider other)
     {

@@ -26,11 +26,12 @@ public class Dog : Enemy
     GameObject patrolPoint;
     bool idle = false;
     bool firstAttack = true;
-    int X = 0;
-    int Z = 0;
-    public int health = 1;
+    short X = 0;
+    short Z = 0;
+    public short health = 1;
     PlayerController playerScript;
     public bool aiStunned = false;
+    bool canBeHit = false;
 
     public override void OnStart()
     {
@@ -39,15 +40,15 @@ public class Dog : Enemy
         anim = GetComponent<Animator>();    //animate the enemies
         patrolPoint = Instantiate(target) as GameObject;
 
-        X = Random.Range(0, 2);
-        Z = Random.Range(0, 2);
+        X = (short)Random.Range(0, 2);
+        Z = (short)Random.Range(0, 2);
         minPositionX = this.transform.position.x - 10;
         maxPositionX = this.transform.position.x + 10;
         minPositionZ = this.transform.position.z - 10;
         maxPositionZ = this.transform.position.z + 10;
+        //set the bounds the ai will be moving around
 
-
-
+        //depending on a random number between 0 and 1 set the point for the ai to move to
         if (X == 0)
         {
             XPosition = minPositionX;
@@ -67,7 +68,9 @@ public class Dog : Enemy
     
         
         patrolPoint.transform.position = new Vector3(XPosition, transform.position.y, ZPosition);
+        //set the patrol point gameobject in the scene based on the random position
         agent.SetDestination(patrolPoint.transform.position);
+        //tell the ai to go to the patrol point
     }
 
 
@@ -84,10 +87,11 @@ public class Dog : Enemy
                 transform.position = hit.point;
 
         }
+        // put the ai on the ground using raycasting
 
         
         float offset = Vector3.Distance(player.transform.position, transform.position);
-
+        //find the distance between the player and the ai and change state based on health of ai and distance
         
       
 
@@ -97,12 +101,12 @@ public class Dog : Enemy
         }
         if (health > 0 && aiStunned == false)
         {
-                if (offset <= 15 && offset > 4)
+                if (offset <= 15 && offset > 3.9)
                 {
                     idle = false;
                     aiState = States.Chase;
                 }
-                if (offset <= 4 && player.transform.position.y <= transform.position.y)
+                if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y)
                 {
                     aiState = States.Attack;
                 }
@@ -119,9 +123,8 @@ public class Dog : Enemy
 
 
 
-
         
-
+        //choose the state and which method to call based on the state of tha ai
         switch (aiState)
         {
             case States.Patrol:
@@ -143,11 +146,15 @@ public class Dog : Enemy
                 break;
         }
 
-
-
+        //change this to whatever attack button is
+        if (InputManager.GetKeyDown(KeyCode.X))
+        {
+            canBeHit = true;
+        }
        
 
     }
+    //walk to diffenent patrol points
     void Patrol()
     {
         patrolPoint.SetActive(true);
@@ -158,6 +165,7 @@ public class Dog : Enemy
         agent.SetDestination(patrolPoint.transform.position);
 
     }
+    //chase after the player
     void Chase()
     {
         firstAttack = true;
@@ -169,10 +177,12 @@ public class Dog : Enemy
         anim.SetBool("Bite", false);
         agent.SetDestination(player.transform.position);
     }
+    //attack the player and call the player loose life method
     void Attack()
     {
         if (firstAttack == true)
         {
+            //for the first attack reset the animation timer and call the attack animation
             anim.Play("Bite", -1, 0);
             anim.SetBool("Walk", false);
             anim.SetBool("Run", false);
@@ -184,12 +194,15 @@ public class Dog : Enemy
         
        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Combat Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
         {
+            //if the attack idle animation reaches 2 seconds in loop length change to attack animation and reset the timer. 
             Player.Instance.LoseLife();
             anim.Play("Bite", -1, 0);
             anim.SetBool("Idle", false);
         }
        else
         {
+            //rotate for bad angle in idle animation
+            transform.Rotate(3, 0, 0);
             anim.SetBool("Idle", true);
             anim.SetBool("Bite", false);
         }
@@ -198,8 +211,10 @@ public class Dog : Enemy
         
        
     }
+    //when the ai reaches a patrol point change to idle animation
     void Idle()
     {
+        transform.Rotate(3, 0, 0);
         agent.speed = 0;
         agent.SetDestination(transform.position);
         anim.SetBool("Walk", false);
@@ -208,15 +223,18 @@ public class Dog : Enemy
     }
 
     
+    
     IEnumerator OnTriggerStay(Collider other)
     {
+        //when the player reaches a patrol point, deactivate the patrol point and reactivate at a new random position
         if (other.gameObject.tag == "PatrolPoint")
         {
             idle = true;
-            patrolPoint.transform.position = new Vector3(transform.position.x, -500, transform.position.z);
+            patrolPoint.SetActive(false);
             yield return new WaitForSeconds(3);
-            X = Random.Range(0, 2);
-            Z = Random.Range(0, 2);
+            patrolPoint.SetActive(true);
+            X = (short)Random.Range(0, 2);
+            Z = (short)Random.Range(0, 2);
             if (X == 0)
             {
                 XPosition = minPositionX;
@@ -244,6 +262,7 @@ public class Dog : Enemy
 
     private void OnTriggerEnter(Collider other)
     {
+        //if the player jumps on the ai chnge to stunned state and bounce the player
          if (other.gameObject.tag == "Player" && aiStunned == false)
         {
             playerScript.verticalVelocity = playerScript.jumpForce;
@@ -251,14 +270,15 @@ public class Dog : Enemy
             aiState = States.Stunned;
             StartCoroutine(DogStunned());
         }
-
-         if (other.gameObject.name == "Hammer")
+         //damage the robot
+         if (other.gameObject.name == "Hammer" && canBeHit == true)
         {
+            canBeHit = false;
             health--;
         }
     }
    
-
+    //when the ai is out of health change to dead animation and after 3 seconds destroy the ai gameobject
     IEnumerator EnemyDead()
     {
         agent.speed = 0;
@@ -271,6 +291,8 @@ public class Dog : Enemy
         Destroy(gameObject);
     }
 
+    
+    //play the stunned animation for 3 seconds then change states
     IEnumerator DogStunned()
     {
         agent.SetDestination(transform.position);

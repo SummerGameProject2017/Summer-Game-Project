@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:GameProject2017/Assets/Blender Exports/Misc Robot/Materials.meta
+guid: 781447775ab9ed949a9a52a89919420b
+folderAsset: yes
+timeCreated: 1495806386
+=======
 guid: 246d5fdf73bacbf4281b4ad113719b66
 folderAsset: yes
 timeCreated: 1495806498
+>>>>>>> 27c272f89e6c2acf6449ec4ac0892efce5a3e716:GameProject2017/Assets/Blender Exports/Misc Robot/Materials.meta
 licenseType: Free
 DefaultImporter:
   userData: 

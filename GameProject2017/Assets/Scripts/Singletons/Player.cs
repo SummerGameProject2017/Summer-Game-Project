@@ -8,6 +8,7 @@ public class Player
     public int lives;
     public int gear;
     public int robot;
+    public short maxLives;
 
     private static Player instance;
 
@@ -47,7 +48,7 @@ public class Player
 
     public void RestoreLife()
     {
-       lives = 3;
+       lives = maxLives;
     }
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum States { Patrol, Chase, Attack, Idle};
+public enum States { Patrol, Chase, Attack, Idle, Dead, Stunned };
 public class Dog : Enemy
 {
 
@@ -28,10 +28,13 @@ public class Dog : Enemy
     bool firstAttack = true;
     int X = 0;
     int Z = 0;
+    public int health = 1;
+    PlayerController playerScript;
+    public bool aiStunned = false;
 
     public override void OnStart()
     {
-
+        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         anim = GetComponent<Animator>();    //animate the enemies
         patrolPoint = Instantiate(target) as GameObject;
@@ -82,28 +85,43 @@ public class Dog : Enemy
 
         }
 
-
+        
         float offset = Vector3.Distance(player.transform.position, transform.position);
-        if (offset <= 15 && offset > 6)
+
+        
+      
+
+        if (health <= 0)
         {
-            idle = false;
-            aiState = States.Chase;
+            aiState = States.Dead;
         }
-        if (offset <= 6 && player.transform.position.y <= transform.position.y)
+        if (health > 0 && aiStunned == false)
         {
-            aiState = States.Attack;
-        }
-        if (offset > 15 && idle == false)
-        {
-            aiState = States.Patrol;
-        }
-        if (idle == true)
-        {
-            aiState = States.Idle;
+                if (offset <= 15 && offset > 4)
+                {
+                    idle = false;
+                    aiState = States.Chase;
+                }
+                if (offset <= 4 && player.transform.position.y <= transform.position.y)
+                {
+                    aiState = States.Attack;
+                }
+                if (offset > 15 && idle == false)
+                {
+                    aiState = States.Patrol;
+                }
+                if (idle == true)
+                {
+                    aiState = States.Idle;
+                }
+
         }
 
-        Debug.Log("Player" + player.transform.position.y);
-        Debug.Log("Enemy" + transform.position.y);
+
+
+
+        
+
         switch (aiState)
         {
             case States.Patrol:
@@ -118,7 +136,11 @@ public class Dog : Enemy
             case States.Idle:
                 Idle();
                 break;
-
+            case States.Dead:
+                StartCoroutine(EnemyDead());
+                break;
+            case States.Stunned:
+                break;
         }
 
 
@@ -139,6 +161,7 @@ public class Dog : Enemy
     void Chase()
     {
         firstAttack = true;
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
         patrolPoint.SetActive(false);
         agent.speed = 4;
         anim.SetBool("Walk", false);
@@ -159,7 +182,7 @@ public class Dog : Enemy
         }
         transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
         
-       if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
+       if (anim.GetCurrentAnimatorStateInfo(0).IsName("Combat Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
         {
             Player.Instance.LoseLife();
             anim.Play("Bite", -1, 0);
@@ -178,10 +201,13 @@ public class Dog : Enemy
     void Idle()
     {
         agent.speed = 0;
+        agent.SetDestination(transform.position);
         anim.SetBool("Walk", false);
         anim.SetBool("Run", false);
         anim.SetBool("Bite", false);
     }
+
+    
     IEnumerator OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "PatrolPoint")
@@ -210,11 +236,55 @@ public class Dog : Enemy
             patrolPoint.transform.position = new Vector3(XPosition, transform.position.y, ZPosition);
             idle = false;
         }
-        
 
-
+       
     }
 
-    
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+         if (other.gameObject.tag == "Player" && aiStunned == false)
+        {
+            playerScript.verticalVelocity = playerScript.jumpForce;
+            aiStunned = true;
+            aiState = States.Stunned;
+            StartCoroutine(DogStunned());
+        }
+
+         if (other.gameObject.name == "Hammer")
+        {
+            health--;
+        }
+    }
+   
+
+    IEnumerator EnemyDead()
+    {
+        agent.speed = 0;
+        anim.SetBool("Dead", true);
+        anim.SetBool("Walk", false);
+        anim.SetBool("Run", false);
+        anim.SetBool("Bite", false);
+        anim.SetBool("Idle", false);
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
+    }
+
+    IEnumerator DogStunned()
+    {
+        agent.SetDestination(transform.position);
+        agent.updateRotation = false;
+        anim.SetBool("Stunned", true);
+        anim.SetBool("Walk", false);
+        anim.SetBool("Run", false);
+        anim.SetBool("Bite", false);
+        anim.SetBool("Idle", false);
+        yield return new WaitForSeconds(3);
+        anim.SetBool("Stunned", false);
+        agent.updateRotation = true;
+        firstAttack = true;
+        aiStunned = false;
+    }
 
 }

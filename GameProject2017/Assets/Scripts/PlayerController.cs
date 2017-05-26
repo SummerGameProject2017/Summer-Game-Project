@@ -10,24 +10,27 @@ public class PlayerController : MonoBehaviour
 
     Vector3 additionalmovement;
 
-    int jump = 2;
-    Vector3 moveVector;
+    public static int jump = 2;
+    public static Vector3 moveVector;
     Vector3 lastMove;
     float jumpForce = 10;
     float gravity = 25;
     float verticalVelocity;
     public bool isTalking = false;
+    private bool Landed = false;
     CharacterController controller;
     int health;
     float hideplayerinfo;
     public GameObject[] Healthpoints;
     Gear collectable;
     public GameObject PlayerGear;
+
     
     // Use this for initialization
     void Start()
     {
         controller = GetComponent<CharacterController>();
+       
         health = 3;
         collectable = GetComponent<Gear>();
     }
@@ -39,18 +42,22 @@ public class PlayerController : MonoBehaviour
 
         if (controller.isGrounded)
         {
+            PlayerAnim.Anim.SetBool("Jump", false);
+            PlayerAnim.Anim.SetBool("DJump", false);
             verticalVelocity = -1;
             jump = 2;
+           
+            
 
         }
-
         else
         {
             verticalVelocity -= gravity * Time.deltaTime;
             //verticalVelocity += Physics.gravity.y * Time.deltaTime;
             moveVector = lastMove;
         }
-
+    
+        
         //moveVector = Vector3.zero;
         //if (Input.GetKey(JPGameManager.GM.forward) || Input.GetAxis("Vertical") > 0.5)
         //{
@@ -76,17 +83,17 @@ public class PlayerController : MonoBehaviour
 
        
 
-        transform.rotation = Quaternion.LookRotation(rotationVector);
+       // transform.rotation = Quaternion.LookRotation(rotationVector);
 
 
 
         // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
         if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
         {
-            jump--;
-            verticalVelocity = jumpForce;
-            health -= 1;
-            HealthChange();
+                jump--;
+                verticalVelocity = jumpForce;
+                
+            //HealthChange();
         }
         
         //if (Input.GetButtonDown("Attack") || Input.GetKeyDown(JPGameManager.GM.joyAttack))
@@ -114,7 +121,7 @@ public class PlayerController : MonoBehaviour
         lastMove = moveVector;
         hideplayerinfo += Time.deltaTime;
 
-        //hides health after 3 seconds
+       /* //hides health after 3 seconds
         if (hideplayerinfo > 3)
         {
             Healthpoints[2].SetActive(false);
@@ -123,12 +130,18 @@ public class PlayerController : MonoBehaviour
             PlayerGear.SetActive(false);
         }
         //does the meme for collecting a gear
-        if (collectable.collected == true)
+       /* if (collectable.collected == true)
         {
             CollectedGear();
-        }
+        }*/
 
     }
+
+    // Delay Function
+   
+
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Collectible")
@@ -153,7 +166,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //When health is added or subtracted this is called to display current health
-    public void HealthChange()
+   /* public void HealthChange()
     {
         hideplayerinfo = 0;
         if (health == 3)
@@ -175,7 +188,7 @@ public class PlayerController : MonoBehaviour
      
         
     }
-
+    */
     public void CollectedGear()
     {
         hideplayerinfo = 0;

@@ -13,9 +13,9 @@ public class PlayerController : MonoBehaviour
     int jump = 2;
     Vector3 moveVector;
     Vector3 lastMove;
-    float jumpForce = 10;
+    public float jumpForce = 10;
     float gravity = 25;
-    float verticalVelocity;
+    public float verticalVelocity;
     public bool isTalking = false;
     CharacterController controller;
     int health;
@@ -29,12 +29,16 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         health = 3;
-        collectable = GetComponent<Gear>();
+    //    collectable = GetComponent<Gear>();
     }
 
     // Update is called once per frame
     void Update()
     {
+       
+
+     
+
         Debug.Log(controller.isGrounded);
 
         if (controller.isGrounded)
@@ -107,7 +111,7 @@ public class PlayerController : MonoBehaviour
         hideplayerinfo += Time.deltaTime;
 
         //hides health after 3 seconds
-        if (hideplayerinfo > 3)
+/*        if (hideplayerinfo > 3)
         {
             Healthpoints[2].SetActive(false);
             Healthpoints[1].SetActive(false);
@@ -119,7 +123,7 @@ public class PlayerController : MonoBehaviour
         {
             CollectedGear();
         }
-
+        */
     }
     private void OnTriggerEnter(Collider other)
     {

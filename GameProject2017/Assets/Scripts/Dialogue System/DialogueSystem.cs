@@ -53,34 +53,34 @@ public class DialogueSystem : MonoBehaviour
 
     private void Update()
     {
-        if (InputManager.GetButtonDown("Jump") && startTalking == false)
+        if (InputManager.GetButtonDown("Jump") && startTalking == false)//if the dialogue has already started and the jump button is pushed go to the continue dialogue function.
         {
             ContinueDialogue();
         }
-        if (currentCharacterIndex >= 2)
+        if (currentCharacterIndex >= 2)     
         {
             startTalking = false;
         }
 
-        if (savePanel.activeSelf)
+        if (savePanel.activeSelf)   //if the save panel is active start moving controller or keys to change which menu is selected
         {
             playerScript.enabled = false;
             npcScript.enabled = false;
-            if (InputManager.GetKeyDown(KeyCode.A) || InputManager.GetKeyDown(KeyCode.LeftArrow))
+            if (InputManager.GetKeyDown(KeyCode.A) || InputManager.GetKeyDown(KeyCode.LeftArrow) || InputManager.GetAxis("Horizontal") < 0)
             {
                 yesButton.image.color = new Color(255, 0, 0);
                 noButton.image.color = new Color(255, 255, 255);
                 yes = true;
                 no = false;
             }
-            if (InputManager.GetKeyDown(KeyCode.D) || InputManager.GetKeyDown(KeyCode.RightArrow))
+            if (InputManager.GetKeyDown(KeyCode.D) || InputManager.GetKeyDown(KeyCode.RightArrow) || InputManager.GetAxis("Horizontal") > 0)
             {
                 noButton.image.color = new Color(255, 0, 0);
                 yesButton.image.color = new Color(255, 255, 255);
                 no = true;
                 yes = false;
             }
-            if (yes == true && InputManager.GetButtonDown("Jump"))
+            if (yes == true && InputManager.GetButtonDown("Jump"))      //if the jump button is pushed on yes or no save game or not
             {
                 YesButtonPushed();
             }
@@ -94,7 +94,7 @@ public class DialogueSystem : MonoBehaviour
 
 
     }
-    public void AddNewDialogue(List<string> lines, string npcName)
+    public void AddNewDialogue(List<string> lines, string npcName)      //add dialogue from the NPC script into dialogue
     {
         dialogueIndex = 0;
         dialogueText.text = "";
@@ -106,7 +106,7 @@ public class DialogueSystem : MonoBehaviour
         CreateDialogue();
     }
 
-    public void CreateDialogue()
+    public void CreateDialogue()        //activate the dialogue panel and show the first line of dialogue
     {
 
         StartCoroutine(DisplayString(dialogueLines[dialogueIndex]));
@@ -116,11 +116,11 @@ public class DialogueSystem : MonoBehaviour
         dialoguePanel.SetActive(true);
     }
 
-    public void ContinueDialogue()
+    public void ContinueDialogue()      
     {
         
 
-            if (isStringBeingShown == false && dialogueIndex < dialogueLines.Count - 1)
+            if (isStringBeingShown == false && dialogueIndex < dialogueLines.Count - 1)     //start showing the next lines of dialogue one leter at a time
             {
                 isStringBeingShown = true;
                 stringLength = 0;
@@ -131,10 +131,11 @@ public class DialogueSystem : MonoBehaviour
             }
            else if (isStringBeingShown == true)
             {
+            //if the jump key is pushed before the dialogue is sone showing increase speed of text writing to screen
                 secondsBetweenDialogue = 0;
         }
         else 
-        {
+        {   //if the NPC is a savebot activate the save panel
             if (npcName == "SaveBot")
             {
                 savePanel.SetActive(true);
@@ -150,7 +151,7 @@ public class DialogueSystem : MonoBehaviour
 
     
 
-
+    //display the string one character at a time
     IEnumerator DisplayString(string stringToDisplay)
     {
         stringLength = stringToDisplay.Length;
@@ -177,7 +178,7 @@ public class DialogueSystem : MonoBehaviour
         secondsBetweenDialogue = 0.15f;
 
     }
-
+    //close the save panel and reset the color of the buttons
     public void NoButtonPushed()
     {
         npcScript.enabled = true;

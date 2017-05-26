@@ -5,7 +5,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public class SaveLoad : MonoSingleton<SaveLoad>
+public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated when needed. Doesnt need to be attached to anything
 {
     
     public bool saveGame = false;
@@ -20,7 +20,8 @@ public class SaveLoad : MonoSingleton<SaveLoad>
 		
 	}
   
-    public static void Save()
+    //create or open a save file and serialize the data being saved to binary then close the file
+    public static void Save()   
     {
         playerScript = Player.Instance;
         Debug.Log("Saved Game");
@@ -32,6 +33,7 @@ public class SaveLoad : MonoSingleton<SaveLoad>
         file.Close();
     }
 
+    //load the fila and desearialize from binary and give player information needed
     public static void Load()
     {
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))

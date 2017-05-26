@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
        
 
-        transform.rotation = Quaternion.LookRotation(rotationVector);
+        //transform.rotation = Quaternion.LookRotation(rotationVector);
 
 
 

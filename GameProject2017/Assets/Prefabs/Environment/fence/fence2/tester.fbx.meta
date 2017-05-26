@@ -1,21 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:GameProject2017/Assets/Imports/Oil Tank/Oil Tank.fbx.meta
-guid: 16e04686e9f136e4296ecc420b22c174
-ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: oiltank
-    400000: //RootNode
-    400002: oiltank
-    2300000: oiltank
-    3300000: oiltank
-    4300000: oiltank
-    11100000: //RootNode
-=======
 guid: 2fec9ddd1a6bb3f499be49492e2fc364
-timeCreated: 1495653878
-licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -30,7 +14,7 @@ ModelImporter:
     2300000: Cube
     3300000: Cube
     4300000: Cube
->>>>>>> 2864c3eb88387ac9e5c433aec4a06ee2d157a73f:GameProject2017/Assets/Prefabs/Environment/fence/fence2/tester.fbx.meta
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -57,7 +41,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -95,7 +79,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

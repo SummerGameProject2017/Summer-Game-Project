@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
             //verticalVelocity += Physics.gravity.y * Time.deltaTime;
             moveVector = lastMove;
         }
-      
+
         //moveVector = Vector3.zero;
         //if (Input.GetKey(JPGameManager.GM.forward) || Input.GetAxis("Vertical") > 0.5)
         //{
@@ -69,8 +69,16 @@ public class PlayerController : MonoBehaviour
         //    moveVector.z = -5;
         //}
 
-        moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
-        moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
+        Vector3 rotationVector = Vector3.zero;
+
+        rotationVector.z = moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
+        rotationVector.x = moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
+
+       
+
+        transform.rotation = Quaternion.LookRotation(rotationVector);
+
+
 
         // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
         if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)

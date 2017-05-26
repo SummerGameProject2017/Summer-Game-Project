@@ -12,7 +12,7 @@ public class NPC : MonoBehaviour
 
 
     private JsonData stringData;
-    private int count = 0;
+    private short count = 0;
     Transform player;
     DialogueSystem dialogueScript;
     PlayerController playerScript;
@@ -25,7 +25,7 @@ public class NPC : MonoBehaviour
             loadLines = File.ReadAllText(Application.dataPath + "/Resources/Dialogue.json");    //load the dialogue file from the resource folder
             stringData = JsonMapper.ToObject(loadLines);
 
-            count = GetString()["Dialogue"].Count;
+            count = (short)GetString()["Dialogue"].Count;
             for (int i = 0; i < count; i++)
             {
                 textLines.Add(GetString()["Dialogue"][i].ToString());

@@ -16,8 +16,8 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
 	}
 
     // Update is called once per frame
-    public override void OnUpdate () {
-		
+    public override void OnUpdate() {
+        
 	}
   
     //create or open a save file and serialize the data being saved to binary then close the file
@@ -28,8 +28,8 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");    //create a file or overwrite if exists to save data too
 
-        PlayerData player = new PlayerData(playerScript.lives, playerScript.gear, playerScript.robot);
-        bf.Serialize(file, player);       //serialize and save the data
+        PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.Find("Player").transform.position);
+        bf.Serialize(file, playerInfo);       //serialize and save the data
         file.Close();
     }
 
@@ -45,23 +45,30 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             PlayerData data = (PlayerData)bf.Deserialize(file);     //load the data from the class
             file.Close();
 
-            playerScript.lives = data.health;       //set health and collectibles to saved data
+            playerScript.lives = data.maxLives;       //set health and collectibles to saved data
             playerScript.gear = data.collectibles;
             playerScript.robot = data.robotsCollected;
+            GameObject.Find("Player").transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
         }
     }
 }
 [Serializable]      //serialize the data to be saved to file
 public class PlayerData
 {
-    public int health;        //player health value
+    public int maxLives;        //player health value
     public int collectibles;      //collectibles gained value
     public int robotsCollected; //robots collected
+    public float positionX;
+    public float positionY;
+    public float positionZ;
 
-    public PlayerData(int _health, int _collectibles, int _robotsCollected)
+    public PlayerData(int _maxLives, int _collectibles, int _robotsCollected, Vector3 _position)
     {
-        health = _health;
+        maxLives = _maxLives;
         collectibles = _collectibles;
         robotsCollected = _robotsCollected;
+        positionX = _position.x;
+        positionY = _position.y;
+        positionZ = _position.z;
     }
 }

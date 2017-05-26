@@ -12,12 +12,12 @@ public class DialogueSystem : MonoBehaviour
     public GameObject dialoguePanel;
     public GameObject savePanel;
     public float secondsBetweenDialogue = 0.15f;
-    public int stringLength = 0;
+    public short stringLength = 0;
     Button yesButton, noButton;
     Text dialogueText, nameText;
-    public int dialogueIndex;
+    public short dialogueIndex;
     public bool startTalking = true;
-    int currentCharacterIndex;
+    short currentCharacterIndex;
     public bool isStringBeingShown = false;
     public bool isTalking = false;
     PlayerController playerScript;
@@ -90,7 +90,11 @@ public class DialogueSystem : MonoBehaviour
             }
 
         }
-       
+       if (InputManager.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log("load");
+            SaveLoad.Load();
+        }
 
 
     }
@@ -154,7 +158,7 @@ public class DialogueSystem : MonoBehaviour
     //display the string one character at a time
     IEnumerator DisplayString(string stringToDisplay)
     {
-        stringLength = stringToDisplay.Length;
+        stringLength = (short)stringToDisplay.Length;
         currentCharacterIndex = 0;
 
         while (currentCharacterIndex < stringLength)

@@ -26,11 +26,12 @@ public class Dog : Enemy
     GameObject patrolPoint;
     bool idle = false;
     bool firstAttack = true;
-    int X = 0;
-    int Z = 0;
-    public int health = 1;
+    short X = 0;
+    short Z = 0;
+    public short health = 1;
     PlayerController playerScript;
     public bool aiStunned = false;
+    bool canBeHit = false;
 
     public override void OnStart()
     {
@@ -39,8 +40,8 @@ public class Dog : Enemy
         anim = GetComponent<Animator>();    //animate the enemies
         patrolPoint = Instantiate(target) as GameObject;
 
-        X = Random.Range(0, 2);
-        Z = Random.Range(0, 2);
+        X = (short)Random.Range(0, 2);
+        Z = (short)Random.Range(0, 2);
         minPositionX = this.transform.position.x - 10;
         maxPositionX = this.transform.position.x + 10;
         minPositionZ = this.transform.position.z - 10;
@@ -145,8 +146,11 @@ public class Dog : Enemy
                 break;
         }
 
-
-
+        //change this to whatever attack button is
+        if (InputManager.GetKeyDown(KeyCode.X))
+        {
+            canBeHit = true;
+        }
        
 
     }
@@ -229,8 +233,8 @@ public class Dog : Enemy
             patrolPoint.SetActive(false);
             yield return new WaitForSeconds(3);
             patrolPoint.SetActive(true);
-            X = Random.Range(0, 2);
-            Z = Random.Range(0, 2);
+            X = (short)Random.Range(0, 2);
+            Z = (short)Random.Range(0, 2);
             if (X == 0)
             {
                 XPosition = minPositionX;
@@ -267,8 +271,9 @@ public class Dog : Enemy
             StartCoroutine(DogStunned());
         }
          //damage the robot
-         if (other.gameObject.name == "Hammer")
+         if (other.gameObject.name == "Hammer" && canBeHit == true)
         {
+            canBeHit = false;
             health--;
         }
     }

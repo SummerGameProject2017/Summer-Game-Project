@@ -19,10 +19,6 @@ public class PlayerController : MonoBehaviour
     public bool isTalking = false;
     CharacterController controller;
     int health;
-    float hideplayerinfo;
-    public GameObject[] Healthpoints;
-    Gear collectable;
-    public GameObject PlayerGear;
     public Animator anim;
 
 
@@ -92,8 +88,8 @@ public class PlayerController : MonoBehaviour
         {
             jump--;
             verticalVelocity = jumpForce;
-            health -= 1;
-            //          HealthChange();
+            Player.Instance.lives -= 1;
+                     HealthChange();
         }
 
         //if (Input.GetButtonDown("Attack") || Input.GetKeyDown(JPGameManager.GM.joyAttack))
@@ -119,7 +115,6 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(moveVector * Time.deltaTime);
         lastMove = moveVector;
-        hideplayerinfo += Time.deltaTime;
 
         //hides health after 3 seconds
         /*        if (hideplayerinfo > 3)
@@ -171,33 +166,32 @@ public class PlayerController : MonoBehaviour
     }
 
     //When health is added or subtracted this is called to display current health
-    /*public void HealthChange()
+    public void HealthChange()
     {
-        hideplayerinfo = 0;
-        if (health == 3)
+
+        if (Player.Instance.lives == 3)
         {
-            Healthpoints[2].SetActive(true);
-            Healthpoints[1].SetActive(true);
-            Healthpoints[0].SetActive(true);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 + (gameObject.transform.right * 1), gameObject.transform.rotation);
 
         }
-        if(health == 2)
+        if (Player.Instance.lives == 2)
         {
-            Healthpoints[1].SetActive(true);
-            Healthpoints[0].SetActive(true);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
         }
-        if(health == 1)
+        if (Player.Instance.lives == 1)
         {
-            Healthpoints[0].SetActive(true);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
         }
-     
-        
+
+
     }
-    */
     public void CollectedGear()
     {
-        hideplayerinfo = 0;
-        PlayerGear.SetActive(true);
+        GameObject Gear = (GameObject)Instantiate(Resources.Load("PlayerGear"), gameObject.transform.position + gameObject.transform.up * 3, gameObject.transform.rotation);
+
     }
 
 }

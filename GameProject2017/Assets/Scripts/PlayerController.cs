@@ -10,12 +10,17 @@ public class PlayerController : MonoBehaviour
 
     Vector3 additionalmovement;
 
+<<<<<<< HEAD
     public static int jump = 2;
     public static Vector3 moveVector;
+=======
+    public int jump = 2;
+    Vector3 moveVector;
+>>>>>>> e4778703aa3b8f368152aa6e9314157a07d10e89
     Vector3 lastMove;
-    float jumpForce = 10;
+    public float jumpForce = 10;
     float gravity = 25;
-    float verticalVelocity;
+    public float verticalVelocity;
     public bool isTalking = false;
     private bool Landed = false;
     CharacterController controller;
@@ -24,20 +29,31 @@ public class PlayerController : MonoBehaviour
     public GameObject[] Healthpoints;
     Gear collectable;
     public GameObject PlayerGear;
+<<<<<<< HEAD
 
     
+=======
+    public Animator anim;
+
+
+>>>>>>> e4778703aa3b8f368152aa6e9314157a07d10e89
     // Use this for initialization
     void Start()
     {
+        anim = GetComponent<Animator>();    //animate the enemies
         controller = GetComponent<CharacterController>();
        
         health = 3;
-        collectable = GetComponent<Gear>();
+    //    collectable = GetComponent<Gear>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
+
+
         Debug.Log(controller.isGrounded);
 
         if (controller.isGrounded)
@@ -81,7 +97,7 @@ public class PlayerController : MonoBehaviour
         rotationVector.z = moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
         rotationVector.x = moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
 
-       
+
 
        // transform.rotation = Quaternion.LookRotation(rotationVector);
 
@@ -90,12 +106,19 @@ public class PlayerController : MonoBehaviour
         // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
         if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
         {
+<<<<<<< HEAD
                 jump--;
                 verticalVelocity = jumpForce;
                 
             //HealthChange();
+=======
+            jump--;
+            verticalVelocity = jumpForce;
+            health -= 1;
+            //          HealthChange();
+>>>>>>> e4778703aa3b8f368152aa6e9314157a07d10e89
         }
-        
+
         //if (Input.GetButtonDown("Attack") || Input.GetKeyDown(JPGameManager.GM.joyAttack))
         //{
         //    Debug.Log("Attack");
@@ -121,6 +144,7 @@ public class PlayerController : MonoBehaviour
         lastMove = moveVector;
         hideplayerinfo += Time.deltaTime;
 
+<<<<<<< HEAD
        /* //hides health after 3 seconds
         if (hideplayerinfo > 3)
         {
@@ -134,8 +158,28 @@ public class PlayerController : MonoBehaviour
         {
             CollectedGear();
         }*/
+=======
+        //hides health after 3 seconds
+        /*        if (hideplayerinfo > 3)
+                {
+                    Healthpoints[2].SetActive(false);
+                    Healthpoints[1].SetActive(false);
+                    Healthpoints[0].SetActive(false);
+                    PlayerGear.SetActive(false);
+                }
+                //does the meme for collecting a gear
+                if (collectable.collected == true)
+                {
+                    CollectedGear();
+                }
+                */
 
+>>>>>>> e4778703aa3b8f368152aa6e9314157a07d10e89
+
+
+        
     }
+<<<<<<< HEAD
 
     // Delay Function
    
@@ -143,10 +187,20 @@ public class PlayerController : MonoBehaviour
 
 
     private void OnTriggerEnter(Collider other)
+=======
+    private IEnumerator OnTriggerEnter(Collider other)
+>>>>>>> e4778703aa3b8f368152aa6e9314157a07d10e89
     {
         if (other.tag == "Collectible")
         {
             CollectedGear();
+        }
+        //if the player falls in water play the falling in water animation then reset player to last save position
+        if (other.name == "Water")
+        {
+            anim.SetBool("Dead-Water", true);
+            yield return new WaitForSeconds(1.5f);
+            SaveLoad.Load();
         }
     }
 
@@ -166,7 +220,11 @@ public class PlayerController : MonoBehaviour
     }
 
     //When health is added or subtracted this is called to display current health
+<<<<<<< HEAD
    /* public void HealthChange()
+=======
+    /*public void HealthChange()
+>>>>>>> e4778703aa3b8f368152aa6e9314157a07d10e89
     {
         hideplayerinfo = 0;
         if (health == 3)

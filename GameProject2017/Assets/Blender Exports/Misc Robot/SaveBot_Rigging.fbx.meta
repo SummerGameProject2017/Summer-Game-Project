@@ -1,0 +1,221 @@
+fileFormatVersion: 2
+guid: 6fa9295b62a5baa4596b8aee58dba89d
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Chest
+    100002: Cube
+    100004: Foot.L
+    100006: Foot.L_end
+    100008: Foot.R
+    100010: Foot.R_end
+    100012: Hand.L
+    100014: Hand.R
+    100016: Head
+    100018: Head_end
+    100020: Index_F.L
+    100022: Index_F.R
+    100024: Index_M.L
+    100026: Index_M.R
+    100028: Index_T.L
+    100030: Index_T.L_end
+    100032: Index_T.R
+    100034: Index_T.R_end
+    100036: LowerArm.L
+    100038: LowerArm.L.001
+    100040: LowerArm.L_end
+    100042: LowerArm.R
+    100044: LowerArm.R.001
+    100046: LowerArm.R_end
+    100048: LowerLeg.L
+    100050: LowerLeg.L.001
+    100052: LowerLeg.L_end
+    100054: LowerLEg.R
+    100056: LowerLEg.R.001
+    100058: LowerLEg.R_end
+    100060: Middle_F.L
+    100062: Middle_F.R
+    100064: MIddle_M.L
+    100066: MIddle_M.R
+    100068: Middle_T.L
+    100070: Middle_T.L_end
+    100072: Middle_T.R
+    100074: Middle_T.R_end
+    100076: Neck
+    100078: Pinky_F.L
+    100080: Pinky_F.R
+    100082: Pinky_T.L
+    100084: Pinky_T.L_end
+    100086: Pinky_T.R
+    100088: Pinky_T.R_end
+    100090: Point
+    100092: Point.001
+    100094: //RootNode
+    100096: SaveBotAnim
+    100098: Shoulder.L
+    100100: Shoulder.R
+    100102: Thumb_M.L
+    100104: Thumb_M.R
+    100106: Thumb_T.L
+    100108: Thumb_T.L_end
+    100110: Thumb_T.R
+    100112: Thumb_T.R_end
+    100114: Torso
+    100116: UpperArm.L
+    100118: UpperArm.L.001
+    100120: UpperArm.L.001_end
+    100122: UpperArm.R
+    100124: UpperArm.R.001
+    100126: UpperArm.R.001_end
+    100128: UpperLeg.L
+    100130: UpperLeg.L.001
+    100132: UpperLeg.L.001_end
+    100134: UpperLeg.R
+    100136: UpperLeg.R.001
+    100138: UpperLeg.R.001_end
+    100140: Waist
+    400000: Chest
+    400002: Cube
+    400004: Foot.L
+    400006: Foot.L_end
+    400008: Foot.R
+    400010: Foot.R_end
+    400012: Hand.L
+    400014: Hand.R
+    400016: Head
+    400018: Head_end
+    400020: Index_F.L
+    400022: Index_F.R
+    400024: Index_M.L
+    400026: Index_M.R
+    400028: Index_T.L
+    400030: Index_T.L_end
+    400032: Index_T.R
+    400034: Index_T.R_end
+    400036: LowerArm.L
+    400038: LowerArm.L.001
+    400040: LowerArm.L_end
+    400042: LowerArm.R
+    400044: LowerArm.R.001
+    400046: LowerArm.R_end
+    400048: LowerLeg.L
+    400050: LowerLeg.L.001
+    400052: LowerLeg.L_end
+    400054: LowerLEg.R
+    400056: LowerLEg.R.001
+    400058: LowerLEg.R_end
+    400060: Middle_F.L
+    400062: Middle_F.R
+    400064: MIddle_M.L
+    400066: MIddle_M.R
+    400068: Middle_T.L
+    400070: Middle_T.L_end
+    400072: Middle_T.R
+    400074: Middle_T.R_end
+    400076: Neck
+    400078: Pinky_F.L
+    400080: Pinky_F.R
+    400082: Pinky_T.L
+    400084: Pinky_T.L_end
+    400086: Pinky_T.R
+    400088: Pinky_T.R_end
+    400090: Point
+    400092: Point.001
+    400094: //RootNode
+    400096: SaveBotAnim
+    400098: Shoulder.L
+    400100: Shoulder.R
+    400102: Thumb_M.L
+    400104: Thumb_M.R
+    400106: Thumb_T.L
+    400108: Thumb_T.L_end
+    400110: Thumb_T.R
+    400112: Thumb_T.R_end
+    400114: Torso
+    400116: UpperArm.L
+    400118: UpperArm.L.001
+    400120: UpperArm.L.001_end
+    400122: UpperArm.R
+    400124: UpperArm.R.001
+    400126: UpperArm.R.001_end
+    400128: UpperLeg.L
+    400130: UpperLeg.L.001
+    400132: UpperLeg.L.001_end
+    400134: UpperLeg.R
+    400136: UpperLeg.R.001
+    400138: UpperLeg.R.001_end
+    400140: Waist
+    4300000: Cube
+    7400000: SaveBotAnim|SaveBotAnimAction
+    9500000: //RootNode
+    13700000: Cube
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

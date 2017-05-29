@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public static int jump = 2;
     Vector3 moveVector;
     Vector3 lastMove;
+    Vector3 rotationVector = Vector3.zero;
+
     public float jumpForce = 10;
     float gravity = 25;
     public float verticalVelocity;
@@ -34,18 +36,11 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-
-
-
-
-        Debug.Log(controller.isGrounded);
-
+    { 
         if (controller.isGrounded)
         {
             verticalVelocity = -1;
             jump = 2;
-
         }
 
         else
@@ -73,24 +68,29 @@ public class PlayerController : MonoBehaviour
         //    moveVector.z = -5;
         //}
 
-        Vector3 rotationVector = Vector3.zero;
+        
 
         rotationVector.z = moveAnim.z =  moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
         rotationVector.x = moveVector.x = moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
 
 
 
-        transform.rotation = Quaternion.LookRotation(rotationVector);
+        transform.rotation = Quaternion.LookRotation(new Vector3 (rotationVector.x, 0f , rotationVector.z));
 
 
 
         // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
-        if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
+
+        if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false )
         {
+
             jump--;
             verticalVelocity = jumpForce;
-            Player.Instance.lives -= 1;
-                     HealthChange();
+            PlayerAnim.Anim.SetBool("Jump", true);
+
+
+            // Player.Instance.lives -= 1;
+            //        HealthChange();
         }
 
         //if (Input.GetButtonDown("Attack") || Input.GetKeyDown(JPGameManager.GM.joyAttack))

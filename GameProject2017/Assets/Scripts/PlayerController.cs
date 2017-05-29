@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 additionalmovement;
 
-    public int jump = 2;
+    public static int jump = 2;
     Vector3 moveVector;
     Vector3 lastMove;
     public float jumpForce = 10;
@@ -19,17 +19,14 @@ public class PlayerController : MonoBehaviour
     public bool isTalking = false;
     CharacterController controller;
     int health;
-    float hideplayerinfo;
-    public GameObject[] Healthpoints;
-    Gear collectable;
-    public GameObject PlayerGear;
-    public Animator anim;
+    public static Vector3 moveAnim;
+    
 
 
     // Use this for initialization
     void Start()
     {
-        anim = GetComponent<Animator>();    //animate the enemies
+        
         controller = GetComponent<CharacterController>();
         health = 3;
     //    collectable = GetComponent<Gear>();
@@ -78,12 +75,12 @@ public class PlayerController : MonoBehaviour
 
         Vector3 rotationVector = Vector3.zero;
 
-        rotationVector.z = moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
-        rotationVector.x = moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
+        rotationVector.z = moveAnim.z =  moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
+        rotationVector.x = moveVector.x = moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
 
 
 
-        //transform.rotation = Quaternion.LookRotation(rotationVector);
+        transform.rotation = Quaternion.LookRotation(rotationVector);
 
 
 
@@ -92,8 +89,8 @@ public class PlayerController : MonoBehaviour
         {
             jump--;
             verticalVelocity = jumpForce;
-            health -= 1;
-            //          HealthChange();
+            Player.Instance.lives -= 1;
+                     HealthChange();
         }
 
         //if (Input.GetButtonDown("Attack") || Input.GetKeyDown(JPGameManager.GM.joyAttack))
@@ -119,7 +116,6 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(moveVector * Time.deltaTime);
         lastMove = moveVector;
-        hideplayerinfo += Time.deltaTime;
 
         //hides health after 3 seconds
         /*        if (hideplayerinfo > 3)
@@ -149,7 +145,7 @@ public class PlayerController : MonoBehaviour
         //if the player falls in water play the falling in water animation then reset player to last save position
         if (other.name == "Water")
         {
-            anim.SetBool("Dead-Water", true);
+           
             yield return new WaitForSeconds(1.5f);
             SaveLoad.Load();
         }
@@ -171,33 +167,32 @@ public class PlayerController : MonoBehaviour
     }
 
     //When health is added or subtracted this is called to display current health
-    /*public void HealthChange()
+    public void HealthChange()
     {
-        hideplayerinfo = 0;
-        if (health == 3)
+
+        if (Player.Instance.lives == 3)
         {
-            Healthpoints[2].SetActive(true);
-            Healthpoints[1].SetActive(true);
-            Healthpoints[0].SetActive(true);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 + (gameObject.transform.right * 1), gameObject.transform.rotation);
 
         }
-        if(health == 2)
+        if (Player.Instance.lives == 2)
         {
-            Healthpoints[1].SetActive(true);
-            Healthpoints[0].SetActive(true);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
         }
-        if(health == 1)
+        if (Player.Instance.lives == 1)
         {
-            Healthpoints[0].SetActive(true);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
         }
-     
-        
+
+
     }
-    */
     public void CollectedGear()
     {
-        hideplayerinfo = 0;
-        PlayerGear.SetActive(true);
+        GameObject Gear = (GameObject)Instantiate(Resources.Load("PlayerGear"), gameObject.transform.position + gameObject.transform.up * 3, gameObject.transform.rotation);
+
     }
 
 }

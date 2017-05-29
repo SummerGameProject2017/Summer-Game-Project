@@ -16,8 +16,6 @@ public class PlayerAnim : MonoBehaviour {
     // Movement animations controller
     private float inputH; 
     private float inputV;
-    
-
 
     // Animator Component
     public static Animator Anim; 
@@ -26,8 +24,8 @@ public class PlayerAnim : MonoBehaviour {
 	void Start () {
 
         Anim = GetComponent<Animator>();
-       
 
+        
         //set all animations false
         Anim.SetFloat("inputV" , 0f);       
         Anim.SetFloat("inputH" , 0f);
@@ -45,8 +43,8 @@ public class PlayerAnim : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Anim.SetFloat("inputV", PlayerController.moveVector.z); // Set Vertical Movement
-        Anim.SetFloat("inputH", PlayerController.moveVector.x);
+        Anim.SetFloat("inputV", PlayerController.moveAnim.z); // Set Vertical Movement
+        Anim.SetFloat("inputH", PlayerController.moveAnim.x);
 
         if (InputManager.GetButtonDown("Jump") && PlayerController.jump >= 1)
         {

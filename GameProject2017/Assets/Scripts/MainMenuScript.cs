@@ -43,7 +43,7 @@ public class MainMenuScript : MonoBehaviour {
     public void StartButtonFunction()
     {
 
-        ScreenManager.LoadScene("Junkyard");
+        ScreenManager.LoadScene("Junkyard_Level_VR");
     }
 
     public void LoadButtonFunction()

@@ -37,6 +37,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+        Vector3 forward = GameObject.Find("GameObject").transform.TransformDirection(Vector3.forward);
+        forward.y = 0;
+        forward = forward.normalized;
+        Vector3 right = new Vector3(forward.z, 0, -forward.x);
+        float h = InputManager.GetAxis("Horizontal");
+        float v = InputManager.GetAxis("Vertical");
+
+
         if (controller.isGrounded)
         {
             verticalVelocity = -1;
@@ -44,7 +52,6 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             Debug.Log("Grounded");
         }
-
         else
         {
             verticalVelocity -= gravity * Time.deltaTime;
@@ -72,13 +79,7 @@ public class PlayerController : MonoBehaviour
 
         
 
-        rotationVector.z = moveAnim.z = moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
-        rotationVector.x = moveAnim.x = moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
-
-
-
-        transform.rotation = Quaternion.LookRotation(new Vector3(rotationVector.x, rotationVector.y, rotationVector.z));
-
+       
 
 
         // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
@@ -97,12 +98,27 @@ public class PlayerController : MonoBehaviour
         //    //attack code here;
         //}
 
+       
+        
+            
+
+        
+        moveVector = (speed *( h * right + v * forward));
+
+
+        rotationVector = moveAnim = moveVector = speed * (h * right + v * forward); //* speed;
+     //   rotationVector.x = moveAnim.x = moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
+
+
+
+        transform.rotation = Quaternion.LookRotation(new Vector3(rotationVector.x, rotationVector.y, rotationVector.z));
+
 
 
 
         moveVector.y = 0;
         //moveVector.Normalize();
-        moveVector *= speed;
+ //       moveVector *= speed;
         moveVector.y = verticalVelocity;
 
         // Add Aditional movement from level
@@ -131,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-        
+
     }
     private IEnumerator OnTriggerEnter(Collider other)
     {

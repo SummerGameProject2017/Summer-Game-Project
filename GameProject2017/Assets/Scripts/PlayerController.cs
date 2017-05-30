@@ -106,26 +106,26 @@ public class PlayerController : MonoBehaviour
         moveVector = (speed *( h * right + v * forward));
 
 
-        rotationVector = moveAnim = moveVector = speed * (h * right + v * forward); //* speed;
-     //   rotationVector.x = moveAnim.x = moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
+        // rotationVector = moveAnim = moveVector = speed * (h * right + v * forward); //* speed;
+        moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
+        moveAnim.z = InputManager.GetAxis("Vertical"); 
 
 
-
-        transform.rotation = Quaternion.LookRotation(new Vector3(rotationVector.x, rotationVector.y, rotationVector.z));
+        transform.rotation = Quaternion.LookRotation(moveVector);
 
 
 
 
         moveVector.y = 0;
         //moveVector.Normalize();
- //       moveVector *= speed;
+        //moveVector *= speed;
         moveVector.y = verticalVelocity;
 
         // Add Aditional movement from level
         moveVector += additionalmovement;
 
         // Clear
-        additionalmovement = Vector3.zero;
+        //additionalmovement = Vector3.zero;
 
         controller.Move(moveVector * Time.deltaTime);
         lastMove = moveVector;

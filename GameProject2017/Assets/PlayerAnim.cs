@@ -18,13 +18,14 @@ public class PlayerAnim : MonoBehaviour {
     private float inputV;
 
     // Animator Component
-    public static Animator Anim; 
+    Animator Anim;
 
-	// Use this for initialization
+    PlayerController PC;
+    // Use this for initialization
 	void Start () {
 
         Anim = GetComponent<Animator>();
-
+        PC = GetComponent<PlayerController>();
         
         //set all animations false
         Anim.SetFloat("inputV" , 0f);       
@@ -43,23 +44,27 @@ public class PlayerAnim : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Anim.SetFloat("inputV", PlayerController.moveAnim.z); // Set Vertical Movement
-        Anim.SetFloat("inputH", PlayerController.moveAnim.x);
-       
-        if (InputManager.GetButtonDown("Jump") && PlayerController.jump < 1)
+        Anim.SetFloat("inputV", PC.moveAnim.z); // Set Vertical Movement
+        Anim.SetFloat("inputH", PC.moveAnim.x); // Set Horizontal Movement
+
+
+        if (InputManager.GetButtonDown("Jump") && PC.jump >= 1)
         {
-
-            Anim.SetBool("DJump", true);
-
+            Anim.SetBool("Jump", true);
         }
 
-        if (InputManager.GetButtonUp("Jump"))
+        if (InputManager.GetButtonDown("Jump") && PC.jump < 1)
+        {
+            Anim.SetBool("DJump", true);
+            Anim.SetBool("Jump", false);
+        }
+        if (PC.isGrounded)
         {
             Anim.SetBool("Jump", false);
             Anim.SetBool("DJump", false);
-        }
 
-            
+        }
+           
         
     }
 

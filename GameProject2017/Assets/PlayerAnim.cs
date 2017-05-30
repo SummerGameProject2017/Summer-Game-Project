@@ -64,8 +64,17 @@ public class PlayerAnim : MonoBehaviour {
             Anim.SetBool("DJump", false);
 
         }
-           
-        
+
+        if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Walk_F"))
+        {
+            PC.speed = 5;
+        }
+        else
+        {
+            PC.speed = 10;
+        }
+
+
     }
 
     

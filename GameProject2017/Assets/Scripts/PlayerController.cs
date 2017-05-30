@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 additionalmovement;
 
-    public int jump = 2;
+    public static int jump = 2;
     Vector3 moveVector;
     Vector3 lastMove;
     public float jumpForce = 10;
@@ -19,13 +19,14 @@ public class PlayerController : MonoBehaviour
     public bool isTalking = false;
     CharacterController controller;
     int health;
-    public Animator anim;
+    public static Vector3 moveAnim;
+    
 
 
     // Use this for initialization
     void Start()
     {
-        anim = GetComponent<Animator>();    //animate the enemies
+        
         controller = GetComponent<CharacterController>();
         health = 3;
     //    collectable = GetComponent<Gear>();
@@ -74,8 +75,8 @@ public class PlayerController : MonoBehaviour
 
         Vector3 rotationVector = Vector3.zero;
 
-        rotationVector.z = moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
-        rotationVector.x = moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
+        rotationVector.z = moveAnim.z =  moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
+        rotationVector.x = moveVector.x = moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
 
 
 
@@ -88,8 +89,7 @@ public class PlayerController : MonoBehaviour
         {
             jump--;
             verticalVelocity = jumpForce;
-            Player.Instance.lives -= 1;
-                     HealthChange();
+         
         }
 
         //if (Input.GetButtonDown("Attack") || Input.GetKeyDown(JPGameManager.GM.joyAttack))
@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
         //if the player falls in water play the falling in water animation then reset player to last save position
         if (other.name == "Water")
         {
-            anim.SetBool("Dead-Water", true);
+           
             yield return new WaitForSeconds(1.5f);
             SaveLoad.Load();
         }

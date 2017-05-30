@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 additionalmovement;
 
-    public static int jump = 2;
+    public int jump = 2;    
     Vector3 moveVector;
     Vector3 lastMove;
     public float jumpForce = 10;
@@ -19,8 +19,9 @@ public class PlayerController : MonoBehaviour
     public bool isTalking = false;
     CharacterController controller;
     int health;
-    public static Vector3 moveAnim;
-    
+    public Vector3 moveAnim; // animation movement vector
+    public bool isGrounded = true; //  player on the ground bool
+    Vector3 rotationVector = Vector3.zero;
 
 
     // Use this for initialization
@@ -36,16 +37,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-
-
-
-        Debug.Log(controller.isGrounded);
-
         if (controller.isGrounded)
         {
             verticalVelocity = -1;
             jump = 2;
-
+            isGrounded = true;
+            Debug.Log("Grounded");
         }
 
         else
@@ -73,14 +70,14 @@ public class PlayerController : MonoBehaviour
         //    moveVector.z = -5;
         //}
 
-        Vector3 rotationVector = Vector3.zero;
+        
 
-        rotationVector.z = moveAnim.z =  moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
-        rotationVector.x = moveVector.x = moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
+        rotationVector.z = moveAnim.z = moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
+        rotationVector.x = moveAnim.x = moveVector.x = InputManager.GetAxis("Horizontal"); //* speed;
 
 
 
-        transform.rotation = Quaternion.LookRotation(rotationVector);
+        transform.rotation = Quaternion.LookRotation(new Vector3(rotationVector.x, rotationVector.y, rotationVector.z));
 
 
 
@@ -89,7 +86,8 @@ public class PlayerController : MonoBehaviour
         {
             jump--;
             verticalVelocity = jumpForce;
-         
+            isGrounded = false;
+
         }
 
         //if (Input.GetButtonDown("Attack") || Input.GetKeyDown(JPGameManager.GM.joyAttack))
@@ -145,7 +143,7 @@ public class PlayerController : MonoBehaviour
         if (other.name == "Water")
         {
            
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1);
             SaveLoad.Load();
         }
     }

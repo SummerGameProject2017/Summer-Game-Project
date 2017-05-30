@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
         if (other.name == "Water")
         {
            
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1);
             SaveLoad.Load();
         }
     }

@@ -19,6 +19,10 @@ public class Dog : Enemy
     float maxPositionX;
     float minPositionZ;
     float maxPositionZ;
+    public float maxDistanceX = 0;
+    public float maxDistanceZ = 0;
+    public float minDistanceX = 0;
+    public float minDistanceZ = 0;
     
     public GameObject target;
     private Transform player;
@@ -35,17 +39,17 @@ public class Dog : Enemy
 
     public override void OnStart()
     {
-        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         anim = GetComponent<Animator>();    //animate the enemies
         patrolPoint = Instantiate(target) as GameObject;
 
         X = (short)Random.Range(0, 2);
         Z = (short)Random.Range(0, 2);
-        minPositionX = this.transform.position.x - 10;
-        maxPositionX = this.transform.position.x + 10;
-        minPositionZ = this.transform.position.z - 10;
-        maxPositionZ = this.transform.position.z + 10;
+        minPositionX = this.transform.position.x - minDistanceX;
+        maxPositionX = this.transform.position.x + maxDistanceX;
+        minPositionZ = this.transform.position.z - minDistanceZ;
+        maxPositionZ = this.transform.position.z + maxDistanceZ;
         //set the bounds the ai will be moving around
 
         //depending on a random number between 0 and 1 set the point for the ai to move to

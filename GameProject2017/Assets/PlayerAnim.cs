@@ -45,21 +45,20 @@ public class PlayerAnim : MonoBehaviour {
 
         Anim.SetFloat("inputV", PlayerController.moveAnim.z); // Set Vertical Movement
         Anim.SetFloat("inputH", PlayerController.moveAnim.x);
-
-        if (InputManager.GetButtonDown("Jump") && PlayerController.jump >= 1)
-        {
-            Anim.SetBool("Jump", true);
-            Anim.SetBool("DJump", false);
-
-        }
-
+       
         if (InputManager.GetButtonDown("Jump") && PlayerController.jump < 1)
         {
+
             Anim.SetBool("DJump", true);
-            Anim.SetBool("Jump", false);
+
         }
-     
-       
+
+        if (InputManager.GetButtonUp("Jump"))
+        {
+            Anim.SetBool("Jump", false);
+            Anim.SetBool("DJump", false);
+        }
+
             
         
     }

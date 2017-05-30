@@ -26,9 +26,10 @@ public class Gear : Collectables {
             player.CollectGear();
 
             GameObject CollectedParticle = Instantiate(par_pickup, transform.position, Quaternion.identity) as GameObject;
+            gameObject.SetActive(false);
             //SetGearCountText();
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            gameObject.GetComponent<BoxCollider>().enabled = false;
+            //gameObject.GetComponent<MeshRenderer>().enabled = false;
+            //gameObject.GetComponent<BoxCollider>().enabled = false;
             //FadeIn();
             Destroy(CollectedParticle, 1); //Deletes the particles after 1 seconds
         }

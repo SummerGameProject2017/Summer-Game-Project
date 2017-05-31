@@ -24,7 +24,7 @@
 		}
 		else if (abs(IN.worldNormal.x) > 0.5)
 		{
-			o.Albedo = tex2D(_MainTex, IN.worldPos.yz);
+			o.Albedo = tex2D(_MainTex, IN.worldPos.yz / 8);
 		}
 		else
 		{

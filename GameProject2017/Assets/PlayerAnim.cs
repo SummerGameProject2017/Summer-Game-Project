@@ -18,7 +18,7 @@ public class PlayerAnim : MonoBehaviour {
     private float inputV;
 
     // Animator Component
-    Animator Anim;
+    public Animator Anim;
 
     PlayerController PC;
     // Use this for initialization
@@ -72,6 +72,11 @@ public class PlayerAnim : MonoBehaviour {
         else
         {
             PC.speed = 10;
+        }
+
+        if (InputManager.GetButtonDown("Attack"))
+        {
+            Anim.Play("Attack", -1, 0);
         }
 
 

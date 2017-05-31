@@ -34,12 +34,14 @@ public class Dog : Enemy
     short Z = 0;
     public short health = 1;
     PlayerController playerScript;
+    PlayerAnim animationScript;
     public bool aiStunned = false;
     bool canBeHit = false;
 
     public override void OnStart()
     {
         playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        animationScript = GameObject.FindWithTag("Player").GetComponent<PlayerAnim>();
         agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         anim = GetComponent<Animator>();    //animate the enemies
         patrolPoint = Instantiate(target) as GameObject;
@@ -105,12 +107,12 @@ public class Dog : Enemy
         }
         if (health > 0 && aiStunned == false)
         {
-                if (offset <= 15 && offset > 3.9)
+                if (offset <= 15 && offset > 5)
                 {
                     idle = false;
                     aiState = States.Chase;
                 }
-                if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y)
+                if (offset <= 5 && (player.transform.position.y - 1.25) <= transform.position.y)
                 {
                     aiState = States.Attack;
                 }
@@ -155,7 +157,16 @@ public class Dog : Enemy
         {
             canBeHit = true;
         }
-       
+
+        if (animationScript.Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && animationScript.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.2)
+        {
+            canBeHit = true;
+        }
+        if (animationScript.Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && animationScript.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime> 0.7)
+        {
+            canBeHit = false;
+        }
+
 
     }
     //walk to diffenent patrol points
@@ -278,6 +289,8 @@ public class Dog : Enemy
          if (other.gameObject.name == "Hammer" && canBeHit == true)
         {
             canBeHit = false;
+            Debug.Log("Hit");
+            anim.Play("Hit", -1, 0);
             health--;
         }
     }

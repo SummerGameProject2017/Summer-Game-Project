@@ -18,9 +18,9 @@
 
 	void surf(Input IN, inout SurfaceOutputStandard o) {
 
-		if (abs(IN.worldNormal.y) > 0.5)
+		if (abs(IN.worldNormal.y) > .5)
 		{
-			o.Albedo = tex2D(_MainTex, IN.worldPos.xz);
+			o.Albedo = tex2D(_MainTex, IN.worldPos.xz/ 5);
 		}
 		else if (abs(IN.worldNormal.x) > 0.5)
 		{
@@ -30,8 +30,8 @@
 		{
 			o.Albedo = tex2D(_MainTex, IN.worldPos.xy);
 		}
-
-		o.Emission = o.Albedo;
+		
+		
 	}
 
 	ENDCG

@@ -12,7 +12,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
     static Player playerScript;
     // Use this for initialization
     public override void OnStart () {
-		
+        Save();
 	}
 
     // Update is called once per frame

@@ -23,7 +23,7 @@
 
 		//Outline
 		_OutlineColor ("Outline Color", Color) = (0,0,0,1.0)
-		_OutlineSize ("Outline Size", Range(.002, 0.05)) = 0.02
+		_OutlineSize ("Outline Size", Range(.00, 0.05)) = 0.02
 
 		//Rim
 		_RimColor ("Rim Color", Color) = (1,1,1,1)

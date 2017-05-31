@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 moveAnim; // animation movement vector
     public bool isGrounded = true; //  player on the ground bool
     Vector3 rotationVector = Vector3.zero;
-    Quaternion lastRotation;
+    public Quaternion lastRotation;
 
     // Use this for initialization
     void Start()
@@ -70,17 +70,8 @@ public class PlayerController : MonoBehaviour
             verticalVelocity = jumpForce;
             isGrounded = false;
 
-        }
-
-       
-
-       
-        
-            
-
-        
+        } 
         moveVector = (speed *( h * right + v * forward));
-
 
         moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
         moveAnim.z = InputManager.GetAxis("Vertical");

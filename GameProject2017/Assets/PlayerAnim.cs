@@ -19,7 +19,7 @@ public class PlayerAnim : MonoBehaviour {
 
     // Animator Component
     public Animator Anim;
-
+    public bool attacking = false;
     PlayerController PC;
     // Use this for initialization
 	void Start () {
@@ -76,8 +76,31 @@ public class PlayerAnim : MonoBehaviour {
 
         if (InputManager.GetButtonDown("Attack"))
         {
-            Anim.Play("Attack", -1, 0);
+            if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+           {
+                if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7)
+                {
+                    Anim.Play("Attack", -1, 0);
+                }
+                
+           }
+            else
+            {
+                Anim.Play("Attack", -1, 0);
+            }
+            
         }
+        
+            if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            {
+                    attacking = true;
+            }
+            else
+        {
+            attacking = false;
+        }
+
+        
 
 
     }

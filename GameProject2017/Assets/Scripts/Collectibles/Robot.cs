@@ -27,10 +27,12 @@ public class Robot : Collectables {
 
             GameObject CollectedParticle = Instantiate(par_pickup, transform.position, Quaternion.identity) as GameObject;
             //SetRobotCountText();
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            gameObject.GetComponent<BoxCollider>().enabled = false;
+            gameObject.SetActive(false);
+            //gameObject.GetComponent<MeshRenderer>().enabled = false;
+            //gameObject.GetComponent<BoxCollider>().enabled = false;
             //FadeIn();
             Destroy(CollectedParticle, 1); //Deletes the particles after 1 seconds
+            Destroy(gameObject, 2); //Deletes the gameobject after 2 seconds
         }
     }
 

@@ -8,11 +8,11 @@ using System.IO;
 public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated when needed. Doesnt need to be attached to anything
 {
     
-    public bool saveGame = false;
     static Player playerScript;
     // Use this for initialization
+
+    
     public override void OnStart () {
-        Save();
 	}
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");    //create a file or overwrite if exists to save data too
 
-        PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.Find("Player").transform.position);
+        PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.FindWithTag("Player").transform.position);
         bf.Serialize(file, playerInfo);       //serialize and save the data
         file.Close();
     }
@@ -48,7 +48,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             playerScript.lives = data.maxLives;       //set health and collectibles to saved data
             playerScript.gear = data.collectibles;
             playerScript.robot = data.robotsCollected;
-            GameObject.Find("Player").transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
+            GameObject.FindWithTag("Player").transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
         }
     }
 }

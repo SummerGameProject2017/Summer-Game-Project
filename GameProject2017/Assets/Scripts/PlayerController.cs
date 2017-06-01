@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public float verticalVelocity;
     public bool isTalking = false;
     CharacterController controller;
-    int health;
+    public int health;
     public Vector3 moveAnim; // animation movement vector
     public bool isGrounded = true; //  player on the ground bool
     Vector3 rotationVector = Vector3.zero;

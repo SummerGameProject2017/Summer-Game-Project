@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public float verticalVelocity;
     public bool isTalking = false;
     CharacterController controller;
-    int health;
+    public short health;
     public static Vector3 moveAnim;
     
 
@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour
         {
             jump--;
             verticalVelocity = jumpForce;
+            health--;
          
         }
 
@@ -115,21 +116,6 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(moveVector * Time.deltaTime);
         lastMove = moveVector;
-
-        //hides health after 3 seconds
-        /*        if (hideplayerinfo > 3)
-                {
-                    Healthpoints[2].SetActive(false);
-                    Healthpoints[1].SetActive(false);
-                    Healthpoints[0].SetActive(false);
-                    PlayerGear.SetActive(false);
-                }
-                //does the meme for collecting a gear
-                if (collectable.collected == true)
-                {
-                    CollectedGear();
-                }
-                */
 
 
 

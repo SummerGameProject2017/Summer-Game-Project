@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Gear : Collectables {
 
-    public bool collected;
     public override void OnStart()
     {
         //GearCountText.canvasRenderer.SetAlpha(0.0f);
@@ -24,7 +23,6 @@ public class Gear : Collectables {
         {
             Player player = Player.Instance;
             player.CollectGear();
-
             GameObject CollectedParticle = Instantiate(par_pickup, transform.position, Quaternion.identity) as GameObject;
             gameObject.SetActive(false);
             //SetGearCountText();
@@ -32,7 +30,13 @@ public class Gear : Collectables {
             //gameObject.GetComponent<BoxCollider>().enabled = false;
             //FadeIn();
             Destroy(CollectedParticle, 1); //Deletes the particles after 1 seconds
+            
         }
+    }
+    public void CollectedGear()
+    {
+       // GameObject Gear = (GameObject)Instantiate(Resources.Load("PlayerGear"), gameObject.transform.position + gameObject.transform.up * 5, gameObject.transform.rotation);
+
     }
 
     //Display to the screen the amount of gears collected

@@ -38,6 +38,7 @@ public class Dog : Enemy
     public bool aiStunned = false;
     bool canBeHit = false;
     public GameObject DogExplosionParticle;
+    public GameOver DeadScript;
 
     public override void OnStart()
     {
@@ -207,11 +208,13 @@ public class Dog : Enemy
             animationScript.Anim.Play("GetHit", -1, 0);
 //            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
+            playerScript.HealthChange();
             firstAttack = false;
 
             if (Player.Instance.lives <= 0)
             {
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
+                DeadScript.dead = true;
             }
 
         }
@@ -224,10 +227,12 @@ public class Dog : Enemy
             Player.Instance.LoseLife();
             anim.Play("Bite", -1, 0);
             anim.SetBool("Idle", false);
+            playerScript.HealthChange();
 
             if (Player.Instance.lives <= 0)
             {
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
+                DeadScript.dead = true;
             }
 
         }

@@ -11,12 +11,13 @@ public class Player
     public short maxLives;
 
     private static Player instance;
-
+     
     private Player()
     {
         lives = 3;
         gear = 0;
         robot = 0;
+       
     }
 
     public static Player Instance

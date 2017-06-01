@@ -28,7 +28,7 @@ public class FadeIN : MonoBehaviour {
 	void Update ()
     {
         Color c = image.color;
-        c.a += Time.deltaTime;
+        c.a += Time.deltaTime / 2;
         
         image.color = c;
 

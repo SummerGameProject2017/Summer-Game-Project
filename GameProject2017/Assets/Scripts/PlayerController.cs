@@ -5,15 +5,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    [Range(3.0f, 10.0f)]
-    public float speed = 5.0f;
+    [Range(3.0f, 8.0f)]
+    public float speed;
 
     Vector3 additionalmovement;
 
     public int jump = 2;    
     Vector3 moveVector;
     Vector3 lastMove;
-    public float jumpForce = 10;
+    public float jumpForce;
     float gravity = 25;
     public float verticalVelocity;
     public bool isTalking = false;

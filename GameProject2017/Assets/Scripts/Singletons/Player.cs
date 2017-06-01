@@ -14,6 +14,7 @@ public class Player
 
     private Player()
     {
+        maxLives = 3;
         lives = 3;
         gear = 0;
         robot = 0;

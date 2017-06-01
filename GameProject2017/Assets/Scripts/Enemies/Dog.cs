@@ -97,35 +97,38 @@ public class Dog : Enemy
         }
         // put the ai on the ground using raycasting
 
-        
+
         float offset = Vector3.Distance(player.transform.position, transform.position);
         //find the distance between the player and the ai and change state based on health of ai and distance
-        
-      
 
-       
+
+
+
         if (health > 0 && aiStunned == false)
         {
-                if (offset <= 15 && offset > 3.9)
-                {
-                    idle = false;
-                    aiState = States.Chase;
-                }
+            if (offset <= 15 && offset > 3.9)
+            {
+                idle = false;
+                aiState = States.Chase;
+            }
+            if (Player.Instance.lives > 0)
+            {
                 if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && animationScript.attacking == false)
                 {
                     aiState = States.Attack;
                 }
                 if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && animationScript.attacking == true)
                 {
-                agent.SetDestination(transform.position);
-                firstAttack = false;
-                aiState = States.Attack;
+                    agent.SetDestination(transform.position);
+                    firstAttack = false;
+                    aiState = States.Attack;
                 }
-                if (offset > 15 && idle == false)
-                {
-                    aiState = States.Patrol;
-                }
-                if (idle == true)
+            }
+            if (offset > 15 && idle == false)
+            {
+                aiState = States.Patrol;
+            }
+            if (idle == true || Player.Instance.lives <=0)
                 {
                     aiState = States.Idle;
                 }
@@ -206,7 +209,7 @@ public class Dog : Enemy
             anim.SetBool("Run", false);
             anim.SetBool("Bite", true);
             animationScript.Anim.Play("GetHit", -1, 0);
-//            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
+            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
             playerScript.HealthChange();
             firstAttack = false;
@@ -224,6 +227,7 @@ public class Dog : Enemy
         {
             //if the attack idle animation reaches 2 seconds in loop length change to attack animation and reset the timer. 
             animationScript.Anim.Play("GetHit", -1, 0);
+            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
             anim.Play("Bite", -1, 0);
             anim.SetBool("Idle", false);

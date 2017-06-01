@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterMovement : MonoBehaviour {
+public class WaterMovement : MonoBehaviour
+{
+    public Vector2 uvAnimationRate = new Vector2(1.0f, 0.0f);
+    public string textureName = "";
 
-    public float scroolX = 0.5f;
-    public float scrollY = 0.5f;
+    Vector2 uvOffset = Vector2.zero;
 
-
-
-	void Update () {
-        float offsetX = Time.time * scroolX;
-        float offsetY = Time.time * scrollY;
-        GetComponent<Renderer>().material.mainTextureOffset = new Vector2(offsetX, offsetY);
-
-	}
+    void LateUpdate()
+    {
+        uvOffset += (uvAnimationRate * Time.deltaTime);
+        if (GetComponent<Renderer>().enabled)
+        {
+            GetComponent<Renderer>().sharedMaterial.SetTextureOffset(textureName, uvOffset);
+        }
+    }
 }

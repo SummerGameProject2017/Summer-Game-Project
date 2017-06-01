@@ -47,60 +47,61 @@ public class PlayerAnim : MonoBehaviour {
         Anim.SetFloat("inputV", PC.moveAnim.z); // Set Vertical Movement
         Anim.SetFloat("inputH", PC.moveAnim.x); // Set Horizontal Movement
 
+        if (Player.Instance.lives > 0)
+        {
+            if (InputManager.GetButtonDown("Jump") && PC.jump >= 1)
+            {
+                Anim.SetBool("Jump", true);
+            }
 
-        if (InputManager.GetButtonDown("Jump") && PC.jump >= 1)
-        {
-            Anim.SetBool("Jump", true);
-        }
+            if (InputManager.GetButtonDown("Jump") && PC.jump < 1)
+            {
+                Anim.SetBool("DJump", true);
+                Anim.SetBool("Jump", false);
+            }
+            if (PC.isGrounded)
+            {
+                Anim.SetBool("Jump", false);
+                Anim.SetBool("DJump", false);
 
-        if (InputManager.GetButtonDown("Jump") && PC.jump < 1)
-        {
-            Anim.SetBool("DJump", true);
-            Anim.SetBool("Jump", false);
-        }
-        if (PC.isGrounded)
-        {
-            Anim.SetBool("Jump", false);
-            Anim.SetBool("DJump", false);
+            }
 
-        }
+            if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Walk_F"))
+            {
+                PC.speed = 5;
+            }
+            else
+            {
+                PC.speed = 10;
+            }
 
-        if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Walk_F"))
-        {
-            PC.speed = 5;
-        }
-        else
-        {
-            PC.speed = 10;
-        }
+            if (InputManager.GetButtonDown("Attack"))
+            {
+                if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                {
+                    if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7)
+                    {
+                        Anim.Play("Attack", -1, 0);
+                    }
 
-        if (InputManager.GetButtonDown("Attack"))
-        {
-            if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-           {
-                if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7)
+                }
+                else
                 {
                     Anim.Play("Attack", -1, 0);
                 }
-                
-           }
-            else
-            {
-                Anim.Play("Attack", -1, 0);
+
             }
-            
-        }
-        
+
             if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             {
-                    attacking = true;
+                attacking = true;
             }
             else
-        {
-            attacking = false;
-        }
+            {
+                attacking = false;
+            }
 
-        
+        }
 
 
     }

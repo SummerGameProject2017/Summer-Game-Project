@@ -45,74 +45,76 @@ public class PlayerController : MonoBehaviour
         float v = InputManager.GetAxis("Vertical");
 
 
-        if (controller.isGrounded)
+        if (Player.Instance.lives > 0)
         {
-            verticalVelocity = -1;
-            jump = 2;
-            isGrounded = true;
-            Debug.Log("Grounded");
+            if (controller.isGrounded)
+            {
+                verticalVelocity = -1;
+                jump = 2;
+                isGrounded = true;
+                Debug.Log("Grounded");
+            }
+            else
+            {
+                verticalVelocity -= gravity * Time.deltaTime;
+                moveVector = lastMove;
+            }
+
+
+
+
+
+
+
+            if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
+            {
+                jump--;
+                verticalVelocity = jumpForce;
+                isGrounded = false;
+
+            }
+            moveVector = (speed * (h * right + v * forward));
+
+            moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
+            moveAnim.z = InputManager.GetAxis("Vertical");
+
+            if (h == 0 && v == 0)
+            {
+                transform.rotation = lastRotation;
+            }
+            else
+                transform.rotation = Quaternion.LookRotation(moveVector);
+
+
+
+
+            moveVector.y = 0;
+
+            moveVector.y = verticalVelocity;
+
+
+
+            controller.Move(moveVector * Time.deltaTime);
+            lastMove = moveVector;
+
+            //hides health after 3 seconds
+            /*        if (hideplayerinfo > 3)
+                    {
+                        Healthpoints[2].SetActive(false);
+                        Healthpoints[1].SetActive(false);
+                        Healthpoints[0].SetActive(false);
+                        PlayerGear.SetActive(false);
+                    }
+                    //does the meme for collecting a gear
+                    if (collectable.collected == true)
+                    {
+                        CollectedGear();
+                    }
+                    */
+
+            lastRotation = this.transform.rotation;
+
         }
-        else
-        {
-            verticalVelocity -= gravity * Time.deltaTime;
-            moveVector = lastMove;
-        }
-
-
-        
-
-       
-
-
-        if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
-        {
-            jump--;
-            verticalVelocity = jumpForce;
-            isGrounded = false;
-
-        } 
-        moveVector = (speed *( h * right + v * forward));
-
-        moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
-        moveAnim.z = InputManager.GetAxis("Vertical");
-
-        if (h == 0 && v == 0)
-        {
-            transform.rotation = lastRotation;
-        }
-        else
-            transform.rotation = Quaternion.LookRotation(moveVector);
-
-
-
-
-        moveVector.y = 0;
-      
-        moveVector.y = verticalVelocity;
-
-     
-
-        controller.Move(moveVector * Time.deltaTime);
-        lastMove = moveVector;
-
-        //hides health after 3 seconds
-        /*        if (hideplayerinfo > 3)
-                {
-                    Healthpoints[2].SetActive(false);
-                    Healthpoints[1].SetActive(false);
-                    Healthpoints[0].SetActive(false);
-                    PlayerGear.SetActive(false);
-                }
-                //does the meme for collecting a gear
-                if (collectable.collected == true)
-                {
-                    CollectedGear();
-                }
-                */
-
-        lastRotation = this.transform.rotation;
-
-
     }
     private IEnumerator OnTriggerEnter(Collider other)
     {

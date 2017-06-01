@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 additionalmovement;
 
-    public static int jump = 2;
+    public int jump = 2;    
     Vector3 moveVector;
     Vector3 lastMove;
     public float jumpForce = 10;
@@ -18,10 +18,11 @@ public class PlayerController : MonoBehaviour
     public float verticalVelocity;
     public bool isTalking = false;
     CharacterController controller;
-    public short health;
-    public static Vector3 moveAnim;
-    
-
+    int health;
+    public Vector3 moveAnim; // animation movement vector
+    public bool isGrounded = true; //  player on the ground bool
+    Vector3 rotationVector = Vector3.zero;
+    public Quaternion lastRotation;
 
     // Use this for initialization
     void Start()
@@ -36,90 +37,82 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+        Vector3 forward = GameObject.Find("PlayerCamera").transform.TransformDirection(Vector3.forward);
+        forward.y = 0;
+        forward = forward.normalized;
+        Vector3 right = new Vector3(forward.z, 0, -forward.x);
+        float h = InputManager.GetAxis("Horizontal");
+        float v = InputManager.GetAxis("Vertical");
 
-
-
-        Debug.Log(controller.isGrounded);
 
         if (controller.isGrounded)
         {
             verticalVelocity = -1;
             jump = 2;
-
+            isGrounded = true;
+            Debug.Log("Grounded");
         }
-
         else
         {
             verticalVelocity -= gravity * Time.deltaTime;
-            //verticalVelocity += Physics.gravity.y * Time.deltaTime;
             moveVector = lastMove;
         }
 
-        //moveVector = Vector3.zero;
-        //if (Input.GetKey(JPGameManager.GM.forward) || Input.GetAxis("Vertical") > 0.5)
-        //{
-        //    moveVector.x = 5;
-        //}
-        //if (Input.GetKey(JPGameManager.GM.backward) || Input.GetAxis("Vertical") < -0.5)
-        //{
-        //    moveVector.x = -5;
-        //}
-        //if (Input.GetKey(JPGameManager.GM.left) || Input.GetAxis("Horizontal") < -0.5)
-        //{
-        //    moveVector.z = 5;
-        //}
-        //if (Input.GetKey(JPGameManager.GM.right) || Input.GetAxis("Horizontal") > 0.5)
-        //{
-        //    moveVector.z = -5;
-        //}
 
-        Vector3 rotationVector = Vector3.zero;
+        
 
-        rotationVector.z = moveAnim.z =  moveVector.z = InputManager.GetAxis("Vertical"); //* speed;
-        rotationVector.x = moveVector.x = moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
+       
 
 
-
-        transform.rotation = Quaternion.LookRotation(rotationVector);
-
-
-
-        // if ((Input.GetKeyDown(JPGameManager.GM.jump) || Input.GetKeyDown(JPGameManager.GM.joyJump)) && jump >= 1)
         if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
         {
             jump--;
             verticalVelocity = jumpForce;
-            health--;
-         
+            isGrounded = false;
+
+        } 
+        moveVector = (speed *( h * right + v * forward));
+
+        moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
+        moveAnim.z = InputManager.GetAxis("Vertical");
+
+        if (h == 0 && v == 0)
+        {
+            transform.rotation = lastRotation;
         }
-
-        //if (Input.GetButtonDown("Attack") || Input.GetKeyDown(JPGameManager.GM.joyAttack))
-        //{
-        //    Debug.Log("Attack");
-
-        //    //attack code here;
-        //}
+        else
+            transform.rotation = Quaternion.LookRotation(moveVector);
 
 
 
 
         moveVector.y = 0;
-        //moveVector.Normalize();
-        moveVector *= speed;
+      
         moveVector.y = verticalVelocity;
 
-        // Add Aditional movement from level
-        moveVector += additionalmovement;
-
-        // Clear
-        additionalmovement = Vector3.zero;
+     
 
         controller.Move(moveVector * Time.deltaTime);
         lastMove = moveVector;
 
+        //hides health after 3 seconds
+        /*        if (hideplayerinfo > 3)
+                {
+                    Healthpoints[2].SetActive(false);
+                    Healthpoints[1].SetActive(false);
+                    Healthpoints[0].SetActive(false);
+                    PlayerGear.SetActive(false);
+                }
+                //does the meme for collecting a gear
+                if (collectable.collected == true)
+                {
+                    CollectedGear();
+                }
+                */
+
+        lastRotation = this.transform.rotation;
 
 
-        
     }
     private IEnumerator OnTriggerEnter(Collider other)
     {
@@ -131,7 +124,7 @@ public class PlayerController : MonoBehaviour
         if (other.name == "Water")
         {
            
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1);
             SaveLoad.Load();
         }
     }

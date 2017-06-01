@@ -10,8 +10,8 @@ public abstract class Collectables : MonoBehaviour, IChildEvents
     public float frequency = 1f;
 
     public GameObject par_pickup;
-    public Text GearCountText;
-    public Text RobotCountText;
+    //public Text GearCountText;
+    //public Text RobotCountText;
 
     Vector3 PosOffset = new Vector3();
     Vector3 TempPos = new Vector3();

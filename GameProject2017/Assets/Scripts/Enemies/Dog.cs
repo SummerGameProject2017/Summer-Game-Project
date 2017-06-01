@@ -19,6 +19,10 @@ public class Dog : Enemy
     float maxPositionX;
     float minPositionZ;
     float maxPositionZ;
+    public float maxDistanceX = 0;
+    public float maxDistanceZ = 0;
+    public float minDistanceX = 0;
+    public float minDistanceZ = 0;
     
     public GameObject target;
     private Transform player;
@@ -28,24 +32,27 @@ public class Dog : Enemy
     bool firstAttack = true;
     short X = 0;
     short Z = 0;
-    public short health = 1;
+    public short health = 2;
     PlayerController playerScript;
+    PlayerAnim animationScript;
     public bool aiStunned = false;
     bool canBeHit = false;
+    public GameObject DogExplosionParticle;
 
     public override void OnStart()
     {
-        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        animationScript = GameObject.FindWithTag("Player").GetComponent<PlayerAnim>();
         agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         anim = GetComponent<Animator>();    //animate the enemies
         patrolPoint = Instantiate(target) as GameObject;
 
         X = (short)Random.Range(0, 2);
         Z = (short)Random.Range(0, 2);
-        minPositionX = this.transform.position.x - 10;
-        maxPositionX = this.transform.position.x + 10;
-        minPositionZ = this.transform.position.z - 10;
-        maxPositionZ = this.transform.position.z + 10;
+        minPositionX = this.transform.position.x - minDistanceX;
+        maxPositionX = this.transform.position.x + maxDistanceX;
+        minPositionZ = this.transform.position.z - minDistanceZ;
+        maxPositionZ = this.transform.position.z + maxDistanceZ;
         //set the bounds the ai will be moving around
 
         //depending on a random number between 0 and 1 set the point for the ai to move to
@@ -95,10 +102,7 @@ public class Dog : Enemy
         
       
 
-        if (health <= 0)
-        {
-            aiState = States.Dead;
-        }
+       
         if (health > 0 && aiStunned == false)
         {
                 if (offset <= 15 && offset > 3.9)
@@ -106,9 +110,15 @@ public class Dog : Enemy
                     idle = false;
                     aiState = States.Chase;
                 }
-                if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y)
+                if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && animationScript.attacking == false)
                 {
                     aiState = States.Attack;
+                }
+                if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && animationScript.attacking == true)
+                {
+                agent.SetDestination(transform.position);
+                firstAttack = false;
+                aiState = States.Attack;
                 }
                 if (offset > 15 && idle == false)
                 {
@@ -147,18 +157,24 @@ public class Dog : Enemy
         }
 
         //change this to whatever attack button is
-        if (InputManager.GetKeyDown(KeyCode.X))
+        
+
+        if (animationScript.Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && animationScript.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.2)
         {
             canBeHit = true;
         }
-       
+        if (animationScript.Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && animationScript.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime> 0.8)
+        {
+            canBeHit = false;
+        }
+
 
     }
     //walk to diffenent patrol points
     void Patrol()
     {
         patrolPoint.SetActive(true);
-        agent.speed = 2;
+        agent.speed = 5;
         anim.SetBool("Walk", true);
         anim.SetBool("Run", false);
         anim.SetBool("Bite", false);
@@ -171,7 +187,7 @@ public class Dog : Enemy
         firstAttack = true;
         transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
         patrolPoint.SetActive(false);
-        agent.speed = 4;
+        agent.speed = 7;
         anim.SetBool("Walk", false);
         anim.SetBool("Run", true);
         anim.SetBool("Bite", false);
@@ -180,6 +196,7 @@ public class Dog : Enemy
     //attack the player and call the player loose life method
     void Attack()
     {
+        agent.SetDestination(transform.position);
         if (firstAttack == true)
         {
             //for the first attack reset the animation timer and call the attack animation
@@ -187,17 +204,32 @@ public class Dog : Enemy
             anim.SetBool("Walk", false);
             anim.SetBool("Run", false);
             anim.SetBool("Bite", true);
+            animationScript.Anim.Play("GetHit", -1, 0);
+//            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
             firstAttack = false;
+
+            if (Player.Instance.lives <= 0)
+            {
+                animationScript.Anim.Play("Death-Enemy", -1, 0);
+            }
+
         }
         transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
         
        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Combat Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
         {
             //if the attack idle animation reaches 2 seconds in loop length change to attack animation and reset the timer. 
+            animationScript.Anim.Play("GetHit", -1, 0);
             Player.Instance.LoseLife();
             anim.Play("Bite", -1, 0);
             anim.SetBool("Idle", false);
+
+            if (Player.Instance.lives <= 0)
+            {
+                animationScript.Anim.Play("Death-Enemy", -1, 0);
+            }
+
         }
        else
         {
@@ -263,50 +295,86 @@ public class Dog : Enemy
     private void OnTriggerEnter(Collider other)
     {
         //if the player jumps on the ai chnge to stunned state and bounce the player
-         if (other.gameObject.tag == "Player" && aiStunned == false)
+         if (other.gameObject.tag == "Player" && aiStunned == false && health > 0)
         {
             playerScript.verticalVelocity = playerScript.jumpForce;
             aiStunned = true;
             aiState = States.Stunned;
             StartCoroutine(DogStunned());
         }
-         //damage the robot
-         if (other.gameObject.name == "Hammer" && canBeHit == true)
+        //damage the robot
+        if (other.gameObject.name == "Hammer" && canBeHit == true)
         {
-            canBeHit = false;
-            health--;
+            if (health > 1)
+            {
+                health--;
+                StartCoroutine(DogHit());
+                canBeHit = false;
+                
+        }
+        else
+        {
+                GetComponent<Collider>().enabled = false;
+                health--;
+                canBeHit = false;
+                aiState = States.Dead;
+            }
+
+
         }
     }
    
     //when the ai is out of health change to dead animation and after 3 seconds destroy the ai gameobject
     IEnumerator EnemyDead()
     {
+        canBeHit = false;
         agent.speed = 0;
+        anim.SetBool("Sunned", false);
         anim.SetBool("Dead", true);
         anim.SetBool("Walk", false);
         anim.SetBool("Run", false);
         anim.SetBool("Bite", false);
         anim.SetBool("Idle", false);
+        
         yield return new WaitForSeconds(3);
         Destroy(gameObject);
+        Instantiate(DogExplosionParticle, transform.position, Quaternion.identity);
     }
 
     
     //play the stunned animation for 3 seconds then change states
     IEnumerator DogStunned()
     {
+        
+            agent.SetDestination(transform.position);
+            agent.updateRotation = false;
+
+            anim.SetBool("Stunned", true);
+            anim.SetBool("Walk", false);
+            anim.SetBool("Run", false);
+            anim.SetBool("Bite", false);
+            anim.SetBool("Idle", false);
+            yield return new WaitForSeconds(3);
+            anim.SetBool("Stunned", false);
+            agent.updateRotation = true;
+            firstAttack = true;
+            aiStunned = false;
+                
+    }
+
+    IEnumerator DogHit()
+    {
+        anim.SetBool("Stunned", false);
         agent.SetDestination(transform.position);
         agent.updateRotation = false;
-        anim.SetBool("Stunned", true);
+        anim.Play("Hit", -1, 0);
         anim.SetBool("Walk", false);
         anim.SetBool("Run", false);
         anim.SetBool("Bite", false);
         anim.SetBool("Idle", false);
-        yield return new WaitForSeconds(3);
-        anim.SetBool("Stunned", false);
+        yield return new WaitForSeconds(1);
+
         agent.updateRotation = true;
-        firstAttack = true;
-        aiStunned = false;
     }
 
 }

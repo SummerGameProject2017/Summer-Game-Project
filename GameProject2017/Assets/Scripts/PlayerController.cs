@@ -30,7 +30,8 @@ public class PlayerController : MonoBehaviour
         
         controller = GetComponent<CharacterController>();
         health = 3;
-    //    collectable = GetComponent<Gear>();
+        //    collectable = GetComponent<Gear>();
+        SaveLoad.Save();
     }
 
     // Update is called once per frame
@@ -52,7 +53,6 @@ public class PlayerController : MonoBehaviour
                 verticalVelocity = -1;
                 jump = 2;
                 isGrounded = true;
-                Debug.Log("Grounded");
             }
             else
             {
@@ -116,19 +116,13 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-    private IEnumerator OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Collectible")
         {
             CollectedGear();
         }
-        //if the player falls in water play the falling in water animation then reset player to last save position
-        if (other.name == "Water")
-        {
-           
-            yield return new WaitForSeconds(1);
-            SaveLoad.Load();
-        }
+      
     }
 
     //

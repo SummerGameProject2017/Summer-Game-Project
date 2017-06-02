@@ -20,7 +20,10 @@ public class CameraController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (InputManager.GetButton("Horizontal") || InputManager.GetButton("Vertical"))
+        float h = InputManager.GetAxis("Horizontal");
+        float v = InputManager.GetAxis("Vertical");
+
+        if (h != 0 || v != 0)
         {
             StartCoroutine(MoveCamera());
         }

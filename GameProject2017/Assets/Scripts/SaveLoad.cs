@@ -7,7 +7,10 @@ using System.IO;
 
 public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated when needed. Doesnt need to be attached to anything
 {
+   
+
     
+
     static Player playerScript;
     // Use this for initialization
 
@@ -27,7 +30,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         Debug.Log("Saved Game");
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");    //create a file or overwrite if exists to save data too
-
+        
         PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.FindWithTag("Player").transform.position);
         bf.Serialize(file, playerInfo);       //serialize and save the data
         file.Close();
@@ -38,6 +41,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
     {
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
+            Debug.Log("Load");
             playerScript = Player.Instance;
             //if the file exists open and load
             BinaryFormatter bf = new BinaryFormatter();
@@ -49,6 +53,8 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             playerScript.gear = data.collectibles;
             playerScript.robot = data.robotsCollected;
             GameObject.FindWithTag("Player").transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
+
+            
         }
     }
 }
@@ -61,6 +67,7 @@ public class PlayerData
     public float positionX;
     public float positionY;
     public float positionZ;
+    public string[] collectedGears;
 
     public PlayerData(int _maxLives, int _collectibles, int _robotsCollected, Vector3 _position)
     {

@@ -21,8 +21,9 @@ public class PlayerAnim : MonoBehaviour {
     public Animator Anim;
     public bool attacking = false;
     PlayerController PC;
+    public GameOver DeadScript;
     // Use this for initialization
-	void Start () {
+    void Start () {
 
         Anim = GetComponent<Animator>();
         PC = GetComponent<PlayerController>();
@@ -106,5 +107,20 @@ public class PlayerAnim : MonoBehaviour {
 
     }
 
-    
+
+    private IEnumerator OnTriggerEnter(Collider other)
+    {
+        //if the player falls in water play the falling in water animation then reset player to last save position
+        if (other.gameObject.tag == "Water")
+        {
+            Anim.Play("Death-Water", -1, 0);
+            yield return new WaitForSeconds(1);
+            DeadScript.dead = true;
+            //
+
+        }
+    }
+
+
+
 }

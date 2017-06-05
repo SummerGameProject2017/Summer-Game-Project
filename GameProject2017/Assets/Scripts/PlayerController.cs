@@ -5,15 +5,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    [Range(3.0f, 10.0f)]
-    public float speed = 5.0f;
+    [Range(3.0f, 8.0f)]
+    public float speed;
 
     Vector3 additionalmovement;
 
     public int jump = 2;    
     Vector3 moveVector;
     Vector3 lastMove;
-    public float jumpForce = 10;
+    public float jumpForce;
     float gravity = 25;
     public float verticalVelocity;
     public bool isTalking = false;
@@ -23,19 +23,30 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded = true; //  player on the ground bool
     Vector3 rotationVector = Vector3.zero;
     public Quaternion lastRotation;
+    public GameObject hitpoint1;
+    public GameObject hitpoint2;
+    public GameObject hitpoint3;
 
     // Use this for initialization
     void Start()
     {
-        
         controller = GetComponent<CharacterController>();
         health = 3;
-    //    collectable = GetComponent<Gear>();
+        //    collectable = GetComponent<Gear>();
+        SaveLoad.Save();
     }
 
     // Update is called once per frame
     void Update()
     {
+        hitpoint1 = (GameObject)Instantiate(Resources.Load("Hitpoint"));
+        hitpoint2 = (GameObject)Instantiate(Resources.Load("Hitpoint"));
+        hitpoint3 = (GameObject)Instantiate(Resources.Load("Hitpoint"));
+
+        hitpoint1.SetActive(false);
+        hitpoint2.SetActive(false);
+        hitpoint3.SetActive(false);
+
 
         Vector3 forward = GameObject.Find("PlayerCamera").transform.TransformDirection(Vector3.forward);
         forward.y = 0;
@@ -52,7 +63,6 @@ public class PlayerController : MonoBehaviour
                 verticalVelocity = -1;
                 jump = 2;
                 isGrounded = true;
-                Debug.Log("Grounded");
             }
             else
             {
@@ -62,7 +72,10 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+            if (InputManager.GetKeyDown(KeyCode.R))
+            {
+                SaveLoad.Save();
+            }
 
 
 
@@ -114,21 +127,22 @@ public class PlayerController : MonoBehaviour
 
             lastRotation = this.transform.rotation;
 
+
+            hitpoint1.transform.position = gameObject.transform.position + gameObject.transform.up * 2;
+            hitpoint2.transform.position = gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1);
+            hitpoint3.transform.position =  gameObject.transform.position + gameObject.transform.up * 2 + (gameObject.transform.right * 1);
+            hitpoint1.transform.rotation = gameObject.transform.rotation;
+            hitpoint2.transform.rotation = gameObject.transform.rotation;
+            hitpoint3.transform.rotation = gameObject.transform.rotation;
         }
     }
-    private IEnumerator OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Collectible")
         {
             CollectedGear();
         }
-        //if the player falls in water play the falling in water animation then reset player to last save position
-        if (other.name == "Water")
-        {
-           
-            yield return new WaitForSeconds(1);
-            SaveLoad.Load();
-        }
+      
     }
 
     //
@@ -152,22 +166,29 @@ public class PlayerController : MonoBehaviour
 
         if (Player.Instance.lives == 3)
         {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 + (gameObject.transform.right * 1), gameObject.transform.rotation);
+<<<<<<< HEAD
+            hitpoint1.SetActive(true);
+            hitpoint2.SetActive(true);
+            hitpoint3.SetActive(true);
+           
+=======
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 - (gameObject.transform.right * 1), gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 + (gameObject.transform.right * 1), gameObject.transform.rotation);
 
+>>>>>>> 5f9e28da851f2fc63270ad5c3724869ed6415b20
         }
         if (Player.Instance.lives == 2)
         {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 - (gameObject.transform.right * 1), gameObject.transform.rotation);
         }
         if (Player.Instance.lives == 1)
         {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
         }
 
-
+        
     }
     public void CollectedGear()
     {

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameOver : MonoBehaviour
 {
-    public PlayerController PlayerScript;
-    bool dead = false;
+    public Player PlayerScript;
+    public bool dead = false;
     // Use this for initialization
     void Start ()
     {
@@ -15,20 +16,20 @@ public class GameOver : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if(PlayerScript.health <= 0)
+		if(dead == true)
         {
             DEAD();
         }
+      
 	}
 
     void DEAD()
     {
         
-        if (dead == false)
-        {
-            Instantiate(Resources.Load("DeathScreen"));
-            dead = true;
-        }
+        
+            Instantiate(Resources.Load("GAMEOVER"));
+            dead = false;
         
     }
+
 }

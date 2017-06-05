@@ -32,7 +32,7 @@ public class Gear : Collectables {
             //gameObject.GetComponent<BoxCollider>().enabled = false;
             //FadeIn();
             Destroy(CollectedParticle, 1); //Deletes the particles after 1 seconds
-            Destroy(gameObject, 2);
+            Destroy(gameObject, 2); //Deletes the gameobject after 2 seconds
         }
     }
 

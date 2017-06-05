@@ -166,17 +166,11 @@ public class PlayerController : MonoBehaviour
 
         if (Player.Instance.lives == 3)
         {
-<<<<<<< HEAD
+
             hitpoint1.SetActive(true);
             hitpoint2.SetActive(true);
             hitpoint3.SetActive(true);
            
-=======
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 - (gameObject.transform.right * 1), gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 + (gameObject.transform.right * 1), gameObject.transform.rotation);
-
->>>>>>> 5f9e28da851f2fc63270ad5c3724869ed6415b20
         }
         if (Player.Instance.lives == 2)
         {

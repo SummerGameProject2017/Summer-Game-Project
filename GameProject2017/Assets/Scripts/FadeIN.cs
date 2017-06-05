@@ -16,12 +16,6 @@ public class FadeIN : MonoBehaviour {
         Color c = image.color;
         c.a = 0;
         image.color = c;
-
-        GameObject varGameObject = GameObject.FindWithTag("Player");
-
-
-        varGameObject.GetComponent<PlayerController>().enabled = false;
-
     }
 	
 	// Update is called once per frame

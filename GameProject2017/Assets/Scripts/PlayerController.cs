@@ -146,22 +146,22 @@ public class PlayerController : MonoBehaviour
 
         if (Player.Instance.lives == 3)
         {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 + (gameObject.transform.right * 1), gameObject.transform.rotation);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 - (gameObject.transform.right * 1), gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 + (gameObject.transform.right * 1), gameObject.transform.rotation);
 
         }
         if (Player.Instance.lives == 2)
         {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 - (gameObject.transform.right * 1), gameObject.transform.rotation);
         }
         if (Player.Instance.lives == 1)
         {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
         }
 
-
+        
     }
     public void CollectedGear()
     {

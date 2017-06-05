@@ -12,6 +12,15 @@ public class DestroybyTime : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        Destroy(gameObject, 2);
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(Hide());
+        }
 	}
+
+    IEnumerator Hide()
+    {
+        yield return new WaitForSeconds(2);
+        gameObject.SetActive(false);
+    }
 }

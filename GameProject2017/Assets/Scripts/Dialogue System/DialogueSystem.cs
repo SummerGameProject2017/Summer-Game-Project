@@ -29,7 +29,7 @@ public class DialogueSystem : MonoBehaviour
     {
         npcScript = GameObject.Find("SaveBot").GetComponent<NPC>();
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-        dialogueText = dialoguePanel.transform.FindChild("Text").GetComponent<Text>(); ;
+        dialogueText = dialoguePanel.transform.FindChild("Text").GetComponent<Text>();
         nameText = dialoguePanel.transform.FindChild("Name").GetChild(0).GetComponent<Text>();
         dialoguePanel.SetActive(false);
 

@@ -21,10 +21,10 @@ public class PlayerAnim : MonoBehaviour {
     public Animator Anim;
     public bool attacking = false;
     PlayerController PC;
-    public GameOver DeadScript;
+    GameOver DeadScript;
     // Use this for initialization
     void Start () {
-
+        DeadScript = GetComponent<GameOver>();
         Anim = GetComponent<Animator>();
         PC = GetComponent<PlayerController>();
         
@@ -115,8 +115,11 @@ public class PlayerAnim : MonoBehaviour {
         {
             Anim.Play("Death-Water", -1, 0);
             yield return new WaitForSeconds(1);
+            Debug.Log("Dead");
+
             DeadScript.dead = true;
-            //
+           
+            
 
         }
     }

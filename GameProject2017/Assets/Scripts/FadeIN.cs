@@ -17,10 +17,7 @@ public class FadeIN : MonoBehaviour {
         c.a = 0;
         image.color = c;
 
-        GameObject varGameObject = GameObject.FindWithTag("Player");
 
-
-        varGameObject.GetComponent<PlayerController>().enabled = false;
 
     }
 	

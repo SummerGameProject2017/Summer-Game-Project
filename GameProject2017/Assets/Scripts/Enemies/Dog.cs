@@ -38,10 +38,12 @@ public class Dog : Enemy
     public bool aiStunned = false;
     bool canBeHit = false;
     public GameObject DogExplosionParticle;
-    public GameOver DeadScript;
+    GameOver DeadScript;
+    Health healthScript;
 
     public override void OnStart()
     {
+        
         playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         animationScript = GameObject.FindWithTag("Player").GetComponent<PlayerAnim>();
         agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -79,6 +81,8 @@ public class Dog : Enemy
         //set the patrol point gameobject in the scene based on the random position
         agent.SetDestination(patrolPoint.transform.position);
         //tell the ai to go to the patrol point
+        DeadScript = GameObject.FindWithTag("Player").GetComponent<GameOver>();
+        healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
     }
 
 
@@ -211,7 +215,7 @@ public class Dog : Enemy
             animationScript.Anim.Play("GetHit", -1, 0);
             playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
-            playerScript.HealthChange();
+            healthScript.HealthChange();
             firstAttack = false;
 
             if (Player.Instance.lives <= 0)
@@ -221,7 +225,7 @@ public class Dog : Enemy
             }
 
         }
-        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+        transform.LookAt(player.transform.position);
         
        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Combat Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
         {
@@ -231,12 +235,13 @@ public class Dog : Enemy
             Player.Instance.LoseLife();
             anim.Play("Bite", -1, 0);
             anim.SetBool("Idle", false);
-            playerScript.HealthChange();
+            healthScript.HealthChange();
 
             if (Player.Instance.lives <= 0)
             {
-                animationScript.Anim.Play("Death-Enemy", -1, 0);
                 DeadScript.dead = true;
+                animationScript.Anim.Play("Death-Enemy", -1, 0);
+                
             }
 
         }

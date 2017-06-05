@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
+        
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
@@ -39,13 +41,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hitpoint1 = (GameObject)Instantiate(Resources.Load("Hitpoint"));
-        hitpoint2 = (GameObject)Instantiate(Resources.Load("Hitpoint"));
-        hitpoint3 = (GameObject)Instantiate(Resources.Load("Hitpoint"));
-
-        hitpoint1.SetActive(false);
-        hitpoint2.SetActive(false);
-        hitpoint3.SetActive(false);
+       
 
 
         Vector3 forward = GameObject.Find("PlayerCamera").transform.TransformDirection(Vector3.forward);
@@ -110,30 +106,9 @@ public class PlayerController : MonoBehaviour
             controller.Move(moveVector * Time.deltaTime);
             lastMove = moveVector;
 
-            //hides health after 3 seconds
-            /*        if (hideplayerinfo > 3)
-                    {
-                        Healthpoints[2].SetActive(false);
-                        Healthpoints[1].SetActive(false);
-                        Healthpoints[0].SetActive(false);
-                        PlayerGear.SetActive(false);
-                    }
-                    //does the meme for collecting a gear
-                    if (collectable.collected == true)
-                    {
-                        CollectedGear();
-                    }
-                    */
-
+           
             lastRotation = this.transform.rotation;
 
-
-            hitpoint1.transform.position = gameObject.transform.position + gameObject.transform.up * 2;
-            hitpoint2.transform.position = gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1);
-            hitpoint3.transform.position =  gameObject.transform.position + gameObject.transform.up * 2 + (gameObject.transform.right * 1);
-            hitpoint1.transform.rotation = gameObject.transform.rotation;
-            hitpoint2.transform.rotation = gameObject.transform.rotation;
-            hitpoint3.transform.rotation = gameObject.transform.rotation;
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -161,35 +136,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //When health is added or subtracted this is called to display current health
-    public void HealthChange()
-    {
-
-        if (Player.Instance.lives == 3)
-        {
-<<<<<<< HEAD
-            hitpoint1.SetActive(true);
-            hitpoint2.SetActive(true);
-            hitpoint3.SetActive(true);
-           
-=======
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 - (gameObject.transform.right * 1), gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 + (gameObject.transform.right * 1), gameObject.transform.rotation);
-
->>>>>>> 5f9e28da851f2fc63270ad5c3724869ed6415b20
-        }
-        if (Player.Instance.lives == 2)
-        {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 - (gameObject.transform.right * 1), gameObject.transform.rotation);
-        }
-        if (Player.Instance.lives == 1)
-        {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
-        }
-
-        
-    }
+   
     public void CollectedGear()
     {
         GameObject Gear = (GameObject)Instantiate(Resources.Load("PlayerGear"), gameObject.transform.position + gameObject.transform.up * 3, gameObject.transform.rotation);

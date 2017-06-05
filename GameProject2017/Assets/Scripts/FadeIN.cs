@@ -17,8 +17,6 @@ public class FadeIN : MonoBehaviour {
         c.a = 0;
         image.color = c;
 
-
-
     }
 	
 	// Update is called once per frame

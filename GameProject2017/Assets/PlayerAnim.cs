@@ -115,10 +115,9 @@ public class PlayerAnim : MonoBehaviour {
         {
             Anim.Play("Death-Water", -1, 0);
             yield return new WaitForSeconds(1);
-            Debug.Log("Dead");
-
             DeadScript.dead = true;
            
+  
             
 
         }

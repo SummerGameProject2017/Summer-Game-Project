@@ -23,11 +23,11 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded = true; //  player on the ground bool
     Vector3 rotationVector = Vector3.zero;
     public Quaternion lastRotation;
+    
 
     // Use this for initialization
     void Start()
     {
-        
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
@@ -62,7 +62,10 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+            if (InputManager.GetKeyDown(KeyCode.R))
+            {
+                SaveLoad.Save();
+            }
 
 
 

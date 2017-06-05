@@ -23,11 +23,11 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded = true; //  player on the ground bool
     Vector3 rotationVector = Vector3.zero;
     public Quaternion lastRotation;
+    
 
     // Use this for initialization
     void Start()
     {
-        
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
@@ -62,7 +62,10 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+            if (InputManager.GetKeyDown(KeyCode.R))
+            {
+                SaveLoad.Save();
+            }
 
 
 
@@ -146,22 +149,22 @@ public class PlayerController : MonoBehaviour
 
         if (Player.Instance.lives == 3)
         {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 + (gameObject.transform.right * 1), gameObject.transform.rotation);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 - (gameObject.transform.right * 1), gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 + (gameObject.transform.right * 1), gameObject.transform.rotation);
 
         }
         if (Player.Instance.lives == 2)
         {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
-            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2 - (gameObject.transform.right * 1), gameObject.transform.rotation);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
+            Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4 - (gameObject.transform.right * 1), gameObject.transform.rotation);
         }
         if (Player.Instance.lives == 1)
         {
-            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 2, gameObject.transform.rotation);
+            GameObject Hitpoint = (GameObject)Instantiate(Resources.Load("Hitpoint"), gameObject.transform.position + gameObject.transform.up * 4, gameObject.transform.rotation);
         }
 
-
+        
     }
     public void CollectedGear()
     {

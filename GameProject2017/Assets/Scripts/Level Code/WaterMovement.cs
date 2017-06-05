@@ -12,7 +12,7 @@ public class WaterMovement : MonoBehaviour
     void LateUpdate()
     {
         uvOffset += (uvAnimationRate * Time.deltaTime);
-        if (GetComponent<Renderer>().enabled)
+        if (GetComponent<Renderer>().enabled && GetComponent<Renderer>().sharedMaterial != null)
         {
             GetComponent<Renderer>().sharedMaterial.SetTextureOffset(textureName, uvOffset);
         }

@@ -178,29 +178,27 @@ public class CameraView : MonoBehaviour
 
 
 
-
         //float angleRad = angle * Mathf.Deg2Rad;
 
-        //float distance = size;
+        float distance = size;
+
+
+        Vector3 newPosition = new Vector3();
+
+        newPosition.y = Mathf.Sin(angleRad) * distance;
 
 
 
-        //Vector3 newPosition = new Vector3();
+        float groundAngle = (90 - angle) * Mathf.Deg2Rad;
 
-        //newPosition.y = Mathf.Sin(angleRad) * distance;
-
-
-
-        //float groundAngle = (90 - angle) * Mathf.Deg2Rad;
-
-        //newPosition.x = Mathf.Sin(groundAngle) * Mathf.Sqrt(Mathf.Pow(newPosition.y, 2) + Mathf.Pow(distance, 2));
-        //newPosition.z = Mathf.Cos(groundAngle) * Mathf.Sqrt(Mathf.Pow(newPosition.y, 2) + Mathf.Pow(distance, 2));
+        newPosition.x = Mathf.Sin(groundAngle) * Mathf.Sqrt(Mathf.Pow(newPosition.y, 2) + Mathf.Pow(distance, 2));
+        newPosition.z = Mathf.Cos(groundAngle) * Mathf.Sqrt(Mathf.Pow(newPosition.y, 2) + Mathf.Pow(distance, 2));
 
 
-        //gameObject.transform.position = player.transform.position + newPosition;
+        gameObject.transform.position = player.transform.position + newPosition;
 
-        //gameObject.transform.LookAt(player.transform);
-
+        gameObject.transform.LookAt(player.transform);
+        
     }
 
 }

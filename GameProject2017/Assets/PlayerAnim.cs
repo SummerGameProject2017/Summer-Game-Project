@@ -21,7 +21,7 @@ public class PlayerAnim : MonoBehaviour {
     public Animator Anim;
     public bool attacking = false;
     PlayerController PC;
-    public GameOver DeadScript;
+    GameOver DeadScript;
     // Use this for initialization
     void Start () {
         DeadScript = GetComponent<GameOver>();
@@ -114,9 +114,10 @@ public class PlayerAnim : MonoBehaviour {
         if (other.gameObject.tag == "Water")
         {
             Anim.Play("Death-Water", -1, 0);
-            DeadScript.dead = true;
             yield return new WaitForSeconds(1);
-            
+            DeadScript.dead = true;
+           
+  
             
 
         }

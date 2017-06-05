@@ -87,12 +87,16 @@ public class PlayerController : MonoBehaviour
             moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
             moveAnim.z = InputManager.GetAxis("Vertical");
 
+
+
             if (h == 0 && v == 0)
             {
-                transform.rotation = lastRotation;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), Time.deltaTime);
             }
             else
+            {
                 transform.rotation = Quaternion.LookRotation(moveVector);
+               } 
 
 
 
@@ -143,5 +147,7 @@ public class PlayerController : MonoBehaviour
         GameObject Gear = (GameObject)Instantiate(Resources.Load("PlayerGear"), gameObject.transform.position + gameObject.transform.up * 3, gameObject.transform.rotation);
 
     }
+
+    
 
 }

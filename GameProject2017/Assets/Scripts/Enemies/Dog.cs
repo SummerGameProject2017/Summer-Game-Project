@@ -106,7 +106,14 @@ public class Dog : Enemy
         //find the distance between the player and the ai and change state based on health of ai and distance
 
 
-
+        if (offset <= 15)
+        {
+    //        playerScript.attackMode = true;
+        }
+        else
+        {
+    //        playerScript.attackMode = false;
+        }
 
         if (health > 0 && aiStunned == false)
         {
@@ -213,7 +220,7 @@ public class Dog : Enemy
             anim.SetBool("Run", false);
             anim.SetBool("Bite", true);
             animationScript.Anim.Play("GetHit", -1, 0);
-            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
+//            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
             healthScript.HealthChange();
             firstAttack = false;
@@ -231,7 +238,7 @@ public class Dog : Enemy
         {
             //if the attack idle animation reaches 2 seconds in loop length change to attack animation and reset the timer. 
             animationScript.Anim.Play("GetHit", -1, 0);
-            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
+   //         playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
             anim.Play("Bite", -1, 0);
             anim.SetBool("Idle", false);
@@ -311,7 +318,7 @@ public class Dog : Enemy
         //if the player jumps on the ai chnge to stunned state and bounce the player
          if (other.gameObject.tag == "Player" && aiStunned == false && health > 0)
         {
-            playerScript.verticalVelocity = playerScript.jumpForce;
+ //           playerScript.verticalVelocity = playerScript.jumpForce;
             aiStunned = true;
             aiState = States.Stunned;
             StartCoroutine(DogStunned());

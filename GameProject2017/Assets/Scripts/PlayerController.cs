@@ -21,20 +21,29 @@ public class PlayerController : MonoBehaviour
     public int health;
     public Vector3 moveAnim; // animation movement vector
     public bool isGrounded = true; //  player on the ground bool
-    Vector3 rotationVector = Vector3.zero;
     public Quaternion lastRotation;
     public GameObject hitpoint1;
     public GameObject hitpoint2;
     public GameObject hitpoint3;
+    public bool attackMode = false;
+    public bool ChangePlayerPositionForDevPurposes;
+    public float h;
+    public float v;
+
+
+
 
     // Use this for initialization
     void Start()
     {
         
-        
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
+        if (ChangePlayerPositionForDevPurposes == false)
+        {
+            transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
+        }
         SaveLoad.Save();
     }
 
@@ -42,16 +51,25 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
        
-
+        
 
         Vector3 forward = GameObject.Find("PlayerCamera").transform.TransformDirection(Vector3.forward);
         forward.y = 0;
         forward = forward.normalized;
         Vector3 right = new Vector3(forward.z, 0, -forward.x);
-        float h = InputManager.GetAxis("Horizontal");
-        float v = InputManager.GetAxis("Vertical");
+        h = InputManager.GetAxis("Horizontal");
+        v = InputManager.GetAxis("Vertical");
 
 
+        if (h > 0.65 || h < -0.65 || v > 0.65 || v < -0.65)
+        {
+            speed = 10;
+        }
+        else
+        {
+            speed = 5;
+        }
+       
         if (Player.Instance.lives > 0)
         {
             if (controller.isGrounded)
@@ -67,14 +85,6 @@ public class PlayerController : MonoBehaviour
             }
 
 
-
-            if (InputManager.GetKeyDown(KeyCode.R))
-            {
-                SaveLoad.Save();
-            }
-
-
-
             if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
             {
                 jump--;
@@ -82,24 +92,50 @@ public class PlayerController : MonoBehaviour
                 isGrounded = false;
 
             }
-            moveVector = (speed * (h * right + v * forward));
+            if ((h > 0.65 || h < -0.65) && (v > 0.65 || v < -0.65))
+            {
+                speed = 7.5f;
+                moveVector = (speed * (h * right + v * forward));
+            }
+            else
+            {
+                moveVector = (speed * (h * right + v * forward));
+            }
+
+            
+
 
             moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
             moveAnim.z = InputManager.GetAxis("Vertical");
 
 
-
             if (h == 0 && v == 0)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), Time.deltaTime);
+                transform.rotation = lastRotation;
             }
             else
-            {
                 transform.rotation = Quaternion.LookRotation(moveVector);
-               } 
+
+            /*  if (attackMode == true)
+              {
+                  transform.rotation = Quaternion.LookRotation(moveVector);
+              }
+              else if (h == 0 && v == 0 && attackMode == false)
+              {
+                  transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
+              }
+
+              else
+              {
+                  transform.rotation = Quaternion.LookRotation(moveVector);
+              } 
+  */
 
 
+            moveVector += additionalmovement;
 
+            // Clear
+            additionalmovement = Vector3.zero;
 
             moveVector.y = 0;
 
@@ -112,7 +148,6 @@ public class PlayerController : MonoBehaviour
 
            
             lastRotation = this.transform.rotation;
-
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -134,7 +169,6 @@ public class PlayerController : MonoBehaviour
     //   movement: Direction the player have to be moved
     public void AddMovement(Vector3 movement)
     {
-
         additionalmovement += movement;
 
     }

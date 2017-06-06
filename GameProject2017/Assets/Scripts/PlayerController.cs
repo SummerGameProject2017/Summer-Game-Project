@@ -149,7 +149,6 @@ public class PlayerController : MonoBehaviour
 
            
             lastRotation = this.transform.rotation;
-            Debug.Log(speed);
         }
     }
     private void OnTriggerEnter(Collider other)

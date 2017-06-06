@@ -207,42 +207,39 @@ public class CameraView : MonoBehaviour
 
     public float damping = 1;
     public bool ChangeCameraPositionForDevPurposes;
-
+    public Vector3 turnOffset;
+    public float turnSpeed;
     // Use this for initialization
     void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
-        //transform.LookAt(target);
 
         if (ChangeCameraPositionForDevPurposes == false)
         {
-            transform.localPosition = new Vector3(14.0f, 8.6f, -12.8f);
+            transform.localPosition = new Vector3(7.9f, 7.9f, -10.7f);
             transform.LookAt(target);
         } 
         offset = transform.position - target.transform.position;
-
-
-    }
+            }
 
     // Update is called once per frame
     void Update()
     {
 
-
-        //float horizontal = InputManager.GetAxis("Camera_X", false);
-
-        //if (horizontal != 0.0f)
-        //{
-        //    gameObject.transform.RotateAround(target.transform.position, Vector3.up, horizontal);
-        //    offset = transform.position - target.transform.position;
-        //}
+        
 
 
     }
 
     void LateUpdate()
     {
+        offset = Quaternion.AngleAxis(InputManager.GetAxis("RHorizontal") * turnSpeed, Vector3.up) * offset;
+
         Vector3 desiredPosition = target.transform.position + offset;
+        
+
+
+
 
 
         transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * damping);

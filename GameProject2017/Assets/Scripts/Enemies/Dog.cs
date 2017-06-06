@@ -106,7 +106,14 @@ public class Dog : Enemy
         //find the distance between the player and the ai and change state based on health of ai and distance
 
 
-
+        if (offset <= 15)
+        {
+            playerScript.attackMode = true;
+        }
+        else
+        {
+            playerScript.attackMode = false;
+        }
 
         if (health > 0 && aiStunned == false)
         {
@@ -213,7 +220,7 @@ public class Dog : Enemy
             anim.SetBool("Run", false);
             anim.SetBool("Bite", true);
             animationScript.Anim.Play("GetHit", -1, 0);
-            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
+//            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
             healthScript.HealthChange();
             firstAttack = false;

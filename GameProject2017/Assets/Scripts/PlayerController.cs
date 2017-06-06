@@ -137,7 +137,6 @@ public class PlayerController : MonoBehaviour
             // Clear
             additionalmovement = Vector3.zero;
 
-
             moveVector.y = 0;
 
             moveVector.y = verticalVelocity;
@@ -170,7 +169,6 @@ public class PlayerController : MonoBehaviour
     //   movement: Direction the player have to be moved
     public void AddMovement(Vector3 movement)
     {
-
         additionalmovement += movement;
 
     }

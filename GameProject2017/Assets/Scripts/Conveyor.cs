@@ -16,7 +16,8 @@ public class Conveyor : MonoBehaviour
     
     private void Start()
     {
-        //rb = GetComponent<Rigidbody>();
+        PlayerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody>();
         OnBelt = false;
         anim = GetComponent<Animator>();
         

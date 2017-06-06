@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
     public GameObject hitpoint3;
     public bool attackMode = false;
     public bool ChangePlayerPositionForDevPurposes;
-
+    public float h;
+    public float v;
 
 
 
@@ -56,10 +57,19 @@ public class PlayerController : MonoBehaviour
         forward.y = 0;
         forward = forward.normalized;
         Vector3 right = new Vector3(forward.z, 0, -forward.x);
-        float h = InputManager.GetAxis("Horizontal");
-        float v = InputManager.GetAxis("Vertical");
+        h = InputManager.GetAxis("Horizontal");
+        v = InputManager.GetAxis("Vertical");
 
 
+        if (h > 0.65 || h < -0.65 || v > 0.65 || v < -0.65)
+        {
+            speed = 10;
+        }
+        else
+        {
+            speed = 5;
+        }
+       
         if (Player.Instance.lives > 0)
         {
             if (controller.isGrounded)
@@ -82,16 +92,18 @@ public class PlayerController : MonoBehaviour
                 isGrounded = false;
 
             }
-            if (h != 0 && v != 0)
+            if ((h > 0.65 || h < -0.65) && (v > 0.65 || v < -0.65))
             {
-                moveVector = ((speed/2) * (h * right + v * forward));
+                speed = 7.5f;
+                moveVector = (speed * (h * right + v * forward));
             }
-            else if (h == 0 || v == 0)
+            else
             {
                 moveVector = (speed * (h * right + v * forward));
             }
+
             
-            
+
 
             moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
             moveAnim.z = InputManager.GetAxis("Vertical");
@@ -137,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
            
             lastRotation = this.transform.rotation;
-
+            Debug.Log(speed);
         }
     }
     private void OnTriggerEnter(Collider other)

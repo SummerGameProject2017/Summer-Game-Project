@@ -45,8 +45,8 @@ public class PlayerAnim : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Anim.SetFloat("inputV", PC.moveAnim.z); // Set Vertical Movement
-        Anim.SetFloat("inputH", PC.moveAnim.x); // Set Horizontal Movement
+        Anim.SetFloat("inputV", PC.v); // Set Vertical Movement
+        Anim.SetFloat("inputH", PC.h); // Set Horizontal Movement
 
         if (Player.Instance.lives > 0)
         {
@@ -67,15 +67,9 @@ public class PlayerAnim : MonoBehaviour {
 
             }
 
-            if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Walk_F"))
-            {
-                PC.speed = 5;
-            }
-            else
-            {
-                PC.speed = 10;
-            }
 
+
+            
             if (InputManager.GetButtonDown("Attack"))
             {
                 if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))

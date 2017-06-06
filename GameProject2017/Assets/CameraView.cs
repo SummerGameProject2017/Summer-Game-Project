@@ -206,13 +206,19 @@ public class CameraView : MonoBehaviour
     Vector3 offset;
 
     public float damping = 1;
+    public bool ChangeCameraPositionForDevPurposes;
 
     // Use this for initialization
     void Start()
     {
-
+        target = GameObject.FindWithTag("Player").transform;
         //transform.LookAt(target);
 
+        if (ChangeCameraPositionForDevPurposes == false)
+        {
+            transform.localPosition = new Vector3(14.0f, 8.6f, -12.8f);
+            transform.LookAt(target);
+        } 
         offset = transform.position - target.transform.position;
 
 

@@ -21,20 +21,28 @@ public class PlayerController : MonoBehaviour
     public int health;
     public Vector3 moveAnim; // animation movement vector
     public bool isGrounded = true; //  player on the ground bool
-    Vector3 rotationVector = Vector3.zero;
     public Quaternion lastRotation;
     public GameObject hitpoint1;
     public GameObject hitpoint2;
     public GameObject hitpoint3;
+    public bool attackMode = false;
+    public bool ChangePlayerPositionForDevPurposes;
+
+
+
+
 
     // Use this for initialization
     void Start()
     {
         
-        
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
+        if (ChangePlayerPositionForDevPurposes == false)
+        {
+            transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
+        }
         SaveLoad.Save();
     }
 
@@ -42,7 +50,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
        
-
+        
 
         Vector3 forward = GameObject.Find("PlayerCamera").transform.TransformDirection(Vector3.forward);
         forward.y = 0;
@@ -67,14 +75,6 @@ public class PlayerController : MonoBehaviour
             }
 
 
-
-            if (InputManager.GetKeyDown(KeyCode.R))
-            {
-                SaveLoad.Save();
-            }
-
-
-
             if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
             {
                 jump--;
@@ -82,23 +82,48 @@ public class PlayerController : MonoBehaviour
                 isGrounded = false;
 
             }
-            moveVector = (speed * (h * right + v * forward));
+            if (h != 0 && v != 0)
+            {
+                moveVector = ((speed/2) * (h * right + v * forward));
+            }
+            else if (h == 0 || v == 0)
+            {
+                moveVector = (speed * (h * right + v * forward));
+            }
+            
+            
 
             moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
             moveAnim.z = InputManager.GetAxis("Vertical");
 
 
-
             if (h == 0 && v == 0)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), Time.deltaTime);
+                transform.rotation = lastRotation;
             }
             else
-            {
                 transform.rotation = Quaternion.LookRotation(moveVector);
-               } 
+
+            /*  if (attackMode == true)
+              {
+                  transform.rotation = Quaternion.LookRotation(moveVector);
+              }
+              else if (h == 0 && v == 0 && attackMode == false)
+              {
+                  transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
+              }
+
+              else
+              {
+                  transform.rotation = Quaternion.LookRotation(moveVector);
+              } 
+  */
 
 
+            moveVector += additionalmovement;
+
+            // Clear
+            additionalmovement = Vector3.zero;
 
 
             moveVector.y = 0;

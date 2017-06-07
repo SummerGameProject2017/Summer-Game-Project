@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
+        SaveLoad.Load();
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
         }
-        SaveLoad.Save();
+   //     SaveLoad.Save();
     }
 
     // Update is called once per frame

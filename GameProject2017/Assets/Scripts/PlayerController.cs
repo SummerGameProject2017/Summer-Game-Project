@@ -26,25 +26,24 @@ public class PlayerController : MonoBehaviour
     public GameObject hitpoint2;
     public GameObject hitpoint3;
     public bool attackMode = false;
-    public bool ChangePlayerPositionForDevPurposes;
+    public bool newGame = true;
     public float h;
     public float v;
     public bool bounceOnDog = false;
 
 
-
     // Use this for initialization
     void Start()
     {
-        SaveLoad.Load();
+     //   SaveLoad.Load();
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
-        if (ChangePlayerPositionForDevPurposes == false)
+        if (newGame == true)
         {
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
         }
-   //     SaveLoad.Save();
+        SaveLoad.Save();
     }
 
     // Update is called once per frame

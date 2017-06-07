@@ -9,13 +9,13 @@ public class CameraView : MonoBehaviour
     Vector3 offset;
 
     public float damping = 2;
-    public bool ChangeCameraPositionForDevPurposes;
+    public bool newGame = true;
     // Use this for initialization
     void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
 
-        if (ChangeCameraPositionForDevPurposes == false)
+        if (newGame == true)
         {
             transform.localPosition = new Vector3(7.9f, 7.9f, -10.7f);
             transform.localRotation = Quaternion.Euler(24.043f, -51.16f, -1.258f);

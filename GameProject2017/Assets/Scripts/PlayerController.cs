@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     public int jump = 2;    
     Vector3 moveVector;
-    Vector3 lastMove;
+    public Vector3 lastMove;
     public float jumpForce;
     float gravity = 25;
     public float verticalVelocity;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public bool ChangePlayerPositionForDevPurposes;
     public float h;
     public float v;
-
+    public bool bounceOnDog = false;
 
 
 
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
             
 
 
-            moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
+            moveAnim.x = InputManager.GetAxis("Horizontal"); 
             moveAnim.z = InputManager.GetAxis("Vertical");
 
 
@@ -137,7 +137,12 @@ public class PlayerController : MonoBehaviour
             // Clear
             additionalmovement = Vector3.zero;
 
-            moveVector.y = 0;
+            if (bounceOnDog == true)
+            {
+                verticalVelocity = jumpForce;
+                bounceOnDog = false;
+            }
+
 
             moveVector.y = verticalVelocity;
 

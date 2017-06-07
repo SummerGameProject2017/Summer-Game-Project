@@ -316,12 +316,16 @@ public class Dog : Enemy
     private void OnTriggerEnter(Collider other)
     {
         //if the player jumps on the ai chnge to stunned state and bounce the player
-         if (other.gameObject.tag == "Player" && aiStunned == false && health > 0)
+        if (other.gameObject.tag == "Player" && health > 0)
         {
- //           playerScript.verticalVelocity = playerScript.jumpForce;
-            aiStunned = true;
-            aiState = States.Stunned;
-            StartCoroutine(DogStunned());
+            playerScript.bounceOnDog = true;
+            if (aiStunned == false)
+            {
+
+                aiStunned = true;
+                aiState = States.Stunned;
+                StartCoroutine(DogStunned());
+            }
         }
         //damage the robot
         if (other.gameObject.name == "Hammer" && canBeHit == true)
@@ -350,7 +354,7 @@ public class Dog : Enemy
     {
         canBeHit = false;
         agent.speed = 0;
-        anim.SetBool("Sunned", false);
+        anim.SetBool("Stunned", false);
         anim.SetBool("Dead", true);
         anim.SetBool("Walk", false);
         anim.SetBool("Run", false);

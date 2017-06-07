@@ -8,7 +8,7 @@ public class CameraView : MonoBehaviour
 
     Vector3 offset;
 
-    public float damping = 1;
+    public float damping = 2;
     public bool ChangeCameraPositionForDevPurposes;
     // Use this for initialization
     void Start()

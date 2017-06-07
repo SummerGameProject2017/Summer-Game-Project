@@ -20,7 +20,7 @@ public class NPC : MonoBehaviour
     private void Start()
     {
         
-        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         dialogueScript = GameObject.Find("DialogueSystem").GetComponent<DialogueSystem>(); 
             loadLines = File.ReadAllText(Application.dataPath + "/Resources/Dialogue.json");    //load the dialogue file from the resource folder
             stringData = JsonMapper.ToObject(loadLines);

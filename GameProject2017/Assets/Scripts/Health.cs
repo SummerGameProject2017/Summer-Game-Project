@@ -33,15 +33,21 @@ public class Health : MonoBehaviour {
 
         HealthChange();
 
+        hitpoints1.transform.position = transform.position + transform.up * 3;
+        hitpoints2.transform.position = transform.position + transform.up * 3 + (transform.right * 2);
+        hitpoints3.transform.position = transform.position + transform.up * 3 - (transform.right * 2);
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        Vector3 direction;
+        direction = (GameObject.Find("PlayerCamera").transform.position - transform.position).normalized;
+        transform.rotation = Quaternion.LookRotation(direction);
+
+
         transform.position = player.transform.position + Vector3.up * 2;
-        transform.rotation = Quaternion.LookRotation(Vector3.right);
-        hitpoints1.transform.position = gameObject.transform.position + gameObject.transform.up * 3;
-        hitpoints2.transform.position = gameObject.transform.position + gameObject.transform.up * 3 + (gameObject.transform.right * 2);
-        hitpoints3.transform.position = gameObject.transform.position + gameObject.transform.up * 3 - (gameObject.transform.right * 2);
+        
     }
 
 
@@ -66,9 +72,11 @@ public class Health : MonoBehaviour {
             hitpoints2.SetActive(false);
             hitpoints3.SetActive(false);
         }
-
-
+        if (Player.Instance.lives == 0)
+        {
+            hitpoints1.SetActive(false);
+            hitpoints2.SetActive(false);
+            hitpoints3.SetActive(false);
+        }
     }
-
-
 }

@@ -28,7 +28,7 @@ public class DialogueSystem : MonoBehaviour
     void Awake()
     {
         npcScript = GameObject.Find("SaveBot").GetComponent<NPC>();
-        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         dialogueText = dialoguePanel.transform.FindChild("Text").GetComponent<Text>();
         nameText = dialoguePanel.transform.FindChild("Name").GetChild(0).GetComponent<Text>();
         dialoguePanel.SetActive(false);

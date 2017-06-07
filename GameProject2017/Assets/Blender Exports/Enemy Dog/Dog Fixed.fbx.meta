@@ -158,7 +158,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     animationCompression: 1
     animationRotationError: 0.5
-    animationPositionError: 0.5
+    animationPositionError: 0
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
@@ -1362,7 +1362,7 @@ ModelImporter:
         weight: 1
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 0.03
     isReadable: 1
   meshes:
     lODScreenPercentages: []

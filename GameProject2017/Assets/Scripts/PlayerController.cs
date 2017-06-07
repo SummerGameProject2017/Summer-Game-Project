@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     public int jump = 2;    
     Vector3 moveVector;
-    Vector3 lastMove;
+    public Vector3 lastMove;
     public float jumpForce;
     float gravity = 25;
     public float verticalVelocity;
@@ -26,21 +26,20 @@ public class PlayerController : MonoBehaviour
     public GameObject hitpoint2;
     public GameObject hitpoint3;
     public bool attackMode = false;
-    public bool ChangePlayerPositionForDevPurposes;
+    public bool newGame = true;
     public float h;
     public float v;
-
-
+    public bool bounceOnDog = false;
 
 
     // Use this for initialization
     void Start()
     {
-        
+     //   SaveLoad.Load();
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
-        if (ChangePlayerPositionForDevPurposes == false)
+        if (newGame == true)
         {
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
         }
@@ -105,7 +104,7 @@ public class PlayerController : MonoBehaviour
             
 
 
-            moveAnim.x = InputManager.GetAxis("Horizontal"); //* speed;
+            moveAnim.x = InputManager.GetAxis("Horizontal"); 
             moveAnim.z = InputManager.GetAxis("Vertical");
 
 
@@ -137,8 +136,12 @@ public class PlayerController : MonoBehaviour
             // Clear
             additionalmovement = Vector3.zero;
 
+            if (bounceOnDog == true)
+            {
+                verticalVelocity = jumpForce;
+                bounceOnDog = false;
+            }
 
-            moveVector.y = 0;
 
             moveVector.y = verticalVelocity;
 
@@ -170,7 +173,6 @@ public class PlayerController : MonoBehaviour
     //   movement: Direction the player have to be moved
     public void AddMovement(Vector3 movement)
     {
-
         additionalmovement += movement;
 
     }

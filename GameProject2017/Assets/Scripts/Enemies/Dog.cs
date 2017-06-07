@@ -108,11 +108,11 @@ public class Dog : Enemy
 
         if (offset <= 15)
         {
-            playerScript.attackMode = true;
+    //        playerScript.attackMode = true;
         }
         else
         {
-            playerScript.attackMode = false;
+    //        playerScript.attackMode = false;
         }
 
         if (health > 0 && aiStunned == false)
@@ -200,18 +200,22 @@ public class Dog : Enemy
     void Chase()
     {
         firstAttack = true;
-        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+        agent.SetDestination(player.transform.position);
         patrolPoint.SetActive(false);
         agent.speed = 7;
         anim.SetBool("Walk", false);
         anim.SetBool("Run", true);
         anim.SetBool("Bite", false);
-        agent.SetDestination(player.transform.position);
     }
     //attack the player and call the player loose life method
     void Attack()
     {
+        Vector3 direction;
+        direction = (player.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
         agent.SetDestination(transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 2);
+
         if (firstAttack == true)
         {
             //for the first attack reset the animation timer and call the attack animation
@@ -220,7 +224,6 @@ public class Dog : Enemy
             anim.SetBool("Run", false);
             anim.SetBool("Bite", true);
             animationScript.Anim.Play("GetHit", -1, 0);
-//            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
             healthScript.HealthChange();
             firstAttack = false;
@@ -232,13 +235,12 @@ public class Dog : Enemy
             }
 
         }
-        transform.LookAt(player.transform.position);
         
        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Combat Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
         {
             //if the attack idle animation reaches 2 seconds in loop length change to attack animation and reset the timer. 
             animationScript.Anim.Play("GetHit", -1, 0);
-            playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
+   //         playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
             anim.Play("Bite", -1, 0);
             anim.SetBool("Idle", false);
@@ -316,12 +318,16 @@ public class Dog : Enemy
     private void OnTriggerEnter(Collider other)
     {
         //if the player jumps on the ai chnge to stunned state and bounce the player
-         if (other.gameObject.tag == "Player" && aiStunned == false && health > 0)
+        if (other.gameObject.tag == "Player" && health > 0)
         {
-            playerScript.verticalVelocity = playerScript.jumpForce;
-            aiStunned = true;
-            aiState = States.Stunned;
-            StartCoroutine(DogStunned());
+            playerScript.bounceOnDog = true;
+            if (aiStunned == false)
+            {
+
+                aiStunned = true;
+                aiState = States.Stunned;
+                StartCoroutine(DogStunned());
+            }
         }
         //damage the robot
         if (other.gameObject.name == "Hammer" && canBeHit == true)
@@ -350,7 +356,7 @@ public class Dog : Enemy
     {
         canBeHit = false;
         agent.speed = 0;
-        anim.SetBool("Sunned", false);
+        anim.SetBool("Stunned", false);
         anim.SetBool("Dead", true);
         anim.SetBool("Walk", false);
         anim.SetBool("Run", false);

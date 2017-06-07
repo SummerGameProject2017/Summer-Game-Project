@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovePlatform : MonoBehaviour
 {
 
-
+    
     public Vector3 pointB;
     public PlayerController PlayerScript;
     public bool onplatform;
@@ -14,6 +14,7 @@ public class MovePlatform : MonoBehaviour
 
     IEnumerator Start()
     {
+        PlayerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         Vector3 pointA = transform.position;
         while (true)
         {
@@ -41,6 +42,7 @@ public class MovePlatform : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            Debug.Log("true");
             onplatform = true;
         }
     }
@@ -49,6 +51,7 @@ public class MovePlatform : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            Debug.Log("false");
             onplatform = false;
         }
     }
@@ -58,7 +61,7 @@ public class MovePlatform : MonoBehaviour
         if (onplatform == true)
         {
             Vector3 direction = transform.TransformDirection(speedVector );
-
+            Debug.Log(direction);
             PlayerScript.AddMovement(direction);
         }
     }

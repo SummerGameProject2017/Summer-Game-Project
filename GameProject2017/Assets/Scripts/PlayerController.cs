@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     CharacterController controller;
     public int health;
     public Vector3 moveAnim; // animation movement vector
-    public bool isGrounded = true; //  player on the ground bool
     public Quaternion lastRotation;
     public GameObject hitpoint1;
     public GameObject hitpoint2;
@@ -29,7 +28,7 @@ public class PlayerController : MonoBehaviour
     public bool ChangePlayerPositionForDevPurposes;
     public float h;
     public float v;
-
+    Animation Anim;
 
 
 
@@ -76,7 +75,7 @@ public class PlayerController : MonoBehaviour
             {
                 verticalVelocity = -1;
                 jump = 2;
-                isGrounded = true;
+               
             }
             else
             {
@@ -84,19 +83,25 @@ public class PlayerController : MonoBehaviour
                 moveVector = lastMove;
             }
 
-
+            
+            
+            // Jumping
             if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
             {
                 jump--;
                 verticalVelocity = jumpForce;
-                isGrounded = false;
 
             }
+
+
+            // Pick up speed when joystick is moved more to one side
             if ((h > 0.65 || h < -0.65) && (v > 0.65 || v < -0.65))
             {
                 speed = 7.5f;
                 moveVector = (speed * (h * right + v * forward));
             }
+
+
             else
             {
                 moveVector = (speed * (h * right + v * forward));

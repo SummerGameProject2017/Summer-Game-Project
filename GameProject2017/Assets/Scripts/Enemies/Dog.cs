@@ -108,12 +108,10 @@ public class Dog : Enemy
 
         if (offset <= 15)
         {
-    //        playerScript.attackMode = true;
+            playerScript.attackMode = true;
+            playerScript.enemy = this.gameObject;
         }
-        else
-        {
-    //        playerScript.attackMode = false;
-        }
+        
 
         if (health > 0 && aiStunned == false)
         {
@@ -138,11 +136,20 @@ public class Dog : Enemy
             if (offset > 15 && idle == false)
             {
                 aiState = States.Patrol;
+                if (playerScript.enemy == this.gameObject)
+                {
+                    playerScript.attackMode = false;
+                }
+
             }
             if (idle == true || Player.Instance.lives <=0)
                 {
                     aiState = States.Idle;
+                if (playerScript.enemy == this.gameObject)
+                {
+                    playerScript.attackMode = false;
                 }
+            }
 
         }
 
@@ -214,7 +221,7 @@ public class Dog : Enemy
         direction = (player.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         agent.SetDestination(transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 2);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
 
         if (firstAttack == true)
         {
@@ -240,7 +247,6 @@ public class Dog : Enemy
         {
             //if the attack idle animation reaches 2 seconds in loop length change to attack animation and reset the timer. 
             animationScript.Anim.Play("GetHit", -1, 0);
-   //         playerScript.lastRotation = Quaternion.LookRotation(this.transform.position);
             Player.Instance.LoseLife();
             anim.Play("Bite", -1, 0);
             anim.SetBool("Idle", false);
@@ -345,6 +351,7 @@ public class Dog : Enemy
                 health--;
                 canBeHit = false;
                 aiState = States.Dead;
+                
             }
 
 
@@ -354,6 +361,10 @@ public class Dog : Enemy
     //when the ai is out of health change to dead animation and after 3 seconds destroy the ai gameobject
     IEnumerator EnemyDead()
     {
+        if (playerScript.enemy == this.gameObject)
+                {
+                    playerScript.attackMode = false;
+                }
         canBeHit = false;
         agent.speed = 0;
         anim.SetBool("Stunned", false);

@@ -30,12 +30,15 @@ public class PlayerController : MonoBehaviour
     public float h;
     public float v;
     public bool bounceOnDog = false;
-
+    public GameObject enemy;
+    Health healthScript;
 
     // Use this for initialization
     void Start()
     {
+        
      //   SaveLoad.Load();
+     healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
@@ -107,28 +110,29 @@ public class PlayerController : MonoBehaviour
             moveAnim.x = InputManager.GetAxis("Horizontal"); 
             moveAnim.z = InputManager.GetAxis("Vertical");
 
-
-            if (h == 0 && v == 0)
-            {
-                transform.rotation = lastRotation;
-            }
-            else
-                transform.rotation = Quaternion.LookRotation(moveVector);
-
-            /*  if (attackMode == true)
+       
+             if (attackMode == true && h == 0 && v == 0)
               {
-                  transform.rotation = Quaternion.LookRotation(moveVector);
+                Vector3 direction;
+                direction = (enemy.transform.position - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
               }
               else if (h == 0 && v == 0 && attackMode == false)
               {
-                  transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
+                Vector3 direction;
+                direction = (GameObject.Find("PlayerCamera").transform.position - transform.position).normalized;
+                direction.y = 0;
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
               }
 
               else
               {
                   transform.rotation = Quaternion.LookRotation(moveVector);
               } 
-  */
+  
 
 
             moveVector += additionalmovement;
@@ -159,6 +163,11 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Collectible")
         {
             CollectedGear();
+        }
+        if (other.gameObject.tag == "Fountain")
+        {
+            Player.Instance.lives = Player.Instance.maxLives;
+            healthScript.HealthChange();
         }
       
     }

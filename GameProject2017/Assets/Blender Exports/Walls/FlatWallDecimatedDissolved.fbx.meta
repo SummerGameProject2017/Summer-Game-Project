@@ -6,10 +6,25 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Barb
+    100004: Wall
+    100006: Wire
     400000: //RootNode
+    400002: Barb
+    400004: Wall
+    400006: Wire
     2300000: //RootNode
+    2300002: Barb
+    2300004: Wall
+    2300006: Wire
     3300000: //RootNode
+    3300002: Barb
+    3300004: Wall
+    3300006: Wire
     4300000: Cube
+    4300002: Wire
+    4300004: Barb
+    4300006: Wall
   materials:
     importMaterials: 1
     materialName: 0

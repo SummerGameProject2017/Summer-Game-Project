@@ -12,6 +12,7 @@ public class GameOver : MonoBehaviour
     void Start ()
     {
         Death = GameObject.Find("GAMEOVER");
+        Death.SetActive(false);
 	}
 	
 	// Update is called once per frame

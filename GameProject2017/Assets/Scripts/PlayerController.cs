@@ -31,11 +31,14 @@ public class PlayerController : MonoBehaviour
     public float v;
     public bool bounceOnDog = false;
     public GameObject enemy;
+    Health healthScript;
 
     // Use this for initialization
     void Start()
     {
+        
      //   SaveLoad.Load();
+     healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
         controller = GetComponent<CharacterController>();
         health = 3;
         //    collectable = GetComponent<Gear>();
@@ -160,6 +163,11 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Collectible")
         {
             CollectedGear();
+        }
+        if (other.gameObject.tag == "Fountain")
+        {
+            Player.Instance.lives = Player.Instance.maxLives;
+            healthScript.HealthChange();
         }
       
     }

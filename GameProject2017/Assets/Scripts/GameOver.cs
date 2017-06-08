@@ -7,7 +7,7 @@ public class GameOver : MonoBehaviour
 {
     public Player PlayerScript;
     public bool dead = false;
-    private GameObject Death;
+    public GameObject Death;
     // Use this for initialization
     void Start ()
     {
@@ -29,7 +29,7 @@ public class GameOver : MonoBehaviour
 
 
         //Instantiate(Resources.Load("GAMEOVER"));
-        Death.gameObject.SetActive(true);
+            Death.gameObject.SetActive(true);
             dead = false;
         
     }

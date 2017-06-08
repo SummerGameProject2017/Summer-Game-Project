@@ -66,6 +66,70 @@ ModelImporter:
     100116: Wrist_001
     100118: WristIK_L
     100120: WristIK_R
+    100122: Ankle.001
+    100124: Ankle.001_end
+    100126: Ankle_end
+    100128: AnkleIK.L
+    100130: AnkleIK.L_end
+    100132: AnkleIK.R
+    100134: AnkleIK.R_end
+    100136: Calf.001
+    100138: Collar_end
+    100140: Ear.L
+    100142: Ear.L_end
+    100144: Ear.R
+    100146: Ear.R_end
+    100148: ElbowIK.L
+    100150: ElbowIK.L_end
+    100152: ElbowIK.R
+    100154: ElbowIK.R_end
+    100156: Fingers.001
+    100158: Fingers.001_end
+    100160: Fingers_end
+    100162: Foot.001
+    100164: FootIK.L
+    100166: FootIK.R
+    100168: 'Forearm '
+    100170: Forearm.001
+    100172: Hand.001
+    100174: HandIK.L
+    100176: HandIK.R
+    100178: Jaw.001
+    100180: Jaw.002
+    100182: Jaw.002_end
+    100184: KneeIK.L
+    100186: KneeIK.L_end
+    100188: KneeIK.R
+    100190: KneeIK.R_end
+    100192: Neck.001
+    100194: Neck.002
+    100196: Neck.003
+    100198: Pelvis.001
+    100200: Shoulder.001
+    100202: Snout_end
+    100204: Tail.001
+    100206: Tail.002
+    100208: Tail.003
+    100210: Tail.004
+    100212: Tail.004_end
+    100214: Tail.005
+    100216: Tail.005_end
+    100218: TailEnd_end
+    100220: TailEndIK_end
+    100222: Thigh.001
+    100224: Toes.001
+    100226: Toes.001_end
+    100228: Toes_end
+    100230: UpperArm.001
+    100232: Waist.001
+    100234: Waist.002
+    100236: Wrist.001
+    100238: Wrist.001_end
+    100240: Wrist_end
+    100242: WristIK.L
+    100244: WristIK.L_end
+    100246: WristIK.R
+    100248: WristIK.R_end
     400000: Ankle
     400002: Ankle_001
     400004: AnkleIK_L
@@ -127,12 +191,82 @@ ModelImporter:
     400116: Wrist_001
     400118: WristIK_L
     400120: WristIK_R
+    400122: Ankle.001
+    400124: Ankle.001_end
+    400126: Ankle_end
+    400128: AnkleIK.L
+    400130: AnkleIK.L_end
+    400132: AnkleIK.R
+    400134: AnkleIK.R_end
+    400136: Calf.001
+    400138: Collar_end
+    400140: Ear.L
+    400142: Ear.L_end
+    400144: Ear.R
+    400146: Ear.R_end
+    400148: ElbowIK.L
+    400150: ElbowIK.L_end
+    400152: ElbowIK.R
+    400154: ElbowIK.R_end
+    400156: Fingers.001
+    400158: Fingers.001_end
+    400160: Fingers_end
+    400162: Foot.001
+    400164: FootIK.L
+    400166: FootIK.R
+    400168: 'Forearm '
+    400170: Forearm.001
+    400172: Hand.001
+    400174: HandIK.L
+    400176: HandIK.R
+    400178: Jaw.001
+    400180: Jaw.002
+    400182: Jaw.002_end
+    400184: KneeIK.L
+    400186: KneeIK.L_end
+    400188: KneeIK.R
+    400190: KneeIK.R_end
+    400192: Neck.001
+    400194: Neck.002
+    400196: Neck.003
+    400198: Pelvis.001
+    400200: Shoulder.001
+    400202: Snout_end
+    400204: Tail.001
+    400206: Tail.002
+    400208: Tail.003
+    400210: Tail.004
+    400212: Tail.004_end
+    400214: Tail.005
+    400216: Tail.005_end
+    400218: TailEnd_end
+    400220: TailEndIK_end
+    400222: Thigh.001
+    400224: Toes.001
+    400226: Toes.001_end
+    400228: Toes_end
+    400230: UpperArm.001
+    400232: Waist.001
+    400234: Waist.002
+    400236: Wrist.001
+    400238: Wrist.001_end
+    400240: Wrist_end
+    400242: WristIK.L
+    400244: WristIK.L_end
+    400246: WristIK.R
+    400248: WristIK.R_end
+    2300000: Jaw
+    3300000: Jaw
     4300000: Jaw
     4300002: Body
     7400000: Idle
     7400002: Bite
     7400004: Run
     7400006: Walk
+    7400008: Combat Idle
+    7400010: Stun
+    7400012: Hit
+    7400014: Die
     9500000: //RootNode
     13700000: Body
     13700002: Jaw
@@ -162,8 +296,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle
       takeName: ArmatureAction
-      firstFrame: 215
-      lastFrame: 244
+      firstFrame: 471
+      lastFrame: 501
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -312,8 +446,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Bite
       takeName: ArmatureAction
-      firstFrame: 31
-      lastFrame: 48
+      firstFrame: 287
+      lastFrame: 304
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -462,8 +596,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Run
       takeName: ArmatureAction
-      firstFrame: 95
-      lastFrame: 126
+      firstFrame: 351
+      lastFrame: 382
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -612,8 +746,608 @@ ModelImporter:
     - serializedVersion: 16
       name: Walk
       takeName: ArmatureAction
-      firstFrame: 151
-      lastFrame: 181
+      firstFrame: 406
+      lastFrame: 437
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/AnkleIK_L
+        weight: 1
+      - path: Armature/AnkleIK_R
+        weight: 1
+      - path: Armature/ElbowIK_L
+        weight: 1
+      - path: Armature/ElbowIK_R
+        weight: 1
+      - path: Armature/FootIK_L
+        weight: 1
+      - path: Armature/FootIK_L/Foot
+        weight: 1
+      - path: Armature/FootIK_L/Foot/Toes
+        weight: 1
+      - path: Armature/FootIK_R
+        weight: 1
+      - path: Armature/FootIK_R/Foot_001
+        weight: 1
+      - path: Armature/FootIK_R/Foot_001/Toes_001
+        weight: 1
+      - path: Armature/HandIK_L
+        weight: 1
+      - path: Armature/HandIK_L/Hand
+        weight: 1
+      - path: Armature/HandIK_L/Hand/Fingers
+        weight: 1
+      - path: Armature/HandIK_R
+        weight: 1
+      - path: Armature/HandIK_R/Hand_001
+        weight: 1
+      - path: Armature/HandIK_R/Hand_001/Fingers_001
+        weight: 1
+      - path: Armature/Hip
+        weight: 1
+      - path: Armature/Hip/Pelvis
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh/Calf
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh/Calf/Ankle
+        weight: 1
+      - path: Armature/Hip/Pelvis_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001/Calf_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001/Calf_001/Ankle_001
+        weight: 1
+      - path: Armature/Hip/Tail_001
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002/Tail_003
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002/Tail_003/TailEnd
+        weight: 1
+      - path: Armature/Hip/Waist
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm/Forearm_
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm/Forearm_/Wrist
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001/Forearm_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001/Forearm_001/Wrist_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Collar
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Jaw_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Jaw_001/Jaw_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull/Ear_L
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull/Ear_R
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Snout
+        weight: 1
+      - path: Armature/KneeIK_L
+        weight: 1
+      - path: Armature/KneeIK_R
+        weight: 1
+      - path: Armature/Tail_004
+        weight: 1
+      - path: Armature/Tail_005
+        weight: 1
+      - path: Armature/TailEndIK
+        weight: 1
+      - path: Armature/WristIK_L
+        weight: 1
+      - path: Armature/WristIK_R
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Jaw
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Combat Idle
+      takeName: ArmatureAction
+      firstFrame: 1
+      lastFrame: 33
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/AnkleIK_L
+        weight: 1
+      - path: Armature/AnkleIK_R
+        weight: 1
+      - path: Armature/ElbowIK_L
+        weight: 1
+      - path: Armature/ElbowIK_R
+        weight: 1
+      - path: Armature/FootIK_L
+        weight: 1
+      - path: Armature/FootIK_L/Foot
+        weight: 1
+      - path: Armature/FootIK_L/Foot/Toes
+        weight: 1
+      - path: Armature/FootIK_R
+        weight: 1
+      - path: Armature/FootIK_R/Foot_001
+        weight: 1
+      - path: Armature/FootIK_R/Foot_001/Toes_001
+        weight: 1
+      - path: Armature/HandIK_L
+        weight: 1
+      - path: Armature/HandIK_L/Hand
+        weight: 1
+      - path: Armature/HandIK_L/Hand/Fingers
+        weight: 1
+      - path: Armature/HandIK_R
+        weight: 1
+      - path: Armature/HandIK_R/Hand_001
+        weight: 1
+      - path: Armature/HandIK_R/Hand_001/Fingers_001
+        weight: 1
+      - path: Armature/Hip
+        weight: 1
+      - path: Armature/Hip/Pelvis
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh/Calf
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh/Calf/Ankle
+        weight: 1
+      - path: Armature/Hip/Pelvis_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001/Calf_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001/Calf_001/Ankle_001
+        weight: 1
+      - path: Armature/Hip/Tail_001
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002/Tail_003
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002/Tail_003/TailEnd
+        weight: 1
+      - path: Armature/Hip/Waist
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm/Forearm_
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm/Forearm_/Wrist
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001/Forearm_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001/Forearm_001/Wrist_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Collar
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Jaw_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Jaw_001/Jaw_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull/Ear_L
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull/Ear_R
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Snout
+        weight: 1
+      - path: Armature/KneeIK_L
+        weight: 1
+      - path: Armature/KneeIK_R
+        weight: 1
+      - path: Armature/Tail_004
+        weight: 1
+      - path: Armature/Tail_005
+        weight: 1
+      - path: Armature/TailEndIK
+        weight: 1
+      - path: Armature/WristIK_L
+        weight: 1
+      - path: Armature/WristIK_R
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Jaw
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Stun
+      takeName: ArmatureAction
+      firstFrame: 66
+      lastFrame: 97
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/AnkleIK_L
+        weight: 1
+      - path: Armature/AnkleIK_R
+        weight: 1
+      - path: Armature/ElbowIK_L
+        weight: 1
+      - path: Armature/ElbowIK_R
+        weight: 1
+      - path: Armature/FootIK_L
+        weight: 1
+      - path: Armature/FootIK_L/Foot
+        weight: 1
+      - path: Armature/FootIK_L/Foot/Toes
+        weight: 1
+      - path: Armature/FootIK_R
+        weight: 1
+      - path: Armature/FootIK_R/Foot_001
+        weight: 1
+      - path: Armature/FootIK_R/Foot_001/Toes_001
+        weight: 1
+      - path: Armature/HandIK_L
+        weight: 1
+      - path: Armature/HandIK_L/Hand
+        weight: 1
+      - path: Armature/HandIK_L/Hand/Fingers
+        weight: 1
+      - path: Armature/HandIK_R
+        weight: 1
+      - path: Armature/HandIK_R/Hand_001
+        weight: 1
+      - path: Armature/HandIK_R/Hand_001/Fingers_001
+        weight: 1
+      - path: Armature/Hip
+        weight: 1
+      - path: Armature/Hip/Pelvis
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh/Calf
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh/Calf/Ankle
+        weight: 1
+      - path: Armature/Hip/Pelvis_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001/Calf_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001/Calf_001/Ankle_001
+        weight: 1
+      - path: Armature/Hip/Tail_001
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002/Tail_003
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002/Tail_003/TailEnd
+        weight: 1
+      - path: Armature/Hip/Waist
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm/Forearm_
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm/Forearm_/Wrist
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001/Forearm_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001/Forearm_001/Wrist_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Collar
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Jaw_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Jaw_001/Jaw_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull/Ear_L
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull/Ear_R
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Snout
+        weight: 1
+      - path: Armature/KneeIK_L
+        weight: 1
+      - path: Armature/KneeIK_R
+        weight: 1
+      - path: Armature/Tail_004
+        weight: 1
+      - path: Armature/Tail_005
+        weight: 1
+      - path: Armature/TailEndIK
+        weight: 1
+      - path: Armature/WristIK_L
+        weight: 1
+      - path: Armature/WristIK_R
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Jaw
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Hit
+      takeName: ArmatureAction
+      firstFrame: 192
+      lastFrame: 209
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/AnkleIK_L
+        weight: 1
+      - path: Armature/AnkleIK_R
+        weight: 1
+      - path: Armature/ElbowIK_L
+        weight: 1
+      - path: Armature/ElbowIK_R
+        weight: 1
+      - path: Armature/FootIK_L
+        weight: 1
+      - path: Armature/FootIK_L/Foot
+        weight: 1
+      - path: Armature/FootIK_L/Foot/Toes
+        weight: 1
+      - path: Armature/FootIK_R
+        weight: 1
+      - path: Armature/FootIK_R/Foot_001
+        weight: 1
+      - path: Armature/FootIK_R/Foot_001/Toes_001
+        weight: 1
+      - path: Armature/HandIK_L
+        weight: 1
+      - path: Armature/HandIK_L/Hand
+        weight: 1
+      - path: Armature/HandIK_L/Hand/Fingers
+        weight: 1
+      - path: Armature/HandIK_R
+        weight: 1
+      - path: Armature/HandIK_R/Hand_001
+        weight: 1
+      - path: Armature/HandIK_R/Hand_001/Fingers_001
+        weight: 1
+      - path: Armature/Hip
+        weight: 1
+      - path: Armature/Hip/Pelvis
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh/Calf
+        weight: 1
+      - path: Armature/Hip/Pelvis/Thigh/Calf/Ankle
+        weight: 1
+      - path: Armature/Hip/Pelvis_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001/Calf_001
+        weight: 1
+      - path: Armature/Hip/Pelvis_001/Thigh_001/Calf_001/Ankle_001
+        weight: 1
+      - path: Armature/Hip/Tail_001
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002/Tail_003
+        weight: 1
+      - path: Armature/Hip/Tail_001/Tail_002/Tail_003/TailEnd
+        weight: 1
+      - path: Armature/Hip/Waist
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm/Forearm_
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder/UpperArm/Forearm_/Wrist
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001/Forearm_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Shoulder_001/UpperArm_001/Forearm_001/Wrist_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Collar
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Jaw_001
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Jaw_001/Jaw_002
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull/Ear_L
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Skull/Ear_R
+        weight: 1
+      - path: Armature/Hip/Waist/Waist_001/Waist_002/Neck_001/Neck_002/Neck_003/Snout
+        weight: 1
+      - path: Armature/KneeIK_L
+        weight: 1
+      - path: Armature/KneeIK_R
+        weight: 1
+      - path: Armature/Tail_004
+        weight: 1
+      - path: Armature/Tail_005
+        weight: 1
+      - path: Armature/TailEndIK
+        weight: 1
+      - path: Armature/WristIK_L
+        weight: 1
+      - path: Armature/WristIK_R
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Jaw
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Die
+      takeName: ArmatureAction
+      firstFrame: 128
+      lastFrame: 153
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -16,7 +16,7 @@ public class Fading : MonoBehaviour {
 	void Update () {
 		if (this.gameObject.activeSelf)
         {
-            alpha = Mathf.Lerp(alpha, 1, 4.0f * Time.deltaTime);
+            alpha = Mathf.Lerp(alpha, 1, Time.deltaTime);
 
             GetComponent<GUITexture>().color = new Color(1, 1, 1, alpha);
         } 

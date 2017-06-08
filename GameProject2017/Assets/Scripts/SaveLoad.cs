@@ -31,7 +31,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");    //create a file or overwrite if exists to save data too
         
-        PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.FindWithTag("Player").transform.position);
+        PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.FindWithTag("Player").transform.position, GameObject.Find("PlayerCamera").transform.position);
         bf.Serialize(file, playerInfo);       //serialize and save the data
         file.Close();
     }
@@ -39,6 +39,8 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
     //load the fila and desearialize from binary and give player information needed
     public static void Load()
     {
+        GameObject.FindWithTag("Player").GetComponent<PlayerController>().newGame = false;
+        GameObject.Find("PlayerCamera").GetComponent<CameraView>().newGame = false;
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
             Debug.Log("Load");
@@ -53,6 +55,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             playerScript.gear = data.collectibles;
             playerScript.robot = data.robotsCollected;
             GameObject.FindWithTag("Player").transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
+            GameObject.Find("PlayerCamera").transform.position = new Vector3(data.cameraPositionX, data.cameraPositionY, data.cameraPositionZ);
 
             
         }
@@ -67,9 +70,12 @@ public class PlayerData
     public float positionX;
     public float positionY;
     public float positionZ;
+    public float cameraPositionX;
+    public float cameraPositionY;
+    public float cameraPositionZ;
     public string[] collectedGears;
 
-    public PlayerData(int _maxLives, int _collectibles, int _robotsCollected, Vector3 _position)
+    public PlayerData(int _maxLives, int _collectibles, int _robotsCollected, Vector3 _position, Vector3 _cameraPosition)
     {
         maxLives = _maxLives;
         collectibles = _collectibles;
@@ -77,5 +83,8 @@ public class PlayerData
         positionX = _position.x;
         positionY = _position.y;
         positionZ = _position.z;
+        cameraPositionX = _cameraPosition.x;
+        cameraPositionY = _cameraPosition.y;
+        cameraPositionZ = _cameraPosition.z;
     }
 }

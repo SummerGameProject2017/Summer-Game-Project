@@ -30,14 +30,14 @@ public class FallingPlatform : MonoBehaviour
             {
                 if (Shake == true && HasFallen == false)
                 {
-                    transform.Translate(0.0f, 0.2f, 0.0f);
+                //    transform.Translate(0.0f, 0.2f, 0.0f);
                     GameObject DustParticle = Instantiate(Dust, transform.position, transform.rotation) as GameObject;
                     Destroy(DustParticle, 2.6f); //Deletes the particles after 2.6 seconds
                     Shake = false;
                 }
                 else if (Shake == false && HasFallen == false)
                 {
-                    transform.Translate(0.0f, -0.2f, 0.0f);
+                //    transform.Translate(0.0f, -0.2f, 0.0f);
                     Shake = true;
                 }
             }
@@ -63,6 +63,8 @@ public class FallingPlatform : MonoBehaviour
         }
 	}
 
+
+    
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")

@@ -326,8 +326,13 @@ public class Dog : Enemy
             patrolPoint.transform.position = new Vector3(XPosition, transform.position.y, ZPosition);
             idle = false;
         }
+        if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump >=2)
+        {
+            playerScript.jump = 1;
+            playerScript.bounceOnDog = true;
+            playerScript.fallBack = true;
+        }
 
-       
     }
 
 
@@ -335,8 +340,10 @@ public class Dog : Enemy
     private void OnTriggerEnter(Collider other)
     {
         //if the player jumps on the ai chnge to stunned state and bounce the player
-        if (other.gameObject.tag == "Player" && health > 0)
+        if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump < 2)
         {
+            playerScript.fallBack = false;
+            playerScript.jump = 1;
             playerScript.bounceOnDog = true;
             if (aiStunned == false)
             {
@@ -368,7 +375,13 @@ public class Dog : Enemy
 
         }
     }
-   
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+            playerScript.fallBack = false;
+    }
+
     //when the ai is out of health change to dead animation and after 3 seconds destroy the ai gameobject
     IEnumerator EnemyDead()
     {

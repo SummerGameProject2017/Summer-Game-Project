@@ -7,6 +7,8 @@ public class PS_Healing_Effect : MonoBehaviour
     public float frequency = .2f; //repeate rate
     public float resolution = 20f; //the amount of keys used to make a curve
     public float amplitude = 1.0f; //the height of values -1f to 1f
+    PlayerController playerScript;
+    GameObject player;
     //public float Zvalue = 1f;
 
     void createcircle()
@@ -54,11 +56,32 @@ public class PS_Healing_Effect : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        createcircle();	
+        player = GameObject.FindWithTag("Player");
+        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        if (playerScript.healingEffect == null)
+        {
+            playerScript.healingEffect = this.gameObject;
+        }
+        else
+        {
+            DestroyImmediate(this.gameObject);
+        }
+        createcircle();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 4, player.transform.position.z);
+
+        if (playerScript.destroyHealingParticle == true)
+        {
+            DestroyImmediate(this.gameObject);
+        }
+    }
 }
+
+
+
+    
+

@@ -119,9 +119,12 @@ public class PlayerAnim : MonoBehaviour {
         //if the player falls in water play the falling in water animation then reset player to last save position
         if (other.gameObject.tag == "Water")
         {
+           
             Anim.Play("Death-Water", -1, 0);
+           
             yield return new WaitForSeconds(1);
             DeadScript.dead = true;
+            
            
   
             

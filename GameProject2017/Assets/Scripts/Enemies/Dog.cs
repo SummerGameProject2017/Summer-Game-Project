@@ -40,6 +40,7 @@ public class Dog : Enemy
     public GameObject DogExplosionParticle;
     GameOver DeadScript;
     Health healthScript;
+    public GameObject stunParticle;
 
     public override void OnStart()
     {
@@ -430,7 +431,7 @@ public class Dog : Enemy
     //play the stunned animation for 3 seconds then change states
     IEnumerator DogStunned()
     {
-        
+            Instantiate(stunParticle, transform.position, Quaternion.identity);
             agent.SetDestination(transform.position);
             agent.updateRotation = false;
 

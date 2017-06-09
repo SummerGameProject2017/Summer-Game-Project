@@ -12,26 +12,27 @@ public class PlayerController : MonoBehaviour
 
     public int jump = 2;    
     Vector3 moveVector;
+    [HideInInspector]
     public Vector3 lastMove;
     public float jumpForce;
     float gravity = 25;
     public float verticalVelocity;
     public bool isTalking = false;
     CharacterController controller;
-    public int health;
     public Vector3 moveAnim; // animation movement vector
     public bool isGrounded = true; //  player on the ground bool
-    public Quaternion lastRotation;
-    public GameObject hitpoint1;
-    public GameObject hitpoint2;
-    public GameObject hitpoint3;
     public bool attackMode = false;
     public bool newGame = true;
+    [HideInInspector]
     public float h;
+    [HideInInspector]
     public float v;
+    [HideInInspector]
     public bool bounceOnDog = false;
+    [HideInInspector]
     public GameObject enemy;
     Health healthScript;
+    public GameObject healingParticle;
 
     // Use this for initialization
     void Start()
@@ -40,7 +41,6 @@ public class PlayerController : MonoBehaviour
      //   SaveLoad.Load();
      healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
         controller = GetComponent<CharacterController>();
-        health = 3;
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
         {
@@ -115,8 +115,8 @@ public class PlayerController : MonoBehaviour
               {
                 Vector3 direction;
                 direction = (enemy.transform.position - transform.position).normalized;
+                direction.y = 0;
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
-
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
               }
               else if (h == 0 && v == 0 && attackMode == false)
@@ -142,6 +142,7 @@ public class PlayerController : MonoBehaviour
 
             if (bounceOnDog == true)
             {
+                jump = 1;
                 verticalVelocity = jumpForce;
                 bounceOnDog = false;
             }
@@ -155,7 +156,6 @@ public class PlayerController : MonoBehaviour
             lastMove = moveVector;
 
            
-            lastRotation = this.transform.rotation;
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -164,12 +164,18 @@ public class PlayerController : MonoBehaviour
         {
             CollectedGear();
         }
+        
+      
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
         if (other.gameObject.tag == "Fountain")
         {
             Player.Instance.lives = Player.Instance.maxLives;
             healthScript.HealthChange();
+            Instantiate(healingParticle, transform.position, Quaternion.identity);
         }
-      
     }
 
     //

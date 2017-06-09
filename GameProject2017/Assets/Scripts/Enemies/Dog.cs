@@ -122,9 +122,20 @@ public class Dog : Enemy
             }
             if (Player.Instance.lives > 0)
             {
+                Vector3 direction = (player.position - transform.position).normalized;
+                direction.y = 0;
+                float angle = Vector3.Angle(direction, this.transform.forward);
                 if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && animationScript.attacking == false)
                 {
-                    aiState = States.Attack;
+                    if (angle < 20)
+                    {
+                        aiState = States.Attack;
+                    }
+                    else
+                    {
+                        Quaternion lookRotation = Quaternion.LookRotation(direction);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
+                    }
                 }
                 if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && animationScript.attacking == true)
                 {

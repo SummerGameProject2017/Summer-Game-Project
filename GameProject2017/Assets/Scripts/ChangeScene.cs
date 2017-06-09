@@ -38,10 +38,9 @@ public class ChangeScene : MonoBehaviour {
             yield return null;
         }
        
-        if (async.isDone && loadGame == true)
-        {
-            SaveLoad.Load();
-        }
+        
+           
+        
 
 
     }
@@ -60,7 +59,7 @@ public class ChangeScene : MonoBehaviour {
         StartCoroutine(DisplayLoadingScreen(loadSceneName));
         Time.timeScale = 1;
         loadGame = true;
-         
+        SaveLoad.Load();
     }
 
     public void ExitButton()

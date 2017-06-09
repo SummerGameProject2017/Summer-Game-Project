@@ -57,18 +57,24 @@ public class PlayerAnim : MonoBehaviour {
 
             if (InputManager.GetButtonDown("Jump") && PC.jump < 1)
             {
+                Debug.Log("DJump");
                 Anim.SetBool("DJump", true);
-                Anim.SetBool("Jump", false);
             }
-            if (PC.isGrounded)
+
+            if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > .9 ) //before the animation is done set its bool to be false
             {
-                Anim.SetBool("Jump", false);
-                Anim.SetBool("DJump", false);
+                if(Anim.GetCurrentAnimatorStateInfo(0).IsTag("JumpUp") || Anim.GetCurrentAnimatorStateInfo(0).IsTag("JumpDown")
+                    || Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump"))
+
+                    Anim.SetBool("Jump", false);
+
+                if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump"))
+
+                    Anim.SetBool("DJump", false);
 
             }
-
-
-
+           
+            
             
             if (InputManager.GetButtonDown("Attack"))
             {

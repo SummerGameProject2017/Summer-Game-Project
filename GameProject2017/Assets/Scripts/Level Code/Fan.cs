@@ -14,7 +14,7 @@ public class Fan : MonoBehaviour
             CharacterController ctrl = col.gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
             if (ctrl)
             {
-                ctrl.Move(Force);
+                ctrl.Move(Force);         
             }
         }
     }

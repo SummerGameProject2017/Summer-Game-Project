@@ -25,7 +25,7 @@ public class GameOver : MonoBehaviour
       
 	}
 
-    void DEAD()
+    public void DEAD()
     {
 
 

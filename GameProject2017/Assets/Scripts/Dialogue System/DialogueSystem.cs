@@ -149,7 +149,7 @@ public class DialogueSystem : MonoBehaviour
             dialoguePanel.SetActive(false);
             isTalking = false;
             playerScript.enabled = true;
-            
+            playerScript.isTalking = false;
         }
     }
 
@@ -188,9 +188,11 @@ public class DialogueSystem : MonoBehaviour
         npcScript.enabled = true;
         savePanel.SetActive(false);
         playerScript.enabled = true;
+        playerScript.isTalking = false;
         noButton.image.color = new Color(255, 255, 255);
         yesButton.image.color = new Color(255, 255, 255);
         no = false;
+        
     }
     public void YesButtonPushed()
     {
@@ -198,8 +200,10 @@ public class DialogueSystem : MonoBehaviour
         SaveLoad.Save();
         savePanel.SetActive(false);
         playerScript.enabled = true;
+        playerScript.isTalking = false;
         noButton.image.color = new Color(255, 255, 255);
         yesButton.image.color = new Color(255, 255, 255);
         yes = false;
+        
     }
 }

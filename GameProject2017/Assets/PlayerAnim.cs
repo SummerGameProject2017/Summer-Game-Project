@@ -20,10 +20,12 @@ public class PlayerAnim : MonoBehaviour {
     // Animator Component
     public Animator Anim;
     public bool attacking = false;
+    CameraView cameraScript;
     PlayerController PC;
     GameOver DeadScript;
     // Use this for initialization
     void Start () {
+        cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
         DeadScript = GetComponent<GameOver>();
         Anim = GetComponent<Animator>();
         PC = GetComponent<PlayerController>();
@@ -50,17 +52,17 @@ public class PlayerAnim : MonoBehaviour {
 
         if (Player.Instance.lives > 0)
         {
-            if (InputManager.GetButtonDown("Jump") && PC.jump >= 1)
+            if (InputManager.GetButtonDown("Jump") && PC.jump >= 1 && PC.isActiveAndEnabled && PC.isTalking == false)
             {
                 Anim.SetBool("Jump", true);
             }
+            
 
             if (InputManager.GetButtonDown("Jump") && PC.jump < 1)
             {
                 Debug.Log("DJump");
                 Anim.SetBool("DJump", true);
             }
-
             if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > .9 ) //before the animation is done set its bool to be false
             {
                 if(Anim.GetCurrentAnimatorStateInfo(0).IsTag("JumpUp") || Anim.GetCurrentAnimatorStateInfo(0).IsTag("JumpDown")
@@ -105,6 +107,12 @@ public class PlayerAnim : MonoBehaviour {
         }
 
 
+        if (!PC.isActiveAndEnabled)
+        {
+            Anim.SetBool("Jump", false);
+            Anim.Play("Idle", -1, 0);
+        }
+
     }
 
 
@@ -113,9 +121,12 @@ public class PlayerAnim : MonoBehaviour {
         //if the player falls in water play the falling in water animation then reset player to last save position
         if (other.gameObject.tag == "Water")
         {
+            cameraScript.enabled = false;
             Anim.Play("Death-Water", -1, 0);
             yield return new WaitForSeconds(1);
+            PC.enabled = false;
             DeadScript.dead = true;
+            
            
   
             

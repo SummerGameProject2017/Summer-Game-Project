@@ -217,8 +217,19 @@ public class Dog : Enemy
     //chase after the player
     void Chase()
     {
+        Vector3 direction;
+        direction = (player.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        agent.SetDestination(transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
+
         firstAttack = true;
         agent.SetDestination(player.transform.position);
+
+
+
+
+
         patrolPoint.SetActive(false);
         agent.speed = 7;
         anim.SetBool("Walk", false);
@@ -326,12 +337,24 @@ public class Dog : Enemy
             patrolPoint.transform.position = new Vector3(XPosition, transform.position.y, ZPosition);
             idle = false;
         }
-        if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump >=2)
+        if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump >=2 && player.transform.position.y - 1 < transform.position.y)
+        {
+            playerScript.fallBack = true;
+        }
+        if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump < 2 && player.transform.position.y > transform.position.y)
         {
             playerScript.jump = 1;
             playerScript.bounceOnDog = true;
-            playerScript.fallBack = true;
+            if (aiStunned == false)
+            {
+
+                aiStunned = true;
+                aiState = States.Stunned;
+                StartCoroutine(DogStunned());
+            }
         }
+        
+
 
     }
 

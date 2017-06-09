@@ -39,8 +39,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
     //load the fila and desearialize from binary and give player information needed
     public static void Load()
     {
-        GameObject.FindWithTag("Player").GetComponent<PlayerController>().newGame = false;
-        GameObject.Find("PlayerCamera").GetComponent<CameraView>().newGame = false;
+        
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
             Debug.Log("Load");
@@ -50,7 +49,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             FileStream file = File.Open(Application.persistentDataPath + "/SaveFile.dat", FileMode.Open);   
             PlayerData data = (PlayerData)bf.Deserialize(file);     //load the data from the class
             file.Close();
-
+            
             playerScript.lives = data.maxLives;       //set health and collectibles to saved data
             playerScript.gear = data.collectibles;
             playerScript.robot = data.robotsCollected;

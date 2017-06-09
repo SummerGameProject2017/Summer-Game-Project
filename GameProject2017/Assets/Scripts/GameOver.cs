@@ -7,11 +7,12 @@ public class GameOver : MonoBehaviour
 {
     public Player PlayerScript;
     public bool dead = false;
-    private GameObject Death;
+    public GameObject Death;
     // Use this for initialization
     void Start ()
     {
         Death = GameObject.Find("GAMEOVER");
+        Death.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -24,12 +25,12 @@ public class GameOver : MonoBehaviour
       
 	}
 
-    void DEAD()
+    public void DEAD()
     {
 
 
         //Instantiate(Resources.Load("GAMEOVER"));
-        Death.gameObject.SetActive(true);
+            Death.gameObject.SetActive(true);
             dead = false;
         
     }

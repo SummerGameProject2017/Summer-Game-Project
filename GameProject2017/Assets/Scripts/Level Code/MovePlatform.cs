@@ -19,9 +19,7 @@ public class MovePlatform : MonoBehaviour
         while (true)
         {
             yield return StartCoroutine(MoveObject(transform, pointA, pointB, 3.0f));
-            transform.Rotate(0, 180, 0);
             yield return StartCoroutine(MoveObject(transform, pointB, pointA, 3.0f));
-            transform.Rotate(0, 180, 0);
         }
     }
 

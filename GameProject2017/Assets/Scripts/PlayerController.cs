@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
         }
-        SaveLoad.Save();
+     //   SaveLoad.Save();
     }
 
     // Update is called once per frame
@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
 
         if (fallBack == true)
         {
-            transform.position = Vector3.Lerp(transform.position, enemy.transform.position + enemy.transform.forward * 20, Time.deltaTime * 2);
+            transform.position = Vector3.Lerp(transform.position, enemy.transform.position + enemy.transform.forward * 20, Time.deltaTime * 5);
         }
         
     }

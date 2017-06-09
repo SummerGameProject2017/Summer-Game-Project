@@ -52,7 +52,7 @@ public class NPC : MonoBehaviour
           
        
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         playerScript.isTalking = true;
     }
@@ -60,6 +60,7 @@ public class NPC : MonoBehaviour
     {
         playerScript.isTalking = false;
     }
+
     //load the data from the Json file and convert to string getting the variables we need for dialogue
     JsonData GetString()            
     {

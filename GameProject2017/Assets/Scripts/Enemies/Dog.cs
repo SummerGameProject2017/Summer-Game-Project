@@ -40,6 +40,7 @@ public class Dog : Enemy
     public GameObject DogExplosionParticle;
     GameOver DeadScript;
     Health healthScript;
+    public GameObject stunParticle;
 
     public override void OnStart()
     {
@@ -341,13 +342,13 @@ public class Dog : Enemy
         {
             playerScript.fallBack = true;
         }
-        if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump < 2 && player.transform.position.y > transform.position.y)
+        if (other.gameObject.tag == "Player" && health > 0 && player.transform.position.y - 0.5 > transform.position.y)
         {
             playerScript.jump = 1;
             playerScript.bounceOnDog = true;
             if (aiStunned == false)
             {
-
+                Instantiate(stunParticle, transform.position + (Vector3.forward * 2) + (Vector3.up * 2), Quaternion.identity);
                 aiStunned = true;
                 aiState = States.Stunned;
                 StartCoroutine(DogStunned());
@@ -365,6 +366,7 @@ public class Dog : Enemy
         //if the player jumps on the ai chnge to stunned state and bounce the player
         if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump < 2)
         {
+            Instantiate(stunParticle, transform.position + Vector3.up * 2, Quaternion.identity);
             playerScript.fallBack = false;
             playerScript.jump = 1;
             playerScript.bounceOnDog = true;
@@ -430,7 +432,7 @@ public class Dog : Enemy
     //play the stunned animation for 3 seconds then change states
     IEnumerator DogStunned()
     {
-        
+            
             agent.SetDestination(transform.position);
             agent.updateRotation = false;
 

@@ -28,15 +28,12 @@ public class PlayerController : MonoBehaviour
     public bool newGame = true;
     public float h;
     public float v;
-<<<<<<< HEAD
     Animation Anim;
 
 
-=======
     public bool bounceOnDog = false;
     public GameObject enemy;
     Health healthScript;
->>>>>>> d60b4e5c6858dc7c5ab5b8492d34f63bf55af07f
 
     // Use this for initialization
     void Start()

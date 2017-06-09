@@ -20,10 +20,12 @@ public class PlayerAnim : MonoBehaviour {
     // Animator Component
     public Animator Anim;
     public bool attacking = false;
+    CameraView cameraScript;
     PlayerController PC;
     GameOver DeadScript;
     // Use this for initialization
     void Start () {
+        cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
         DeadScript = GetComponent<GameOver>();
         Anim = GetComponent<Animator>();
         PC = GetComponent<PlayerController>();
@@ -119,10 +121,10 @@ public class PlayerAnim : MonoBehaviour {
         //if the player falls in water play the falling in water animation then reset player to last save position
         if (other.gameObject.tag == "Water")
         {
-           
+            cameraScript.enabled = false;
             Anim.Play("Death-Water", -1, 0);
-           
             yield return new WaitForSeconds(1);
+            PC.enabled = false;
             DeadScript.dead = true;
             
            

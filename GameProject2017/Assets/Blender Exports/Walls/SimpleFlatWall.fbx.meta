@@ -1,79 +1,22 @@
 fileFormatVersion: 2
-guid: 460f7e5c86fedfa499a3224160f3e02e
-timeCreated: 1496856656
+guid: 9ce68bc7c6bd756478498c665c3306cf
+timeCreated: 1497016221
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Cube
-    100002: Cube_001
-    100004: Cube_002
-    100006: Cube_003
-    100008: Cube_004
-    100010: Cube_005
-    100012: Cube_006
-    100014: Cube_007
-    100016: Cube_008
-    100018: Cube_012
-    100020: Cube_013
-    100022: Cylinder
-    100024: Cylinder_003
-    100026: //RootNode
-    400000: Cube
-    400002: Cube_001
-    400004: Cube_002
-    400006: Cube_003
-    400008: Cube_004
-    400010: Cube_005
-    400012: Cube_006
-    400014: Cube_007
-    400016: Cube_008
-    400018: Cube_012
-    400020: Cube_013
-    400022: Cylinder
-    400024: Cylinder_003
-    400026: //RootNode
-    2300000: Cube
-    2300002: Cube_001
-    2300004: Cube_002
-    2300006: Cube_003
-    2300008: Cube_004
-    2300010: Cube_005
-    2300012: Cube_006
-    2300014: Cube_007
-    2300016: Cube_008
-    2300018: Cube_012
-    2300020: Cube_013
-    2300022: Cylinder
-    2300024: Cylinder_003
-    3300000: Cube
-    3300002: Cube_001
-    3300004: Cube_002
-    3300006: Cube_003
-    3300008: Cube_004
-    3300010: Cube_005
-    3300012: Cube_006
-    3300014: Cube_007
-    3300016: Cube_008
-    3300018: Cube_012
-    3300020: Cube_013
-    3300022: Cylinder
-    3300024: Cylinder_003
-    4300000: Cylinder
-    4300002: Cylinder_003
-    4300004: Cube_013
-    4300006: Cube_006
-    4300008: Cube_005
-    4300010: Cube_003
-    4300012: Cube_001
-    4300014: Cube
-    4300016: Cube_002
-    4300018: Cube_004
-    4300020: Cube_007
-    4300022: Cube_008
-    4300024: Cube_012
-    7400000: Default Take
-    9500000: //RootNode
+    100000: Cylinder.016
+    100002: //RootNode
+    100004: Wall
+    400000: Cylinder.016
+    400002: //RootNode
+    400004: Wall
+    2300000: Cylinder.016
+    2300002: Wall
+    3300000: Cylinder.016
+    3300002: Wall
+    4300000: Cylinder.016
+    4300002: Wall
   materials:
     importMaterials: 1
     materialName: 0
@@ -138,7 +81,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

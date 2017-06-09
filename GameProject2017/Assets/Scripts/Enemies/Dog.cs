@@ -366,7 +366,7 @@ public class Dog : Enemy
         //if the player jumps on the ai chnge to stunned state and bounce the player
         if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump < 2)
         {
-            Instantiate(stunParticle, transform.position + Vector2.up * 2, Quaternion.identity);
+            Instantiate(stunParticle, transform.position + Vector3.up * 2, Quaternion.identity);
             playerScript.fallBack = false;
             playerScript.jump = 1;
             playerScript.bounceOnDog = true;

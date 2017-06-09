@@ -9,7 +9,7 @@ public class ChangeScene : MonoBehaviour {
     private int loadProgress = 0;
     bool loadGame = false;
     string loadSceneName;
-
+    AsyncOperation async;
     private void Start()
     {
         background.SetActive(false);
@@ -18,27 +18,21 @@ public class ChangeScene : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
+        SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded 
+    }
 
     IEnumerator DisplayLoadingScreen(string sceneName)
     {
         loadLevel = false;
         background.SetActive(true);
- 
-       
-
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
-
-        while (!async.isDone)
-        {
-            loadProgress = (int)(async.progress * 100);
 
 
-            yield return null;
-        }
-       
+        async = SceneManager.LoadSceneAsync(sceneName);
         
+
+        yield return null;
+       
+         
            
         
 
@@ -46,20 +40,31 @@ public class ChangeScene : MonoBehaviour {
     }
 
 
+    void LevelWasLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (loadGame == true)
+        {
+            GameObject.FindWithTag("Player").GetComponent<PlayerController>().newGame = false;
+            GameObject.Find("PlayerCamera").GetComponent<CameraView>().newGame = false;
+            SaveLoad.Load();
+        }
+    }
 
     public void StartButtonFunction()
     {
         loadSceneName = "Junkyard_Level_VR";
         StartCoroutine(DisplayLoadingScreen(loadSceneName));
+        SaveLoad.Save();
     }
 
     public void LoadButtonFunction()
     {
+        loadGame = true;
         loadSceneName = "Junkyard_Level_VR";
         StartCoroutine(DisplayLoadingScreen(loadSceneName));
         Time.timeScale = 1;
-        loadGame = true;
-        SaveLoad.Load();
+        
+        
     }
 
     public void ExitButton()

@@ -33,6 +33,12 @@ public class PlayerController : MonoBehaviour
     public GameObject enemy;
     Health healthScript;
     public GameObject healingParticle;
+    [HideInInspector]
+    public bool fallBack = false;
+    [HideInInspector]
+    public bool destroyHealingParticle;
+    [HideInInspector]
+    public GameObject healingEffect;
 
     // Use this for initialization
     void Start()
@@ -46,7 +52,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
         }
-        SaveLoad.Save();
+     //   SaveLoad.Save();
     }
 
     // Update is called once per frame
@@ -154,9 +160,13 @@ public class PlayerController : MonoBehaviour
 
             controller.Move(moveVector * Time.deltaTime);
             lastMove = moveVector;
-
-           
         }
+
+        if (fallBack == true)
+        {
+            transform.position = Vector3.Lerp(transform.position, enemy.transform.position + enemy.transform.forward * 20, Time.deltaTime * 5);
+        }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -172,12 +182,20 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Fountain")
         {
-            Player.Instance.lives = Player.Instance.maxLives;
+            destroyHealingParticle = false;
+            Debug.Log("InFountain");
             healthScript.HealthChange();
             Instantiate(healingParticle, transform.position, Quaternion.identity);
+            Player.Instance.lives = Player.Instance.maxLives;
         }
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Fountain")
+        {
+            destroyHealingParticle = true;
+        }
+    }
     //
     // Summary:
     //     ///

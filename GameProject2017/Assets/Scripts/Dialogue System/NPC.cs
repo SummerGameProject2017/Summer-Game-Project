@@ -41,10 +41,12 @@ public class NPC : MonoBehaviour
         float offset = Vector3.Distance(transform.position, player.position);
         if (playerScript.isTalking == true)
         {
-            canvas.transform.position = this.transform.position;
+            canvas.transform.position = this.transform.position + Vector3.up * 5;
+
             Vector3 direction;
             direction = (GameObject.Find("PlayerCamera").transform.position - canvas.transform.position).normalized;
             canvas.transform.rotation = Quaternion.LookRotation(direction);
+
 
             if (InputManager.GetButtonDown("Jump") && offset < 3 && dialogueScript.isTalking == false)  //if the character isnt already talking send the dialogue aray to the Dialogue system to display text
             {

@@ -40,6 +40,7 @@ public class Dog : Enemy
     public GameObject DogExplosionParticle;
     GameOver DeadScript;
     Health healthScript;
+    public GameObject stunParticle;
 
     public override void OnStart()
     {
@@ -122,9 +123,20 @@ public class Dog : Enemy
             }
             if (Player.Instance.lives > 0)
             {
+                Vector3 direction = (player.position - transform.position).normalized;
+                direction.y = 0;
+                float angle = Vector3.Angle(direction, this.transform.forward);
                 if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && animationScript.attacking == false)
                 {
-                    aiState = States.Attack;
+                    if (angle < 20)
+                    {
+                        aiState = States.Attack;
+                    }
+                    else
+                    {
+                        Quaternion lookRotation = Quaternion.LookRotation(direction);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
+                    }
                 }
                 if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && animationScript.attacking == true)
                 {
@@ -206,8 +218,19 @@ public class Dog : Enemy
     //chase after the player
     void Chase()
     {
+        Vector3 direction;
+        direction = (player.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        agent.SetDestination(transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
+
         firstAttack = true;
         agent.SetDestination(player.transform.position);
+
+
+
+
+
         patrolPoint.SetActive(false);
         agent.speed = 7;
         anim.SetBool("Walk", false);
@@ -315,8 +338,25 @@ public class Dog : Enemy
             patrolPoint.transform.position = new Vector3(XPosition, transform.position.y, ZPosition);
             idle = false;
         }
+        if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump >=2 && player.transform.position.y - 1 < transform.position.y)
+        {
+            playerScript.fallBack = true;
+        }
+        if (other.gameObject.tag == "Player" && health > 0 && player.transform.position.y - 0.5 > transform.position.y)
+        {
+            animationScript.Anim.SetBool("Jump", true);
+            playerScript.jump = 1;
+            playerScript.bounceOnDog = true;
+            if (aiStunned == false)
+            {
+                aiStunned = true;
+                aiState = States.Stunned;
+                StartCoroutine(DogStunned());
+            }
+        }
+        
 
-       
+
     }
 
 
@@ -324,8 +364,11 @@ public class Dog : Enemy
     private void OnTriggerEnter(Collider other)
     {
         //if the player jumps on the ai chnge to stunned state and bounce the player
-        if (other.gameObject.tag == "Player" && health > 0)
+        if (other.gameObject.tag == "Player" && health > 0 && playerScript.jump < 2)
         {
+            animationScript.Anim.SetBool("Jump", true);
+            playerScript.fallBack = false;
+            playerScript.jump = 1;
             playerScript.bounceOnDog = true;
             if (aiStunned == false)
             {
@@ -357,7 +400,13 @@ public class Dog : Enemy
 
         }
     }
-   
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+            playerScript.fallBack = false;
+    }
+
     //when the ai is out of health change to dead animation and after 3 seconds destroy the ai gameobject
     IEnumerator EnemyDead()
     {
@@ -375,7 +424,7 @@ public class Dog : Enemy
         anim.SetBool("Idle", false);
         
         yield return new WaitForSeconds(3);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
         Instantiate(DogExplosionParticle, transform.position, Quaternion.identity);
     }
 
@@ -383,8 +432,8 @@ public class Dog : Enemy
     //play the stunned animation for 3 seconds then change states
     IEnumerator DogStunned()
     {
-        
-            agent.SetDestination(transform.position);
+        Instantiate(stunParticle, transform.position + transform.forward * 3 + transform.up * 2, Quaternion.identity);
+        agent.SetDestination(transform.position);
             agent.updateRotation = false;
 
             anim.SetBool("Stunned", true);

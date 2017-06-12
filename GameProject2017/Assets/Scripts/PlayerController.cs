@@ -12,26 +12,33 @@ public class PlayerController : MonoBehaviour
 
     public int jump = 2;    
     Vector3 moveVector;
+    [HideInInspector]
     public Vector3 lastMove;
     public float jumpForce;
     float gravity = 25;
     public float verticalVelocity;
     public bool isTalking = false;
     CharacterController controller;
-    public int health;
     public Vector3 moveAnim; // animation movement vector
     public bool isGrounded = true; //  player on the ground bool
-    public Quaternion lastRotation;
-    public GameObject hitpoint1;
-    public GameObject hitpoint2;
-    public GameObject hitpoint3;
     public bool attackMode = false;
     public bool newGame = true;
+    [HideInInspector]
     public float h;
+    [HideInInspector]
     public float v;
+    [HideInInspector]
     public bool bounceOnDog = false;
+    [HideInInspector]
     public GameObject enemy;
     Health healthScript;
+    public GameObject healingParticle;
+    [HideInInspector]
+    public bool fallBack = false;
+    [HideInInspector]
+    public bool destroyHealingParticle;
+    [HideInInspector]
+    public GameObject healingEffect;
 
     // Use this for initialization
     void Start()
@@ -40,13 +47,12 @@ public class PlayerController : MonoBehaviour
      //   SaveLoad.Load();
      healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
         controller = GetComponent<CharacterController>();
-        health = 3;
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
         {
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
         }
-        SaveLoad.Save();
+      //  SaveLoad.Save();
     }
 
     // Update is called once per frame
@@ -115,8 +121,8 @@ public class PlayerController : MonoBehaviour
               {
                 Vector3 direction;
                 direction = (enemy.transform.position - transform.position).normalized;
+                direction.y = 0;
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
-
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
               }
               else if (h == 0 && v == 0 && attackMode == false)
@@ -142,6 +148,7 @@ public class PlayerController : MonoBehaviour
 
             if (bounceOnDog == true)
             {
+                jump = 1;
                 verticalVelocity = jumpForce;
                 bounceOnDog = false;
             }
@@ -153,10 +160,13 @@ public class PlayerController : MonoBehaviour
 
             controller.Move(moveVector * Time.deltaTime);
             lastMove = moveVector;
-
-           
-            lastRotation = this.transform.rotation;
         }
+
+        if (fallBack == true)
+        {
+            transform.position = Vector3.Lerp(transform.position, enemy.transform.position + enemy.transform.forward * 20, Time.deltaTime * 5);
+        }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -164,14 +174,28 @@ public class PlayerController : MonoBehaviour
         {
             CollectedGear();
         }
-        if (other.gameObject.tag == "Fountain")
-        {
-            Player.Instance.lives = Player.Instance.maxLives;
-            healthScript.HealthChange();
-        }
+        
       
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Fountain")
+        {
+            destroyHealingParticle = false;
+            Debug.Log("InFountain");
+            healthScript.HealthChange();
+            Instantiate(healingParticle, transform.position, Quaternion.identity);
+            Player.Instance.lives = Player.Instance.maxLives;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Fountain")
+        {
+            destroyHealingParticle = true;
+        }
+    }
     //
     // Summary:
     //     ///

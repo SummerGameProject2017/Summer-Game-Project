@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    CharacterController controller;
+    PlayerAnim PA;
 
     [Range(3.0f, 8.0f)]
     public float speed;
-
-    Vector3 additionalmovement;
-
-    public int jump = 2;    
-    Vector3 moveVector;
-    [HideInInspector]
-    public Vector3 lastMove;
-    public float jumpForce;
     float gravity = 25;
-    public float verticalVelocity;
-    public bool isTalking = false;
-    CharacterController controller;
+    public float jumpForce;
+    public float verticalVelocity;    
+
+    public int jump = 2;       
+    
+    Vector3 moveVector;
+    Vector3 additionalmovement;
     public Vector3 moveAnim; // animation movement vector
+
     public bool isGrounded = true; //  player on the ground bool
     public bool attackMode = false;
     public bool newGame = true;
+    public bool isTalking = false;
+
+    [HideInInspector]
+    public Vector3 lastMove;
     [HideInInspector]
     public float h;
     [HideInInspector]
@@ -39,14 +42,19 @@ public class PlayerController : MonoBehaviour
     public bool destroyHealingParticle;
     [HideInInspector]
     public GameObject healingEffect;
+    float waitTime = 0;
+    bool moving  = false;
+
 
     // Use this for initialization
     void Start()
     {
         
-     //   SaveLoad.Load();
-     healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
+        //   SaveLoad.Load();
+        healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
         controller = GetComponent<CharacterController>();
+        PA = GetComponent<PlayerAnim>(); 
+        
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
         {
@@ -92,14 +100,15 @@ public class PlayerController : MonoBehaviour
                 moveVector = lastMove;
             }
 
-
-            if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
+          
+            if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false && PA.inTransition == false)
             {
-                jump--;
-                verticalVelocity = jumpForce;
-                isGrounded = false;
+                    jump--;
+                    verticalVelocity = jumpForce;
+                    isGrounded = false;
 
             }
+
             if ((h > 0.65 || h < -0.65) && (v > 0.65 || v < -0.65))
             {
                 speed = 7.5f;
@@ -110,7 +119,15 @@ public class PlayerController : MonoBehaviour
                 moveVector = (speed * (h * right + v * forward));
             }
 
-            
+            if (h != 0 || v != 0)
+            {
+                moving = true;
+            }
+            if (h == 0 && v == 0 && moving == true)
+            {
+                moving = false;
+                waitTime = Time.time;
+            }
 
 
             moveAnim.x = InputManager.GetAxis("Horizontal"); 
@@ -127,11 +144,14 @@ public class PlayerController : MonoBehaviour
               }
               else if (h == 0 && v == 0 && attackMode == false)
               {
-                Vector3 direction;
-                direction = (GameObject.Find("PlayerCamera").transform.position - transform.position).normalized;
-                direction.y = 0;
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
+                if (Time.time >= waitTime + 3)
+                {
+                    Vector3 direction;
+                    direction = (GameObject.Find("PlayerCamera").transform.position - transform.position).normalized;
+                    direction.y = 0;
+                    Quaternion lookRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
+                }
               }
 
               else

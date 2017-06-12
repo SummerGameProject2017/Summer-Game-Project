@@ -19,10 +19,18 @@ public class PlayerAnim : MonoBehaviour {
 
     // Animator Component
     public Animator Anim;
+
+    //Bools
     public bool attacking = false;
+    public bool inTransition = false;
+
+    // Refernced scripts
     CameraView cameraScript;
     PlayerController PC;
     GameOver DeadScript;
+
+
+
     // Use this for initialization
     void Start () {
         cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
@@ -63,9 +71,9 @@ public class PlayerAnim : MonoBehaviour {
                 Debug.Log("DJump");
                 Anim.SetBool("DJump", true);
             }
-            if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > .9 ) //before the animation is done set its bool to be false
+            if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9 ) //before the animation is done set its bool to be false
             {
-                if(Anim.GetCurrentAnimatorStateInfo(0).IsTag("JumpUp") || Anim.GetCurrentAnimatorStateInfo(0).IsTag("JumpDown")
+                if(Anim.GetCurrentAnimatorStateInfo(0).IsTag("Jump")
                     || Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump"))
 
                     Anim.SetBool("Jump", false);
@@ -75,8 +83,8 @@ public class PlayerAnim : MonoBehaviour {
                     Anim.SetBool("DJump", false);
 
             }
+
            
-            
             
             if (InputManager.GetButtonDown("Attack"))
             {
@@ -112,6 +120,15 @@ public class PlayerAnim : MonoBehaviour {
             Anim.SetBool("Jump", false);
             Anim.Play("Idle", -1, 0);
         }
+        if (Anim.IsInTransition(0))
+        {
+            inTransition = true;
+
+        }
+        if(!Anim.IsInTransition(0))
+        {
+            inTransition = false;
+        }
 
     }
 
@@ -121,15 +138,12 @@ public class PlayerAnim : MonoBehaviour {
         //if the player falls in water play the falling in water animation then reset player to last save position
         if (other.gameObject.tag == "Water")
         {
+
             cameraScript.enabled = false;
             Anim.Play("Death-Water", -1, 0);
             yield return new WaitForSeconds(1);
             PC.enabled = false;
             DeadScript.dead = true;
-            
-           
-  
-            
 
         }
     }

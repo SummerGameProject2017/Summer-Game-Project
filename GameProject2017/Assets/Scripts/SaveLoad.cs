@@ -9,9 +9,10 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
 {
 
 
-
+    public static bool continueFromMain = false;
     static GameObject[] collectables;
     static GameObject[] dogs;
+    static GameObject[] collectBot;
     static Player playerScript;
     // Use this for initialization
 
@@ -28,15 +29,16 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
     //create or open a save file and serialize the data being saved to binary then close the file
     public static void Save()   
     {
-        
         collectables = GameObject.FindGameObjectsWithTag("Collectable");
         dogs = GameObject.FindGameObjectsWithTag("Enemy");
+        collectBot = GameObject.FindGameObjectsWithTag("CollectBot");
+        
         playerScript = Player.Instance;
         Debug.Log("Saved Game");
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");    //create a file or overwrite if exists to save data too
         
-        PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.FindWithTag("Player").transform.position, GameObject.Find("PlayerCamera").transform.position);
+        PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.FindWithTag("Player").transform.position, GameObject.Find("PlayerCamera").transform.position, GameObject.Find("PlayerCamera").transform.eulerAngles);
         bf.Serialize(file, playerInfo);       //serialize and save the data
         
         file.Close();
@@ -45,15 +47,26 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
     //load the fila and desearialize from binary and give player information needed
     public static void Load()
     {
+        if (continueFromMain == true)
+        {
+            continueFromMain = false;
+            collectables = GameObject.FindGameObjectsWithTag("Collectable");
+            dogs = GameObject.FindGameObjectsWithTag("Enemy");
+            collectBot = GameObject.FindGameObjectsWithTag("CollectBot");
+            }
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
             foreach (GameObject gear in collectables)
             {
                 gear.SetActive(true);
-        }
+            }
             foreach (GameObject enemy in dogs)
             {
                 enemy.SetActive(true);
+            }
+            foreach (GameObject robot in collectBot)
+            {
+                robot.SetActive(true);
             }
 
             Debug.Log("Load");
@@ -69,8 +82,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             playerScript.robot = data.robotsCollected;
             GameObject.FindWithTag("Player").transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
             GameObject.Find("PlayerCamera").transform.position = new Vector3(data.cameraPositionX, data.cameraPositionY, data.cameraPositionZ);
-
-            
+            GameObject.Find("PlayerCamera").transform.rotation = Quaternion.Euler(data.cameraRotationX, data.cameraRotationY, data.cameraRotationZ);
         }
     }
 }
@@ -86,9 +98,12 @@ public class PlayerData
     public float cameraPositionX;
     public float cameraPositionY;
     public float cameraPositionZ;
+    public float cameraRotationX;
+    public float cameraRotationY;
+    public float cameraRotationZ;
     public string[] collectedGears;
 
-    public PlayerData(int _maxLives, int _collectibles, int _robotsCollected, Vector3 _position, Vector3 _cameraPosition)
+    public PlayerData(int _maxLives, int _collectibles, int _robotsCollected, Vector3 _position, Vector3 _cameraPosition, Vector3 _cameraRotation)
     {
         maxLives = _maxLives;
         collectibles = _collectibles;
@@ -99,5 +114,10 @@ public class PlayerData
         cameraPositionX = _cameraPosition.x;
         cameraPositionY = _cameraPosition.y;
         cameraPositionZ = _cameraPosition.z;
+        cameraRotationX = _cameraRotation.x;
+        cameraRotationY = _cameraRotation.y;
+        cameraRotationZ = _cameraRotation.z;
+
+
     }
 }

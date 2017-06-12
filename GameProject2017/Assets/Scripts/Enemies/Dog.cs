@@ -424,7 +424,7 @@ public class Dog : Enemy
         anim.SetBool("Idle", false);
         
         yield return new WaitForSeconds(3);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
         Instantiate(DogExplosionParticle, transform.position, Quaternion.identity);
     }
 

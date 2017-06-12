@@ -8,17 +8,15 @@ public class CameraView : MonoBehaviour
 
     Vector3 offset;
 
-    public float damping = 2;
     public bool newGame = true;
-    // Use this for initialization
     void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
 
         if (newGame == true)
         {
-            transform.localPosition = new Vector3(7.9f, 7.9f, -10.7f);
-            transform.localRotation = Quaternion.Euler(24.043f, -51.16f, -1.258f);
+            transform.localPosition = new Vector3(6.29f, 6.67f, -9.46f);
+            transform.localRotation = Quaternion.Euler(28.58f, -52.87f, 1.347f);
         } 
         offset = transform.position - target.transform.position;
             }
@@ -27,8 +25,7 @@ public class CameraView : MonoBehaviour
 
         Vector3 desiredPosition = target.transform.position + offset;
 
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * damping);
-        //transform.LookAt(target);
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2f);
 
     }
 

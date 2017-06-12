@@ -7,16 +7,18 @@ using System.IO;
 
 public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated when needed. Doesnt need to be attached to anything
 {
-   
 
-    
 
+
+    static GameObject[] collectables;
+    static GameObject[] dogs;
     static Player playerScript;
     // Use this for initialization
 
-    
-    public override void OnStart () {
-	}
+
+    public override void OnStart() {
+        
+            }
 
     // Update is called once per frame
     public override void OnUpdate() {
@@ -26,6 +28,9 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
     //create or open a save file and serialize the data being saved to binary then close the file
     public static void Save()   
     {
+        
+        collectables = GameObject.FindGameObjectsWithTag("Collectable");
+        dogs = GameObject.FindGameObjectsWithTag("Enemy");
         playerScript = Player.Instance;
         Debug.Log("Saved Game");
         BinaryFormatter bf = new BinaryFormatter();
@@ -33,15 +38,24 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         
         PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.FindWithTag("Player").transform.position, GameObject.Find("PlayerCamera").transform.position);
         bf.Serialize(file, playerInfo);       //serialize and save the data
+        
         file.Close();
     }
 
     //load the fila and desearialize from binary and give player information needed
     public static void Load()
     {
-        
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
+            foreach (GameObject gear in collectables)
+            {
+                gear.SetActive(true);
+        }
+            foreach (GameObject enemy in dogs)
+            {
+                enemy.SetActive(true);
+            }
+
             Debug.Log("Load");
             playerScript = Player.Instance;
             //if the file exists open and load

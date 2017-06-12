@@ -12,6 +12,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
 
     static GameObject[] collectables;
     static GameObject[] dogs;
+    static GameObject[] collectBot;
     static Player playerScript;
     // Use this for initialization
 
@@ -31,6 +32,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         
         collectables = GameObject.FindGameObjectsWithTag("Collectable");
         dogs = GameObject.FindGameObjectsWithTag("Enemy");
+        collectBot = GameObject.FindGameObjectsWithTag("CollectBot");
         playerScript = Player.Instance;
         Debug.Log("Saved Game");
         BinaryFormatter bf = new BinaryFormatter();
@@ -54,6 +56,10 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             foreach (GameObject enemy in dogs)
             {
                 enemy.SetActive(true);
+            }
+            foreach (GameObject robot in collectBot)
+            {
+                robot.SetActive(true);
             }
 
             Debug.Log("Load");

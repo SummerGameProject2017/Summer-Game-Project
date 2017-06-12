@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     public bool destroyHealingParticle;
     [HideInInspector]
     public GameObject healingEffect;
+    float waitTime = 0;
+    bool moving  = false;
 
     // Use this for initialization
     void Start()
@@ -110,7 +112,15 @@ public class PlayerController : MonoBehaviour
                 moveVector = (speed * (h * right + v * forward));
             }
 
-            
+            if (h != 0 || v != 0)
+            {
+                moving = true;
+            }
+            if (h == 0 && v == 0 && moving == true)
+            {
+                moving = false;
+                waitTime = Time.time;
+            }
 
 
             moveAnim.x = InputManager.GetAxis("Horizontal"); 
@@ -127,11 +137,14 @@ public class PlayerController : MonoBehaviour
               }
               else if (h == 0 && v == 0 && attackMode == false)
               {
-                Vector3 direction;
-                direction = (GameObject.Find("PlayerCamera").transform.position - transform.position).normalized;
-                direction.y = 0;
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
+                if (Time.time >= waitTime + 3)
+                {
+                    Vector3 direction;
+                    direction = (GameObject.Find("PlayerCamera").transform.position - transform.position).normalized;
+                    direction.y = 0;
+                    Quaternion lookRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
+                }
               }
 
               else

@@ -30,7 +30,7 @@ public class DialogueSystem : MonoBehaviour
         npcScript = GameObject.Find("SaveBot").GetComponent<NPC>();
         playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         dialogueText = dialoguePanel.transform.FindChild("Text").GetComponent<Text>();
-        nameText = dialoguePanel.transform.FindChild("Name").GetChild(0).GetComponent<Text>();
+ //       nameText = dialoguePanel.transform.FindChild("Name").GetChild(0).GetComponent<Text>();
         dialoguePanel.SetActive(false);
 
         yesButton = savePanel.transform.FindChild("Yes").GetComponent<Button>();
@@ -116,7 +116,7 @@ public class DialogueSystem : MonoBehaviour
         StartCoroutine(DisplayString(dialogueLines[dialogueIndex]));
         isStringBeingShown = true;
         
-        nameText.text = npcName;
+      //  nameText.text = npcName;
         dialoguePanel.SetActive(true);
     }
 
@@ -135,7 +135,7 @@ public class DialogueSystem : MonoBehaviour
             }
            else if (isStringBeingShown == true)
             {
-            //if the jump key is pushed before the dialogue is sone showing increase speed of text writing to screen
+            //if the jump key is pushed before the dialogue is done showing increase speed of text writing to screen
                 secondsBetweenDialogue = 0;
         }
         else 

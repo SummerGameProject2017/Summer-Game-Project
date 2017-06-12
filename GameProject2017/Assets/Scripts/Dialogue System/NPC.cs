@@ -16,10 +16,11 @@ public class NPC : MonoBehaviour
     Transform player;
     DialogueSystem dialogueScript;
     PlayerController playerScript;
+    GameObject canvas;
 
     private void Start()
     {
-        
+        canvas = GameObject.Find("Canvas");
         playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         dialogueScript = GameObject.Find("DialogueSystem").GetComponent<DialogueSystem>(); 
             loadLines = File.ReadAllText(Application.dataPath + "/Resources/Dialogue.json");    //load the dialogue file from the resource folder
@@ -40,6 +41,11 @@ public class NPC : MonoBehaviour
         float offset = Vector3.Distance(transform.position, player.position);
         if (playerScript.isTalking == true)
         {
+            canvas.transform.position = this.transform.position;
+            Vector3 direction;
+            direction = (GameObject.Find("PlayerCamera").transform.position - canvas.transform.position).normalized;
+            canvas.transform.rotation = Quaternion.LookRotation(direction);
+
             if (InputManager.GetButtonDown("Jump") && offset < 3 && dialogueScript.isTalking == false)  //if the character isnt already talking send the dialogue aray to the Dialogue system to display text
             {
                 playerScript.enabled = false;

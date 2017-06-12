@@ -8,6 +8,7 @@ public class ChangeScene : MonoBehaviour {
     public bool loadLevel = false;
     private int loadProgress = 0;
     bool loadGame = false;
+    bool saveGame = false;
     string loadSceneName;
     AsyncOperation async;
     PlayerController playerScript;
@@ -26,7 +27,6 @@ public class ChangeScene : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  
-        
 
     }
 
@@ -51,41 +51,41 @@ public class ChangeScene : MonoBehaviour {
 
     void LevelWasLoaded(Scene scene, LoadSceneMode mode)
     {
-        
-        if (loadGame == true)
+        if (scene.name == "Junkyard_Level_VR")
         {
-            playerScript.newGame = false;
-            cameraScript.newGame = false;
-            SaveLoad.Load();
-        }
-        else
-        {
-            SaveLoad.Save();
+            playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
+            if (loadGame == true)
+            {
+
+                loadGame = false;
+                playerScript.newGame = false;
+                cameraScript.newGame = false;
+                SaveLoad.continueFromMain = true;
+                SaveLoad.Load();
+            }
+            if (saveGame == true)
+            {
+                saveGame = false;
+                playerScript.newGame = true;
+                cameraScript.newGame = true;
+            }
         }
     }
 
     public void StartButtonFunction()
     {
+        saveGame = true;
         loadSceneName = "Junkyard_Level_VR";
         StartCoroutine(DisplayLoadingScreen(loadSceneName));
     }
 
     public void LoadButtonFunction()
     {
-        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
-        playerScript.enabled = true;
-        cameraScript.enabled = true;
-        gameoverScreen = GameObject.Find("GAMEOVER");
-        playerScript.newGame = false;
-        cameraScript.newGame = false;
-        SaveLoad.Load();
-
         loadGame = true;
         loadSceneName = "Junkyard_Level_VR";
-    //    StartCoroutine(DisplayLoadingScreen(loadSceneName));
-        Time.timeScale = 1;
-        gameoverScreen.SetActive(false);
+        StartCoroutine(DisplayLoadingScreen(loadSceneName));
+        
         
     }
 
@@ -100,4 +100,17 @@ public class ChangeScene : MonoBehaviour {
         Time.timeScale = 1;
     }
 
+
+    public void ContinueGame()
+    {
+        SaveLoad.Load();
+        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
+        playerScript.enabled = true;
+        cameraScript.enabled = true;
+        gameoverScreen = GameObject.Find("GAMEOVER");
+        playerScript.newGame = false;
+        cameraScript.newGame = false;
+        gameoverScreen.SetActive(false);
+    }
 }

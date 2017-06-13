@@ -100,12 +100,13 @@ public class PlayerController : MonoBehaviour
                 moveVector = lastMove;
             }
 
-          
-            if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false && PA.inTransition == false)
+
+            if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false && !PA.Anim.IsInTransition(0))
             {
-                    jump--;
-                    verticalVelocity = jumpForce;
-                    isGrounded = false;
+                jump--;
+                verticalVelocity = jumpForce;
+                isGrounded = false;
+                PA.Anim.SetBool("Jump", true);
 
             }
 

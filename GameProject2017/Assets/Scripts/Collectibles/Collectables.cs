@@ -8,6 +8,7 @@ public abstract class Collectables : MonoBehaviour, IChildEvents
     public float rotationSpeed = 1;
     public float amplitude = 0.5f;
     public float frequency = 1f;
+    public int particleCount;
 
     public GameObject par_pickup;
     //public Text GearCountText;

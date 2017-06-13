@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public bool destroyHealingParticle;
     [HideInInspector]
     public GameObject healingEffect;
+
     float waitTime = 0;
     bool moving  = false;
 
@@ -101,8 +102,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // Jump
-            if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false
-                && !PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Land") )
+            if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false)
             {
                 jump--;
                 verticalVelocity = jumpForce;

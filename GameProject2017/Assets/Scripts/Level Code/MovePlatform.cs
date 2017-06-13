@@ -11,15 +11,20 @@ public class MovePlatform : MonoBehaviour
     public bool onplatform;
     public Vector3 speedVector;
     private Vector3 platformmove;
+    private Vector3 newVel;
+    private Vector3 oldPos;
 
     IEnumerator Start()
     {
+        oldPos = transform.position;
         PlayerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         Vector3 pointA = transform.position;
         while (true)
         {
             yield return StartCoroutine(MoveObject(transform, pointA, pointB, 3.0f));
+
             yield return StartCoroutine(MoveObject(transform, pointB, pointA, 3.0f));
+
         }
     }
 
@@ -28,12 +33,15 @@ public class MovePlatform : MonoBehaviour
     {
         float i = 0.0f;
         float rate = 0.7f / time;
-        while (i < 1.0f)
+        while (i <= 1.0f)
         {
             i += Time.deltaTime * rate;
             thisTransform.position = platformmove = Vector3.Lerp(startPos, endPos, i);
+            
             yield return null;
         }
+        //speedVector *= -1;
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,9 +66,11 @@ public class MovePlatform : MonoBehaviour
     {
         if (onplatform == true)
         {
+            newVel = (transform.position - oldPos) / Time.deltaTime;
             Vector3 direction = transform.TransformDirection(speedVector );
             Debug.Log(direction);
-            PlayerScript.AddMovement(direction);
+            PlayerScript.AddMovement(newVel);
         }
+        oldPos = transform.position;
     }
 }

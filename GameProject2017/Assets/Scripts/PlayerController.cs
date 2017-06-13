@@ -100,12 +100,14 @@ public class PlayerController : MonoBehaviour
                 moveVector = lastMove;
             }
 
-          
-            if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false && PA.inTransition == false)
+            // Jump
+            if (InputManager.GetButtonDown("Jump") && jump >= 1 && isTalking == false
+                && !PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Land") )
             {
-                    jump--;
-                    verticalVelocity = jumpForce;
-                    isGrounded = false;
+                jump--;
+                verticalVelocity = jumpForce;
+                isGrounded = false;               
+                PA.Anim.SetBool("Jump", true);
 
             }
 
@@ -142,7 +144,7 @@ public class PlayerController : MonoBehaviour
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
               }
-              else if (h == 0 && v == 0 && attackMode == false)
+             if (h == 0 && v == 0 && attackMode == false)
               {
                 if (Time.time >= waitTime + 3)
                 {
@@ -153,12 +155,15 @@ public class PlayerController : MonoBehaviour
                     transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
                 }
               }
-
-              else
+             if (InputManager.GetButtonDown("Attack"))
               {
-                  transform.rotation = Quaternion.LookRotation(moveVector);
-              } 
-  
+
+              }
+            else
+            {
+                transform.rotation = Quaternion.LookRotation(moveVector);
+            }
+
 
 
             moveVector += additionalmovement;
@@ -203,7 +208,6 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Fountain")
         {
             destroyHealingParticle = false;
-            Debug.Log("InFountain");
             healthScript.HealthChange();
             Instantiate(healingParticle, transform.position, Quaternion.identity);
             Player.Instance.lives = Player.Instance.maxLives;

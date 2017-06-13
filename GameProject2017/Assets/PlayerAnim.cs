@@ -83,7 +83,6 @@ public class PlayerAnim : MonoBehaviour {
                     Anim.SetBool("DJump", false);
 
             }
-
            
             
             if (InputManager.GetButtonDown("Attack"))

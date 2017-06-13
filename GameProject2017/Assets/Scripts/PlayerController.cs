@@ -203,7 +203,6 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Fountain")
         {
             destroyHealingParticle = false;
-            Debug.Log("InFountain");
             healthScript.HealthChange();
             Instantiate(healingParticle, transform.position, Quaternion.identity);
             Player.Instance.lives = Player.Instance.maxLives;

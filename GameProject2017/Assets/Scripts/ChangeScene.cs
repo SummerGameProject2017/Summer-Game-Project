@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour {
-    public GameObject background;
+//    public GameObject background;
     public bool loadLevel = false;
     private int loadProgress = 0;
     bool loadGame = false;
@@ -16,9 +16,9 @@ public class ChangeScene : MonoBehaviour {
     GameObject gameoverScreen;
     private void Start()
     {
-        background.SetActive(false);
+  //      background.SetActive(false);
 
-       
+
         
         
     }
@@ -32,8 +32,11 @@ public class ChangeScene : MonoBehaviour {
 
     IEnumerator DisplayLoadingScreen(string sceneName)
     {
+        
+        
+
         loadLevel = false;
-        background.SetActive(true);
+   //     background.SetActive(true);
 
 
         async = SceneManager.LoadSceneAsync(sceneName);
@@ -43,6 +46,9 @@ public class ChangeScene : MonoBehaviour {
        
          
            
+        
+            
+        
         
 
 
@@ -75,6 +81,7 @@ public class ChangeScene : MonoBehaviour {
 
     public void StartButtonFunction()
     {
+        SceneManager.LoadScene("LoadingLevel", LoadSceneMode.Additive);
         saveGame = true;
         loadSceneName = "Junkyard_Level_VR";
         StartCoroutine(DisplayLoadingScreen(loadSceneName));

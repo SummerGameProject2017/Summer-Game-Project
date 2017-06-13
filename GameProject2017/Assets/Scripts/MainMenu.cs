@@ -34,17 +34,6 @@ public class MainMenu : MonoBehaviour {
     //}
 
 
-    //public void ContinueGame()
-    //{
-    //    SaveLoad.Load();
-    //    playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-    //    cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
-    //    playerScript.enabled = true;
-    //    cameraScript.enabled = true;
-    //    gameoverScreen = GameObject.Find("GAMEOVER");
-    //    playerScript.newGame = false;
-    //    cameraScript.newGame = false;
-    //    gameoverScreen.SetActive(false);
-    //}
+   
 
 }

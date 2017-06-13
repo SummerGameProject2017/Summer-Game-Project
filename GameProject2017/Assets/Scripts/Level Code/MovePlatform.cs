@@ -19,7 +19,9 @@ public class MovePlatform : MonoBehaviour
         while (true)
         {
             yield return StartCoroutine(MoveObject(transform, pointA, pointB, 3.0f));
+
             yield return StartCoroutine(MoveObject(transform, pointB, pointA, 3.0f));
+
         }
     }
 
@@ -32,8 +34,11 @@ public class MovePlatform : MonoBehaviour
         {
             i += Time.deltaTime * rate;
             thisTransform.position = platformmove = Vector3.Lerp(startPos, endPos, i);
+            
             yield return null;
         }
+        speedVector *= -1;
+
     }
 
     private void OnTriggerEnter(Collider other)

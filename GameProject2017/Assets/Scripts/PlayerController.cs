@@ -174,6 +174,8 @@ public class PlayerController : MonoBehaviour
 
             moveVector += additionalmovement;
 
+            verticalVelocity += additionalmovement.y;
+
             // Clear
             additionalmovement = Vector3.zero;
 

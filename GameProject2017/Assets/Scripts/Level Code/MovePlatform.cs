@@ -40,7 +40,7 @@ public class MovePlatform : MonoBehaviour
             
             yield return null;
         }
-        //speedVector *= -1;
+
 
     }
 

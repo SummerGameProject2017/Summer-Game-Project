@@ -4,18 +4,38 @@ using UnityEngine;
 
 public class Fan : MonoBehaviour
 {
-    public Vector3 Force;
+    public float Force;
+    public float groundForce;
+    public float enterForce;
+
+    public void OnTriggerEnter(Collider col)
+    {
+
+        if (col.gameObject.tag == "Player")
+        {
+            PlayerController ctrl = col.gameObject.GetComponent<PlayerController>();
+            ctrl.AddMovement(new Vector3(0, enterForce * Time.deltaTime, 0));
+
+        }
+    }
 
     public void OnTriggerStay(Collider col)
     {
         //If player is in collider make him fly upwards
         if (col.gameObject.tag == "Player")
         {
-            CharacterController ctrl = col.gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
+            PlayerController ctrl = col.gameObject.GetComponent<PlayerController>();
             if (ctrl)
             {
-                ctrl.Move(Force);         
+                if (ctrl.isGrounded)
+                {
+                    ctrl.AddMovement(new Vector3(0, groundForce * Time.deltaTime, 0));
+                }
+
+                ctrl.AddMovement(new Vector3(0, Force * Time.deltaTime, 0));
+                
             }
+
         }
     }
 }

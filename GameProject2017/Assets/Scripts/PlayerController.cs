@@ -106,10 +106,14 @@ public class PlayerController : MonoBehaviour
             {
                 jump--;
                 verticalVelocity = jumpForce;
-                isGrounded = false;               
+                isGrounded = false;
                 PA.Anim.SetBool("Jump", true);
 
             }
+
+
+            // Attack
+            
 
             if ((h > 0.65 || h < -0.65) && (v > 0.65 || v < -0.65))
             {
@@ -144,6 +148,11 @@ public class PlayerController : MonoBehaviour
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
               }
+            if (InputManager.GetButtonDown("Attack"))
+            {
+                Debug.Log("SpinAttack");
+                transform.Rotate(transform.right * 360 * Time.deltaTime);
+            }
              if (h == 0 && v == 0 && attackMode == false)
               {
                 if (Time.time >= waitTime + 3)
@@ -155,10 +164,7 @@ public class PlayerController : MonoBehaviour
                     transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
                 }
               }
-             if (InputManager.GetButtonDown("Attack"))
-              {
-
-              }
+             
             else
             {
                 transform.rotation = Quaternion.LookRotation(moveVector);

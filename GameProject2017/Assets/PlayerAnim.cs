@@ -90,6 +90,8 @@ public class PlayerAnim : MonoBehaviour {
                         Anim.SetBool("Jump", false);
                         Anim.SetBool("DJump", false);
                     }
+
+
                 }
             }
            

@@ -45,8 +45,8 @@ public class PlayerAnim : MonoBehaviour {
         Anim.SetBool("Victory", false);
         Anim.SetBool("GetHit", false);
         Anim.SetBool("DJump", false);
-        Anim.SetBool("Dead-Water", false);
-        Anim.SetBool("Dead-Enemy", false);
+        Anim.SetBool("Death-Water", false);
+        Anim.SetBool("Death-Enemy", false);
         Anim.SetBool("Attack", false);
 
 

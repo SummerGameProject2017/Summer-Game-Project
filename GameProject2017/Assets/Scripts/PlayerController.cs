@@ -159,11 +159,11 @@ public class PlayerController : MonoBehaviour
               {
 
               }
-              //else
-              //{
-              //    transform.rotation = Quaternion.LookRotation(moveVector);
-              //} 
-  
+            else
+            {
+                transform.rotation = Quaternion.LookRotation(moveVector);
+            }
+
 
 
             moveVector += additionalmovement;

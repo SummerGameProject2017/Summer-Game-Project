@@ -45,8 +45,8 @@ public class PlayerAnim : MonoBehaviour {
         Anim.SetBool("Victory", false);
         Anim.SetBool("GetHit", false);
         Anim.SetBool("DJump", false);
-        Anim.SetBool("Dead-Water", false);
-        Anim.SetBool("Dead-Enemy", false);
+        Anim.SetBool("Death-Water", false);
+        Anim.SetBool("Death-Enemy", false);
         Anim.SetBool("Attack", false);
 
 
@@ -60,30 +60,38 @@ public class PlayerAnim : MonoBehaviour {
 
         if (Player.Instance.lives > 0)
         {
-            if (InputManager.GetButtonDown("Jump") && PC.jump >= 1 && PC.isActiveAndEnabled && PC.isTalking == false)
-            {
-                Anim.SetBool("Jump", true);
-            }
+
             
 
-            if (InputManager.GetButtonDown("Jump") && PC.jump < 1)
+
+            if (PC.jump < 1 && !Anim.IsInTransition(0) && Anim.GetBool("Jump"))
             {
-                Debug.Log("DJump");
+               
                 Anim.SetBool("DJump", true);
             }
-            if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9 ) //before the animation is done set its bool to be false
+
+            if (!Anim.IsInTransition(0))
             {
-                if(Anim.GetCurrentAnimatorStateInfo(0).IsTag("Jump")
-                    || Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump"))
+                if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9) //before the animation is done set its bool to be false
+                {
+                    if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Jump")
+                        || Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump"))
+                    {
+                        Anim.SetBool("Jump", false);
+                    }
 
-                    Anim.SetBool("Jump", false);
+                    if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump"))
+                    {
+                        Anim.SetBool("DJump", false);
+                    }
 
-                if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump"))
-
-                    Anim.SetBool("DJump", false);
-
+                    if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Land"))
+                    {
+                        Anim.SetBool("Jump", false);
+                        Anim.SetBool("DJump", false);
+                    }
+                }
             }
-
            
             
             if (InputManager.GetButtonDown("Attack"))

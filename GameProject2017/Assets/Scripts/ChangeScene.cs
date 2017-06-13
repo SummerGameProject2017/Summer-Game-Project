@@ -3,56 +3,81 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ChangeScene : MonoBehaviour {
-    public GameObject background;
-    public bool loadLevel = false;
-    private int loadProgress = 0;
+public class ChangeScene : MonoSingleton<ChangeScene> {
     bool loadGame = false;
     bool saveGame = false;
     string loadSceneName;
+    string addScreenName;
     AsyncOperation async;
     PlayerController playerScript;
     CameraView cameraScript;
     GameObject gameoverScreen;
-    private void Start()
+    public static bool doneLoading = false;
+    public static bool startGame = false;
+    public override void OnStart()
     {
-        background.SetActive(false);
-
-       
-        
-        
     }
 
 
     // Update is called once per frame
-    void Update () {
+    public override void OnUpdate () {
         SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  
 
     }
 
     IEnumerator DisplayLoadingScreen(string sceneName)
     {
-        loadLevel = false;
-        background.SetActive(true);
+        Scene startScene = SceneManager.GetActiveScene();
+        Scene loadScene;
+        Scene newScene;
 
 
-        async = SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
+        loadScene = SceneManager.GetSceneByName(addScreenName);
+
+
+        while (!loadScene.isLoaded)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        SceneManager.UnloadSceneAsync(startScene);
+
+        async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        newScene = SceneManager.GetSceneByName(sceneName);
+       
         
+         yield return new WaitForSecondsRealtime(1);
+
+       
+        if (async.progress > 0.5f)
+        {
+            doneLoading = true;
+
+
+            
+            yield return new WaitForSeconds(1);
+            SceneManager.UnloadSceneAsync(loadScene);
+            SceneManager.SetActiveScene(newScene);
+            startGame = true;
+        }
 
         yield return null;
        
-         
-           
-        
-
+    
 
     }
+
+
+  
+
+
 
 
     void LevelWasLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Junkyard_Level_VR")
         {
+
             playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
             if (loadGame == true)
@@ -75,8 +100,10 @@ public class ChangeScene : MonoBehaviour {
 
     public void StartButtonFunction()
     {
+        
         saveGame = true;
         loadSceneName = "Junkyard_Level_VR";
+        addScreenName = "LoadingLevel";
         StartCoroutine(DisplayLoadingScreen(loadSceneName));
     }
 
@@ -84,6 +111,7 @@ public class ChangeScene : MonoBehaviour {
     {
         loadGame = true;
         loadSceneName = "Junkyard_Level_VR";
+        addScreenName = "LoadingLevel";
         StartCoroutine(DisplayLoadingScreen(loadSceneName));
         
         
@@ -96,6 +124,7 @@ public class ChangeScene : MonoBehaviour {
     public void ReturnToMainMenu()
     {
         loadSceneName = "Main_Menu";
+        addScreenName = "LoadingLevel";
         StartCoroutine(DisplayLoadingScreen(loadSceneName));
         Time.timeScale = 1;
     }

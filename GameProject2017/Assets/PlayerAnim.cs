@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 /************************************************************************
@@ -45,8 +46,8 @@ public class PlayerAnim : MonoBehaviour {
         Anim.SetBool("Victory", false);
         Anim.SetBool("GetHit", false);
         Anim.SetBool("DJump", false);
-        Anim.SetBool("Dead-Water", false);
-        Anim.SetBool("Dead-Enemy", false);
+        Anim.SetBool("Death-Water", false);
+        Anim.SetBool("Death-Enemy", false);
         Anim.SetBool("Attack", false);
 
 
@@ -90,9 +91,10 @@ public class PlayerAnim : MonoBehaviour {
                         Anim.SetBool("Jump", false);
                         Anim.SetBool("DJump", false);
                     }
+
+
                 }
             }
-
            
             
             if (InputManager.GetButtonDown("Attack"))
@@ -152,7 +154,10 @@ public class PlayerAnim : MonoBehaviour {
             Anim.Play("Death-Water", -1, 0);
             yield return new WaitForSeconds(1);
             PC.enabled = false;
-            DeadScript.dead = true;
+            if (!SceneManager.GetSceneByName("GameOver").isLoaded)
+            {
+                StartCoroutine(DeadScript.DisplayLoadingScreen("GameOver"));
+            }
 
         }
     }

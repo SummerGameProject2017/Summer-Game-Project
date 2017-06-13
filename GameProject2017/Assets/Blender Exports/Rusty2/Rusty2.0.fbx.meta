@@ -774,8 +774,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack
       takeName: Armature|ArmatureAction
-      firstFrame: 0
-      lastFrame: 706
+      firstFrame: 412
+      lastFrame: 460
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -920,8 +920,8 @@ ModelImporter:
     - serializedVersion: 16
       name: GetHit
       takeName: Armature|ArmatureAction
-      firstFrame: 0
-      lastFrame: 706
+      firstFrame: 151
+      lastFrame: 174
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1066,8 +1066,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Victory
       takeName: Armature|ArmatureAction
-      firstFrame: 0
-      lastFrame: 706
+      firstFrame: 347
+      lastFrame: 394
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1650,8 +1650,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Death - Water
       takeName: Armature|ArmatureAction
-      firstFrame: 0
-      lastFrame: 706
+      firstFrame: 31
+      lastFrame: 54
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1796,8 +1796,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Death - Enemy
       takeName: Armature|ArmatureAction
-      firstFrame: 0
-      lastFrame: 706
+      firstFrame: 91
+      lastFrame: 138
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum States { Patrol, Chase, Attack, Idle, Dead, Stunned };
 public class Dog : Enemy
@@ -42,6 +43,8 @@ public class Dog : Enemy
     Health healthScript;
     public GameObject stunParticle;
 
+  
+
     public override void OnStart()
     {
         
@@ -50,7 +53,7 @@ public class Dog : Enemy
         agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         anim = GetComponent<Animator>();    //animate the enemies
         patrolPoint = Instantiate(target) as GameObject;
-
+        patrolPoint.transform.SetParent(GameObject.Find("DialogueSystem").transform);
         X = (short)Random.Range(0, 2);
         Z = (short)Random.Range(0, 2);
         minPositionX = this.transform.position.x - minDistanceX;
@@ -261,7 +264,27 @@ public class Dog : Enemy
             if (Player.Instance.lives <= 0)
             {
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
-                DeadScript.dead = true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                DeadScript.dead = true;
             }
 
         }
@@ -277,7 +300,26 @@ public class Dog : Enemy
 
             if (Player.Instance.lives <= 0)
             {
-                DeadScript.dead = true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //DeadScript.dead = true;
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
                 
             }

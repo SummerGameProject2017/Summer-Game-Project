@@ -1,38 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    public Player PlayerScript;
-    public bool dead = false;
-    public GameObject Death;
-    // Use this for initialization
-    void Start ()
+    PlayerController playerScript;
+    CameraView cameraScript;
+    public bool unloadLevel = false;
+    public bool continueButtonPushed = false;
+    Scene loadScene;
+    public IEnumerator DisplayLoadingScreen(string sceneName)
     {
-        Death = GameObject.Find("GAMEOVER");
-        Death.SetActive(false);
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		if(dead == true)
-        {
-            DEAD();
-        }
-      
-	}
-
-    public void DEAD()
-    {
-
-
-        //Instantiate(Resources.Load("GAMEOVER"));
-            Death.gameObject.SetActive(true);
-            dead = false;
         
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        loadScene = SceneManager.GetSceneByName(sceneName);
+        yield return new WaitForSecondsRealtime(1);
+            
+       
+        yield return null;
+    }
+    public void Continue()
+    {
+        
+            SaveLoad.Load();
+            playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
+            playerScript.enabled = true;
+            cameraScript.enabled = true;
+            playerScript.newGame = false;
+            cameraScript.newGame = false;
+            continueButtonPushed = true;
     }
 
+    public IEnumerator UnloadLevel()
+    {
+        
+            yield return new WaitForSeconds(2);
+        SceneManager.UnloadSceneAsync("GameOver");
+            
+    }
 }

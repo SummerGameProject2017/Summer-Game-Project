@@ -22,15 +22,17 @@ public class GameOver : MonoBehaviour
     }
     public void Continue()
     {
-        
+            continueButtonPushed = true;
             SaveLoad.Load();
             playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
+            
             playerScript.enabled = true;
             cameraScript.enabled = true;
             playerScript.newGame = false;
             cameraScript.newGame = false;
-            continueButtonPushed = true;
+            
+        ChangeScene.doneLoading = true;
     }
 
     public IEnumerator UnloadLevel()
@@ -38,6 +40,7 @@ public class GameOver : MonoBehaviour
         
             yield return new WaitForSeconds(2);
         SceneManager.UnloadSceneAsync("GameOver");
+        ChangeScene.doneLoading = false;
             
     }
 }

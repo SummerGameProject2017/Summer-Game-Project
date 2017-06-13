@@ -36,11 +36,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         loadScene = SceneManager.GetSceneByName(addScreenName);
 
 
-        while (!loadScene.isLoaded)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        SceneManager.UnloadSceneAsync(startScene);
+        
 
         async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         newScene = SceneManager.GetSceneByName(sceneName);
@@ -49,16 +45,17 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
          yield return new WaitForSecondsRealtime(1);
 
        
-        if (async.progress > 0.5f)
+        if (async.progress > 0.9f)
         {
             doneLoading = true;
-
+SceneManager.UnloadSceneAsync(startScene);
 
             
             yield return new WaitForSeconds(1);
             SceneManager.UnloadSceneAsync(loadScene);
             SceneManager.SetActiveScene(newScene);
             startGame = true;
+            doneLoading = false;
         }
 
         yield return null;
@@ -77,7 +74,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     {
         if (scene.name == "Junkyard_Level_VR")
         {
-
+           
             playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
             if (loadGame == true)

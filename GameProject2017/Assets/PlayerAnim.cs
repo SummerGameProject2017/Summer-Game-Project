@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 /************************************************************************
@@ -90,6 +91,8 @@ public class PlayerAnim : MonoBehaviour {
                         Anim.SetBool("Jump", false);
                         Anim.SetBool("DJump", false);
                     }
+
+
                 }
             }
            
@@ -151,7 +154,10 @@ public class PlayerAnim : MonoBehaviour {
             Anim.Play("Death-Water", -1, 0);
             yield return new WaitForSeconds(1);
             PC.enabled = false;
-            DeadScript.dead = true;
+            if (!SceneManager.GetSceneByName("GameOver").isLoaded)
+            {
+                StartCoroutine(DeadScript.DisplayLoadingScreen("GameOver"));
+            }
 
         }
     }

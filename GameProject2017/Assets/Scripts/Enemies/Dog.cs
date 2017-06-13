@@ -264,7 +264,27 @@ public class Dog : Enemy
             if (Player.Instance.lives <= 0)
             {
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
-                DeadScript.dead = true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                DeadScript.dead = true;
             }
 
         }
@@ -280,7 +300,26 @@ public class Dog : Enemy
 
             if (Player.Instance.lives <= 0)
             {
-                DeadScript.dead = true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //DeadScript.dead = true;
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
                 
             }

@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoSingleton<ChangeScene> {
-    bool loadGame = false;
-    bool saveGame = false;
+    public bool loadGame = false;
+    public bool saveGame = false;
     public string loadSceneName;
     public string addScreenName;
     PlayerController playerScript;
@@ -29,7 +29,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  
     }
 
-    IEnumerator DisplayLoadingScreen(string sceneName)
+    public IEnumerator DisplayLoadingScreen(string sceneName)
     {
         Scene loadScene;
         Scene newScene;
@@ -45,10 +45,12 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         
         if (async.progress > 0.9f)
         {
-       SceneManager.UnloadSceneAsync(startScene);
+            
             doneLoading = true;
      
             yield return new WaitForSeconds(1);
+
+            SceneManager.UnloadSceneAsync(startScene);
             SceneManager.UnloadSceneAsync(loadScene);
             startGame = true;
             doneLoading = false;
@@ -63,7 +65,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     {
         if (scene.name == "Junkyard_Level_VR")
         {
-           
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(loadSceneName));
             playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
             if (loadGame == true)
@@ -83,27 +85,27 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         }
     }
 
-    public void StartButtonFunction()
-    {
-        startScene = SceneManager.GetActiveScene();
-        saveGame = true;
-        loadSceneName = "Junkyard_Level_VR";
-        addScreenName = "LoadingLevel";
-        StartCoroutine(DisplayLoadingScreen(loadSceneName));
-    }
+    //public void StartButtonFunction()
+    //{
+    //    startScene = SceneManager.GetActiveScene();
+    //    saveGame = true;
+    //    loadSceneName = "Junkyard_Level_VR";
+    //    addScreenName = "LoadingLevel";
+    //    StartCoroutine(DisplayLoadingScreen(loadSceneName));
+    //}
 
-    public void LoadButtonFunction()
-    {
-        startScene = SceneManager.GetActiveScene();
-        loadGame = true;
-        loadSceneName = "Junkyard_Level_VR";
-        addScreenName = "LoadingLevel";
-        StartCoroutine(DisplayLoadingScreen(loadSceneName));    
-    }
+    //public void LoadButtonFunction()
+    //{
+    //    startScene = SceneManager.GetActiveScene();
+    //    loadGame = true;
+    //    loadSceneName = "Junkyard_Level_VR";
+    //    addScreenName = "LoadingLevel";
+    //    StartCoroutine(DisplayLoadingScreen(loadSceneName));    
+    //}
 
-    public void ExitButton()
-    {
-        Application.Quit();
-    }
+    //public void ExitButton()
+    //{
+    //    Application.Quit();
+    //}
   
 }

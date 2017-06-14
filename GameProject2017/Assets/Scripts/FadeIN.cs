@@ -33,13 +33,16 @@ public class FadeIN : MonoBehaviour {
         else
         {
             Color c = image.color;
-            c.a -= Time.deltaTime ;
+            c.a -= Time.deltaTime;
             image.color = c;
+            gameOverScript.fadeOut = false;
         }
 
-        if (gameOverScript.continueButtonPushed == true)
+        if (gameOverScript.continueButtonPushed == true || gameOverScript.fadeOut == true)
         {
             fadeIn = false;
-            StartCoroutine(gameOverScript.UnloadLevel());        }
+            //StartCoroutine(gameOverScript.UnloadLevel());        
+        }
     }
+
 }

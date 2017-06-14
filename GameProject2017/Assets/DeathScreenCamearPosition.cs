@@ -19,6 +19,10 @@ public class DeathScreenCamearPosition : MonoBehaviour {
             transform.position = GameObject.Find("PlayerCamera").transform.position;
             transform.rotation = GameObject.Find("PlayerCamera").transform.rotation;
         }
+        if (gameOverScript.changeCamera == true)
+        {
+            gameObject.SetActive(false);
+        }
 
     }
 }

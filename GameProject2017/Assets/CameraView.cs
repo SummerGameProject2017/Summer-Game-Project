@@ -15,8 +15,8 @@ public class CameraView : MonoBehaviour
 
         if (newGame == true)
         {
-            transform.localPosition = new Vector3(6.29f, 6.67f, -9.46f);
-            transform.localRotation = Quaternion.Euler(28.58f, -52.87f, 1.347f);
+            transform.localPosition = new Vector3(6.87f, 5.94f, -9.3f);
+            transform.localRotation = Quaternion.Euler(25.7f, -51.13f, 0.0f);
             SaveLoad.Save();
         } 
         offset = transform.position - target.transform.position;

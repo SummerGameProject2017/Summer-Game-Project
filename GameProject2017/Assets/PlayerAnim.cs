@@ -35,7 +35,7 @@ public class PlayerAnim : MonoBehaviour {
     // Use this for initialization
     void Start () {
         cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
-        DeadScript = GetComponent<GameOver>();
+        DeadScript = GameObject.Find("SceneManager").GetComponent<GameOver>();
         Anim = GetComponent<Animator>();
         PC = GetComponent<PlayerController>();
         

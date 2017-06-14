@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     ChangeScene changeSceneScript;
 
+
+   
     public void StartButtonFunction()
     {
+
         changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         changeSceneScript.startScene = SceneManager.GetActiveScene();
         changeSceneScript.saveGame = true;
@@ -32,9 +36,9 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+
    
-
-
 
 
 }

@@ -2,40 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour
 {
-    Button mainMenuButton, continueButton;
-    GameObject gameOverCanvas;
-
-
-    string addScreenName;
-    string loadSceneName;
+   
+    public string addScreenName;
+    public string loadSceneName;
     PlayerController playerScript;
     CameraView cameraScript;
     public bool unloadLevel = false;
-    public bool continueButtonPushed = false;
+ //   public bool continueButtonPushed = false;
     public bool fadeOut = false;
     Scene loadScene;
-    Scene startScene;
+    public Scene startScene;
     public bool changeCamera = false;
 
 
+
+   
     public IEnumerator DisplayLoadingScreen(string sceneName)
     {
-        
+
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         loadScene = SceneManager.GetSceneByName(sceneName);
         yield return new WaitForSecondsRealtime(1);
-            
-       
+
+
         yield return null;
     }
 
-    IEnumerator Return(string sceneName)
+    public IEnumerator Return(string sceneName)
     {
-       
+
         Scene newScene;
 
         SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
@@ -45,8 +43,8 @@ public class GameOver : MonoBehaviour
         newScene = SceneManager.GetSceneByName(sceneName);
 
         yield return new WaitForSecondsRealtime(1);
-        
-        
+
+
         SceneManager.UnloadSceneAsync(startScene);
         if (async.isDone)
         {
@@ -59,7 +57,7 @@ public class GameOver : MonoBehaviour
             SceneManager.UnloadSceneAsync(loadScene);
 
             SceneManager.UnloadSceneAsync("GameOver");
-            
+
             ChangeScene.doneLoading = false;
             changeCamera = false;
         }
@@ -68,49 +66,21 @@ public class GameOver : MonoBehaviour
 
     }
 
-    public void Continue()
-    {
-        
-            SaveLoad.Load();
-            playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
-            
-            playerScript.enabled = true;
-            cameraScript.enabled = true;
-            playerScript.newGame = false;
-            cameraScript.newGame = false;
-            continueButtonPushed = true;
-        StartCoroutine(UnloadLevel());
-    }
-
+    
     public IEnumerator UnloadLevel()
     {
-        
-            yield return new WaitForSeconds(2);
+
+        yield return new WaitForSeconds(2);
         SceneManager.UnloadSceneAsync("GameOver");
         ChangeScene.doneLoading = false;
-            
-    }
-
-
-    public void ReturnToMainMenu()
-    {
-        loadSceneName = "Main_Menu";
-        addScreenName = "LoadingLevel";
-        startScene = SceneManager.GetActiveScene();
-        StartCoroutine(Return(loadSceneName));
-        fadeOut = true;
-
 
     }
 
 
+ 
 
-    private void Update()
-    {
-        if (InputManager.GetAxis("Horizontal") < 0)
-        {
 
-        }
-    }
+    
+
+
 }

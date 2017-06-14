@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ChangeScene : MonoSingleton<ChangeScene> {
     public bool loadGame = false;
@@ -14,9 +16,16 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public static bool doneLoading = false;
     public bool startGame = false;
     public Scene startScene;
+    GameObject myEventSystem;
+    GameObject newGameButton;
+    AsyncOperation async1;
+    AsyncOperation async2;
+    Scene loadScene;
     public override void OnStart()
     {
-                
+        newGameButton = GameObject.Find("New Game");  
+        EventSystem.current.firstSelectedGameObject = newGameButton;
+         
     }
 
 
@@ -27,18 +36,23 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
     public IEnumerator DisplayLoadingScreen(string sceneName)
     {
-        Scene loadScene;
+        
         Scene newScene;
-
-        AsyncOperation async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
-        loadScene = SceneManager.GetSceneByName(addScreenName);
-
+        if (!SceneManager.GetSceneByName(addScreenName).isLoaded)
+        {
+            async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
+            loadScene = SceneManager.GetSceneByName(addScreenName);
+        }
+        
         yield return new WaitForSecondsRealtime(1);
 
         if (async1.isDone)
         {
-            AsyncOperation async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            newScene = SceneManager.GetSceneByName(sceneName);
+            if (!SceneManager.GetSceneByName(sceneName).isLoaded)
+            {
+                async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                newScene = SceneManager.GetSceneByName(sceneName);
+            }
 
             yield return new WaitForSecondsRealtime(1);
 
@@ -83,6 +97,8 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
                 cameraScript.newGame = true;
             }
         }
+
+        
     }
 
     

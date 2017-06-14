@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
@@ -16,10 +17,15 @@ public class GameOver : MonoBehaviour
     Scene loadScene;
     public Scene startScene;
     public bool changeCamera = false;
+    GameObject continueGameButton;
+    AsyncOperation async1;
+    AsyncOperation async2;
 
+    private void Update()
+    {
+        SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  
+    }
 
-
-   
     public IEnumerator DisplayLoadingScreen(string sceneName)
     {
 
@@ -36,34 +42,39 @@ public class GameOver : MonoBehaviour
 
         Scene newScene;
 
-        SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
+        async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
         loadScene = SceneManager.GetSceneByName(addScreenName);
-
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        newScene = SceneManager.GetSceneByName(sceneName);
 
         yield return new WaitForSecondsRealtime(1);
 
-
-        SceneManager.UnloadSceneAsync(startScene);
-        if (async.isDone)
+        if (async1.isDone)
         {
-            changeCamera = true;
-            ChangeScene.doneLoading = true;
-            fadeOut = true;
 
-            yield return new WaitForSeconds(1);
+            async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            newScene = SceneManager.GetSceneByName(sceneName);
 
-            SceneManager.UnloadSceneAsync(loadScene);
+            yield return new WaitForSecondsRealtime(1);
 
-            SceneManager.UnloadSceneAsync("GameOver");
 
-            ChangeScene.doneLoading = false;
-            changeCamera = false;
+            SceneManager.UnloadSceneAsync(startScene);
+            if (async2.isDone)
+            {
+                changeCamera = true;
+                ChangeScene.doneLoading = true;
+                fadeOut = true;
+
+                yield return new WaitForSeconds(1);
+
+                SceneManager.UnloadSceneAsync(loadScene);
+
+                SceneManager.UnloadSceneAsync("GameOver");
+
+                ChangeScene.doneLoading = false;
+                changeCamera = false;
+            }
+
+            yield return null;
         }
-
-        yield return null;
-
     }
 
     
@@ -75,12 +86,19 @@ public class GameOver : MonoBehaviour
         ChangeScene.doneLoading = false;
 
     }
+    void LevelWasLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Main_Menu")
+        {
+            continueGameButton = GameObject.Find("Continue");
+            EventSystem.current.SetSelectedGameObject(continueGameButton);
+        }
+    }
 
 
- 
 
 
-    
 
 
-}
+
+    }

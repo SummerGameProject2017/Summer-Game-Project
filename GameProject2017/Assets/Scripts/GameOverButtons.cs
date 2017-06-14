@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.EventSystems;
 
 public class GameOverButtons : MonoBehaviour {
 
@@ -23,10 +23,12 @@ public class GameOverButtons : MonoBehaviour {
 
     private void Start()
     {
+        
         gameOverScript = GameObject.Find("SceneManager").GetComponent<GameOver>();
         gameOverCanvas = GameObject.Find("GAMEOVER");
         mainMenuButton = gameOverCanvas.transform.FindChild("Menu_Button").GetComponent<Button>();
         continueButton = gameOverCanvas.transform.FindChild("Continue_Button").GetComponent<Button>();
+        EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
     }
    
 
@@ -54,7 +56,8 @@ public class GameOverButtons : MonoBehaviour {
         gameOverScript.startScene = SceneManager.GetActiveScene();
         StartCoroutine(gameOverScript.Return(gameOverScript.loadSceneName));
         fadeOut = true;
-
+        mainMenuButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
 
     }
 

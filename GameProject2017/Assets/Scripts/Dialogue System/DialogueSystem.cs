@@ -90,11 +90,7 @@ public class DialogueSystem : MonoBehaviour
             }
 
         }
-       if (InputManager.GetKeyDown(KeyCode.G))
-        {
-            Debug.Log("load");
-            SaveLoad.Load();
-        }
+      
 
 
     }

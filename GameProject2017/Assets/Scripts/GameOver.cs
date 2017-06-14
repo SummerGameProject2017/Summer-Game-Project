@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour
 {
+    Button mainMenuButton, continueButton;
+    GameObject gameOverCanvas;
+
 
     string addScreenName;
     string loadSceneName;
@@ -16,6 +20,8 @@ public class GameOver : MonoBehaviour
     Scene loadScene;
     Scene startScene;
     public bool changeCamera = false;
+
+
     public IEnumerator DisplayLoadingScreen(string sceneName)
     {
         
@@ -96,5 +102,15 @@ public class GameOver : MonoBehaviour
         fadeOut = true;
 
 
+    }
+
+
+
+    private void Update()
+    {
+        if (InputManager.GetAxis("Horizontal") < 0)
+        {
+
+        }
     }
 }

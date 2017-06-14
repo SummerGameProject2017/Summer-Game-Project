@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
 
     public void LoadButtonFunction()
     {
+        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         changeSceneScript.startScene = SceneManager.GetActiveScene();
         changeSceneScript.loadGame = true;
         changeSceneScript.loadSceneName = "Junkyard_Level_VR";

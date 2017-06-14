@@ -76,7 +76,8 @@ public class PlayerAnim : MonoBehaviour {
                 if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9) //before the animation is done set its bool to be false
                 {
                     if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Jump")
-                        || Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump"))
+                        || Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump") 
+                        || Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
                     {
                         Anim.SetBool("Jump", false);
                     }

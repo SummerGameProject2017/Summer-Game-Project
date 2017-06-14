@@ -1,39 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour {
+public class MainMenu : MonoBehaviour
+{
 
-   
 
     //public void StartButtonFunction()
     //{
-    //    saveGame = true;
-    //    loadSceneName = "Junkyard_Level_VR";
-    //    StartCoroutine(DisplayLoadingScreen(loadSceneName));
+    //    ChangeScene.startScene = SceneManager.GetActiveScene();
+    //    ChangeScene.saveGame = true;
+    //    ChangeScene.loadSceneName = "Junkyard_Level_VR";
+    //    ChangeScene.addScreenName = "LoadingLevel";
+    //    StartCoroutine(ChangeScene.DisplayLoadingScreen(ChangeScene.loadSceneName));
     //}
 
     //public void LoadButtonFunction()
     //{
-    //    loadGame = true;
-    //    loadSceneName = "Junkyard_Level_VR";
-    //    StartCoroutine(DisplayLoadingScreen(loadSceneName));
-
-
+    //    ChangeScene.startScene = SceneManager.GetActiveScene();
+    //    ChangeScene.loadGame = true;
+    //    ChangeScene.loadSceneName = "Junkyard_Level_VR";
+    //    ChangeScene.addScreenName = "LoadingLevel";
+    //    StartCoroutine(ChangeScene.DisplayLoadingScreen(ChangeScene.loadSceneName));
     //}
 
-    //public void ExitButton()
-    //{
-    //    Application.Quit();
-    //}
-    //public void ReturnToMainMenu()
-    //{
-    //    loadSceneName = "Main_Menu";
-    //    StartCoroutine(DisplayLoadingScreen(loadSceneName));
-    //    Time.timeScale = 1;
-    //}
-
-
+    
+    public void ExitButton()
+    {
+        Application.Quit();
+    }
    
+
+
+
 
 }

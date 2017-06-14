@@ -12,6 +12,7 @@ public class FadeIN : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+
         gameOverScript = GameObject.Find("GAMEOVER").GetComponent<GameOver>();
         image = GetComponent<Image>();
         Color c = image.color;

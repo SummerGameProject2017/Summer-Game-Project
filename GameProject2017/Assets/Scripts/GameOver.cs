@@ -12,8 +12,10 @@ public class GameOver : MonoBehaviour
     CameraView cameraScript;
     public bool unloadLevel = false;
     public bool continueButtonPushed = false;
+    public bool fadeOut = false;
     Scene loadScene;
     Scene startScene;
+    public bool changeCamera = false;
     public IEnumerator DisplayLoadingScreen(string sceneName)
     {
         
@@ -38,18 +40,22 @@ public class GameOver : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1);
         
-        SceneManager.UnloadSceneAsync("GameOver");
+        
         SceneManager.UnloadSceneAsync(startScene);
-        if (async.progress > 0.9f)
+        if (async.isDone)
         {
-           
+            changeCamera = true;
             ChangeScene.doneLoading = true;
-            Debug.Log("UNLOAD");            
+            fadeOut = true;
+
+            yield return new WaitForSeconds(1);
 
             SceneManager.UnloadSceneAsync(loadScene);
 
+            SceneManager.UnloadSceneAsync("GameOver");
             
             ChangeScene.doneLoading = false;
+            changeCamera = false;
         }
 
         yield return null;
@@ -68,6 +74,7 @@ public class GameOver : MonoBehaviour
             playerScript.newGame = false;
             cameraScript.newGame = false;
             continueButtonPushed = true;
+        StartCoroutine(UnloadLevel());
     }
 
     public IEnumerator UnloadLevel()
@@ -86,7 +93,7 @@ public class GameOver : MonoBehaviour
         addScreenName = "LoadingLevel";
         startScene = SceneManager.GetActiveScene();
         StartCoroutine(Return(loadSceneName));
-        
+        fadeOut = true;
 
 
     }

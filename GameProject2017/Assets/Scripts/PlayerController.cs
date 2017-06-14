@@ -206,15 +206,7 @@ public class PlayerController : MonoBehaviour
         }
         
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Collectible")
-        {
-            CollectedGear();
-        }
-        
-      
-    }
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -247,15 +239,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //When health is added or subtracted this is called to display current healt
-   
 
-    public void CollectedGear()
-    {
-        GameObject Gear = (GameObject)Instantiate(Resources.Load("PlayerGear"), gameObject.transform.position + gameObject.transform.up * 3, gameObject.transform.rotation);
-
-    }
-
-    
 
 }

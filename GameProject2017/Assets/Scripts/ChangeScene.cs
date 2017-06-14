@@ -68,7 +68,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
                 SceneManager.UnloadSceneAsync(loadScene);
                 startGame = true;
                 doneLoading = false;
-
+                playerScript.enabled = true;
             }
         }
         yield return null;

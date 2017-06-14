@@ -7,6 +7,7 @@ public class FadeIN : MonoBehaviour {
 
     Image image;
     bool fadeIn = true;
+    bool fadeOut = false;
     GameOverButtons gameOverScript;
 
     // Use this for initialization
@@ -26,21 +27,39 @@ public class FadeIN : MonoBehaviour {
     {
         if (fadeIn == true)
         {
+            
             Color c = image.color;
-            c.a += Time.deltaTime;
-            image.color = c;
+            if (c.a < 1)
+           {
+                c.a += Time.deltaTime;
+                image.color = c;
+            }
+            else
+            {
+                fadeIn = false;
+            }
         }
-        else
+        if (fadeOut == true)
         {
+
             Color c = image.color;
-            c.a -= Time.deltaTime;
-            image.color = c;
+            if (c.a > 0)
+            {
+                c.a -= Time.deltaTime;
+                image.color = c;
+            
             gameOverScript.fadeOut = false;
+            }
+            else
+            {
+                fadeOut = false;
+            }
         }
 
         if (gameOverScript.continueButtonPushed == true || gameOverScript.fadeOut == true)
         {
             fadeIn = false;
+            fadeOut = true;
         }
     }
 

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ChangeScene : MonoSingleton<ChangeScene> {
     public bool loadGame = false;
@@ -14,13 +16,16 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public static bool doneLoading = false;
     public bool startGame = false;
     public Scene startScene;
+    GameObject myEventSystem;
+    GameObject newGameButton;
+    AsyncOperation async1;
+    AsyncOperation async2;
+    Scene loadScene;
     public override void OnStart()
     {
-        
-        
-
-
-        
+        newGameButton = GameObject.Find("New Game");  
+        EventSystem.current.firstSelectedGameObject = newGameButton;
+         
     }
 
 
@@ -31,32 +36,41 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
     public IEnumerator DisplayLoadingScreen(string sceneName)
     {
-        Scene loadScene;
+        
         Scene newScene;
-
-        SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
-        loadScene = SceneManager.GetSceneByName(addScreenName);
-
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        newScene = SceneManager.GetSceneByName(sceneName);   
-        
-         yield return new WaitForSecondsRealtime(1);
-      
-        
-        if (async.progress > 0.9f)
+        if (!SceneManager.GetSceneByName(addScreenName).isLoaded)
         {
-            
-            doneLoading = true;
-     
-            yield return new WaitForSeconds(1);
-
-            SceneManager.UnloadSceneAsync(startScene);
-            SceneManager.UnloadSceneAsync(loadScene);
-            startGame = true;
-            doneLoading = false;
-
+            async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
+            loadScene = SceneManager.GetSceneByName(addScreenName);
         }
+        
+        yield return new WaitForSecondsRealtime(1);
 
+        if (async1.isDone)
+        {
+            if (!SceneManager.GetSceneByName(sceneName).isLoaded)
+            {
+                async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                newScene = SceneManager.GetSceneByName(sceneName);
+            }
+
+            yield return new WaitForSecondsRealtime(1);
+
+
+            if (async2.progress > 0.9f)
+            {
+
+                doneLoading = true;
+
+                yield return new WaitForSeconds(1);
+
+                SceneManager.UnloadSceneAsync(startScene);
+                SceneManager.UnloadSceneAsync(loadScene);
+                startGame = true;
+                doneLoading = false;
+                playerScript.enabled = true;
+            }
+        }
         yield return null;
 
     }
@@ -83,29 +97,10 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
                 cameraScript.newGame = true;
             }
         }
+
+        
     }
 
-    //public void StartButtonFunction()
-    //{
-    //    startScene = SceneManager.GetActiveScene();
-    //    saveGame = true;
-    //    loadSceneName = "Junkyard_Level_VR";
-    //    addScreenName = "LoadingLevel";
-    //    StartCoroutine(DisplayLoadingScreen(loadSceneName));
-    //}
-
-    //public void LoadButtonFunction()
-    //{
-    //    startScene = SceneManager.GetActiveScene();
-    //    loadGame = true;
-    //    loadSceneName = "Junkyard_Level_VR";
-    //    addScreenName = "LoadingLevel";
-    //    StartCoroutine(DisplayLoadingScreen(loadSceneName));    
-    //}
-
-    //public void ExitButton()
-    //{
-    //    Application.Quit();
-    //}
+    
   
 }

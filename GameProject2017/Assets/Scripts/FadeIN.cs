@@ -7,13 +7,13 @@ public class FadeIN : MonoBehaviour {
 
     Image image;
     bool fadeIn = true;
-    GameOver gameOverScript;
+    GameOverButtons gameOverScript;
 
     // Use this for initialization
     void Start ()
     {
 
-        gameOverScript = GameObject.Find("GAMEOVER").GetComponent<GameOver>();
+        gameOverScript = GameObject.Find("GAMEOVER").GetComponent<GameOverButtons>();
         image = GetComponent<Image>();
         Color c = image.color;
         c.a = 0;
@@ -41,7 +41,6 @@ public class FadeIN : MonoBehaviour {
         if (gameOverScript.continueButtonPushed == true || gameOverScript.fadeOut == true)
         {
             fadeIn = false;
-            //StartCoroutine(gameOverScript.UnloadLevel());        
         }
     }
 

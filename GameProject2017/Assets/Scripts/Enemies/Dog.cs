@@ -85,7 +85,7 @@ public class Dog : Enemy
         //set the patrol point gameobject in the scene based on the random position
         agent.SetDestination(patrolPoint.transform.position);
         //tell the ai to go to the patrol point
-        DeadScript = GameObject.FindWithTag("Player").GetComponent<GameOver>();
+        DeadScript = GameObject.Find("SceneManager").GetComponent<GameOver>();
         healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
     }
 
@@ -264,27 +264,10 @@ public class Dog : Enemy
             if (Player.Instance.lives <= 0)
             {
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//                DeadScript.dead = true;
+                if (!SceneManager.GetSceneByName("GameOver").isLoaded)
+                {
+                    StartCoroutine(DeadScript.DisplayLoadingScreen("GameOver"));
+                }
             }
 
         }
@@ -300,6 +283,7 @@ public class Dog : Enemy
 
             if (Player.Instance.lives <= 0)
             {
+  
 
 
 
@@ -311,17 +295,11 @@ public class Dog : Enemy
 
 
 
-
-
-
-
-
-
-
-
-                //DeadScript.dead = true;
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
-                
+                if (!SceneManager.GetSceneByName("GameOver").isLoaded)
+                {
+                    StartCoroutine(DeadScript.DisplayLoadingScreen("GameOver"));
+                }
             }
 
         }

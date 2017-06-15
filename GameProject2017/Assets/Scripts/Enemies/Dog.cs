@@ -39,7 +39,7 @@ public class Dog : Enemy
     public bool aiStunned = false;
     bool canBeHit = false;
     public GameObject DogExplosionParticle;
-    GameOver DeadScript;
+    ChangeScene changeSceneScript;
     Health healthScript;
     public GameObject stunParticle;
 
@@ -85,7 +85,7 @@ public class Dog : Enemy
         //set the patrol point gameobject in the scene based on the random position
         agent.SetDestination(patrolPoint.transform.position);
         //tell the ai to go to the patrol point
-        DeadScript = GameObject.Find("SceneManager").GetComponent<GameOver>();
+        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
     }
 
@@ -266,7 +266,7 @@ public class Dog : Enemy
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
                 if (!SceneManager.GetSceneByName("GameOver").isLoaded)
                 {
-                    StartCoroutine(DeadScript.DisplayLoadingScreen("GameOver"));
+                    StartCoroutine(changeSceneScript.DisplayLoadingScreen("GameOver"));
                 }
             }
 
@@ -298,7 +298,7 @@ public class Dog : Enemy
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
                 if (!SceneManager.GetSceneByName("GameOver").isLoaded)
                 {
-                    StartCoroutine(DeadScript.DisplayLoadingScreen("GameOver"));
+                    StartCoroutine(changeSceneScript.DisplayLoadingScreen("GameOver"));
                 }
             }
 

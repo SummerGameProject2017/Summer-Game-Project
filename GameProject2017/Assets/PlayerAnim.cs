@@ -28,14 +28,14 @@ public class PlayerAnim : MonoBehaviour {
     // Refernced scripts
     CameraView cameraScript;
     PlayerController PC;
-    GameOver DeadScript;
+    ChangeScene changeSceneScript;
 
 
 
     // Use this for initialization
     void Start () {
         cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
-        DeadScript = GameObject.Find("SceneManager").GetComponent<GameOver>();
+        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         Anim = GetComponent<Animator>();
         PC = GetComponent<PlayerController>();
         
@@ -144,7 +144,7 @@ public class PlayerAnim : MonoBehaviour {
             PC.enabled = false;
             if (!SceneManager.GetSceneByName("GameOver").isLoaded)
             {
-                StartCoroutine(DeadScript.DisplayLoadingScreen("GameOver"));
+                StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
             }
 
         }

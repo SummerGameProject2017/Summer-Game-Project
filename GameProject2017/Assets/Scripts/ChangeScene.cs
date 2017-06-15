@@ -21,6 +21,12 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     AsyncOperation async1;
     AsyncOperation async2;
     Scene loadScene;
+
+    public bool unloadLevel = false;
+    public bool fadeOut = false;
+    public bool changeCamera = false;
+    GameObject continueGameButton;
+
     public override void OnStart()
     {
         newGameButton = GameObject.Find("New Game");  
@@ -75,6 +81,65 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
     }
 
+
+    public IEnumerator DisplayGameOverScreen(string sceneName)
+    {
+
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        loadScene = SceneManager.GetSceneByName(sceneName);
+        yield return new WaitForSecondsRealtime(1);
+
+
+        yield return null;
+    }
+
+    public IEnumerator Return(string sceneName)
+    {
+
+        Scene newScene;
+
+        async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
+        loadScene = SceneManager.GetSceneByName(addScreenName);
+
+        yield return new WaitForSecondsRealtime(1);
+
+        if (async1.isDone)
+        {
+
+            async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            newScene = SceneManager.GetSceneByName(sceneName);
+
+            yield return new WaitForSecondsRealtime(1);
+
+
+            SceneManager.UnloadSceneAsync(startScene);
+            if (async2.isDone)
+            {
+                changeCamera = true;
+                ChangeScene.doneLoading = true;
+                fadeOut = true;
+
+                yield return new WaitForSeconds(1);
+
+                SceneManager.UnloadSceneAsync(loadScene);
+
+                SceneManager.UnloadSceneAsync("GameOver");
+
+                ChangeScene.doneLoading = false;
+                changeCamera = false;
+            }
+
+            yield return null;
+        }
+    }
+    public IEnumerator UnloadLevel()
+    {
+
+        yield return new WaitForSeconds(2);
+        SceneManager.UnloadSceneAsync("GameOver");
+        ChangeScene.doneLoading = false;
+
+    }
     void LevelWasLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Junkyard_Level_VR")
@@ -97,8 +162,13 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
                 cameraScript.newGame = true;
             }
         }
+        if (scene.name == "Main_Menu")
+        {
+            continueGameButton = GameObject.Find("Continue");
+            EventSystem.current.SetSelectedGameObject(continueGameButton);
+        }
 
-        
+
     }
 
     

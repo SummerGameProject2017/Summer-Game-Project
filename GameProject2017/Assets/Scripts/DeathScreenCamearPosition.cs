@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DeathScreenCamearPosition : MonoBehaviour {
     GameOverButtons gameOverScript;
-    GameOver GOScript;
+    ChangeScene changeSceneScript;
 	// Use this for initialization
 	void Start () {
         gameOverScript = GameObject.Find("GAMEOVER").GetComponent<GameOverButtons>();
-        GOScript = GameObject.Find("SceneManager").GetComponent<GameOver>();
+        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         transform.position = GameObject.Find("PlayerCamera").transform.position;
         transform.rotation = GameObject.Find("PlayerCamera").transform.rotation;
 
@@ -21,7 +21,7 @@ public class DeathScreenCamearPosition : MonoBehaviour {
             transform.position = GameObject.Find("PlayerCamera").transform.position;
             transform.rotation = GameObject.Find("PlayerCamera").transform.rotation;
         }
-        if (GOScript.changeCamera == true)
+        if (changeSceneScript.changeCamera == true)
         {
             gameObject.SetActive(false);
 

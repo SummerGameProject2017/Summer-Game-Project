@@ -29,7 +29,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
     //create or open a save file and serialize the data being saved to binary then close the file
     public static void Save()   
     {
-        collectables = GameObject.FindGameObjectsWithTag("Collectable");
+        collectables = GameObject.FindGameObjectsWithTag("Collectible");
         dogs = GameObject.FindGameObjectsWithTag("Enemy");
         collectBot = GameObject.FindGameObjectsWithTag("CollectBot");
         

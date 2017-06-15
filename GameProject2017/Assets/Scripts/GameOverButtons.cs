@@ -17,14 +17,14 @@ public class GameOverButtons : MonoBehaviour {
     public bool unloadLevel = false;
     public bool fadeOut = false;
 
-    GameOver gameOverScript;
+    ChangeScene changeSceneScript;
 
 
 
     private void Start()
     {
-        
-        gameOverScript = GameObject.Find("SceneManager").GetComponent<GameOver>();
+
+        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         gameOverCanvas = GameObject.Find("GAMEOVER");
         mainMenuButton = gameOverCanvas.transform.FindChild("Menu_Button").GetComponent<Button>();
         continueButton = gameOverCanvas.transform.FindChild("Continue_Button").GetComponent<Button>();
@@ -44,17 +44,17 @@ public class GameOverButtons : MonoBehaviour {
         playerScript.newGame = false;
         cameraScript.newGame = false;
         continueButtonPushed = true;
-        StartCoroutine(gameOverScript.UnloadLevel());
+        StartCoroutine(changeSceneScript.UnloadLevel());
     }
 
    
 
     public void ReturnToMainMenu()
     {
-        gameOverScript.loadSceneName = "Main_Menu";
-        gameOverScript.addScreenName = "LoadingLevel";
-        gameOverScript.startScene = SceneManager.GetActiveScene();
-        StartCoroutine(gameOverScript.Return(gameOverScript.loadSceneName));
+        changeSceneScript.loadSceneName = "Main_Menu";
+        changeSceneScript.addScreenName = "LoadingLevel";
+        changeSceneScript.startScene = SceneManager.GetActiveScene();
+        StartCoroutine(changeSceneScript.Return(changeSceneScript.loadSceneName));
         fadeOut = true;
         mainMenuButton.gameObject.SetActive(false);
         continueButton.gameObject.SetActive(false);

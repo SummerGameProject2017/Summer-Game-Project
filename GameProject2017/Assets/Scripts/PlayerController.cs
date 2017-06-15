@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public bool attackMode = false;
     public bool newGame = true;
     public bool isTalking = false;
-
+    bool attacking = false;
     [HideInInspector]
     public Vector3 lastMove;
     [HideInInspector]
@@ -143,9 +143,16 @@ public class PlayerController : MonoBehaviour
 
             moveAnim.x = InputManager.GetAxis("Horizontal"); 
             moveAnim.z = InputManager.GetAxis("Vertical");
-
+            if (InputManager.GetButtonDown("Attack"))
+            {
+                attacking = true;  
+            }
        
-             if (attackMode == true && h == 0 && v == 0)
+             if (attacking == true)
+            {
+                transform.Rotate(Vector3.down * 360 * Time.deltaTime);
+            }
+            else if (attackMode == true && h == 0 && v == 0 && attacking == false)
               {
                 Vector3 direction;
                 direction = (enemy.transform.position - transform.position).normalized;
@@ -153,12 +160,8 @@ public class PlayerController : MonoBehaviour
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
               }
-            if (InputManager.GetButtonDown("Attack"))
-            {
-                Debug.Log("SpinAttack");
-                transform.Rotate(transform.right * 360 * Time.deltaTime);
-            }
-             if (h == 0 && v == 0 && attackMode == false)
+           
+             else if (h == 0 && v == 0 && attackMode == false && attacking == false)
               {
                 if (Time.time >= waitTime + 3)
                 {

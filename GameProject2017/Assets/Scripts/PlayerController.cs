@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour
                 verticalVelocity = -1;
                 jump = 2;
                 isGrounded = true;
+               
             }
             else
             {
@@ -107,21 +108,17 @@ public class PlayerController : MonoBehaviour
                 jump--;
                 verticalVelocity = jumpForce;
                 isGrounded = false;
+                PA.Anim.Play("Jump");
                 PA.Anim.SetBool("Jump", true);
+                PA.Anim.SetBool("Landed", false);
 
             }
 
 
-            // Attack
-            
-
+            // Change Speed 
             if ((h > 0.65 || h < -0.65) && (v > 0.65 || v < -0.65))
             {
                 speed = 7.5f;
-                moveVector = (speed * (h * right + v * forward));
-            }
-            else
-            {
                 moveVector = (speed * (h * right + v * forward));
             }
 
@@ -129,11 +126,19 @@ public class PlayerController : MonoBehaviour
             {
                 moving = true;
             }
+
             if (h == 0 && v == 0 && moving == true)
             {
                 moving = false;
                 waitTime = Time.time;
             }
+
+            else
+            {
+                moveVector = (speed * (h * right + v * forward));
+            }
+
+           
 
 
             moveAnim.x = InputManager.GetAxis("Horizontal"); 
@@ -201,15 +206,7 @@ public class PlayerController : MonoBehaviour
         }
         
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Collectible")
-        {
-            CollectedGear();
-        }
-        
-      
-    }
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -242,15 +239,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //When health is added or subtracted this is called to display current healt
-   
 
-    public void CollectedGear()
-    {
-        GameObject Gear = (GameObject)Instantiate(Resources.Load("PlayerGear"), gameObject.transform.position + gameObject.transform.up * 3, gameObject.transform.rotation);
-
-    }
-
-    
 
 }

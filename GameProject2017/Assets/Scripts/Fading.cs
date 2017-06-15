@@ -8,6 +8,7 @@ public class Fading : MonoBehaviour {
     public float alpha;
     public bool fadeIn = false;
 
+
     // Use this for initialization
     void Start () {
         fadeIn = true;

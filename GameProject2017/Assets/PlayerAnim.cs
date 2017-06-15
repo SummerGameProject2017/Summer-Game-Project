@@ -35,7 +35,7 @@ public class PlayerAnim : MonoBehaviour {
     // Use this for initialization
     void Start () {
         cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
-        DeadScript = GetComponent<GameOver>();
+        DeadScript = GameObject.Find("SceneManager").GetComponent<GameOver>();
         Anim = GetComponent<Animator>();
         PC = GetComponent<PlayerController>();
         
@@ -62,8 +62,6 @@ public class PlayerAnim : MonoBehaviour {
         if (Player.Instance.lives > 0)
         {
 
-            
-
 
             if (PC.jump < 1 && !Anim.IsInTransition(0) && Anim.GetBool("Jump"))
             {
@@ -71,32 +69,23 @@ public class PlayerAnim : MonoBehaviour {
                 Anim.SetBool("DJump", true);
             }
 
-            if (!Anim.IsInTransition(0))
+
+
+            if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9)  // if the animation is about to end
             {
-                if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9) //before the animation is done set its bool to be false
+
+                if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Jump") || Anim.GetCurrentAnimatorStateInfo(0).IsTag("Land"))
                 {
-                    if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Jump")
-                        || Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump") 
-                        || Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
-                    {
-                        Anim.SetBool("Jump", false);
-                    }
-
-                    if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump"))
-                    {
-                        Anim.SetBool("DJump", false);
-                    }
-
-                    if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Land"))
-                    {
-                        Anim.SetBool("Jump", false);
-                        Anim.SetBool("DJump", false);
-                    }
-
-
+                    Anim.SetBool("Jump", false);
                 }
+
+                if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("DJump") || Anim.GetCurrentAnimatorStateInfo(0).IsTag("Land"))
+                {
+                    Anim.SetBool("DJump", false);
+                    Anim.SetBool("Jump", false);
+                }
+
             }
-           
             
             if (InputManager.GetButtonDown("Attack"))
             {
@@ -143,8 +132,6 @@ public class PlayerAnim : MonoBehaviour {
         }
 
     }
-
-
     private IEnumerator OnTriggerEnter(Collider other)
     {
         //if the player falls in water play the falling in water animation then reset player to last save position

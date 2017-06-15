@@ -18,7 +18,7 @@ public class GameOverButtons : MonoBehaviour {
     public bool fadeOut = false;
 
     ChangeScene changeSceneScript;
-
+   
 
 
     private void Start()
@@ -45,12 +45,16 @@ public class GameOverButtons : MonoBehaviour {
         cameraScript.newGame = false;
         continueButtonPushed = true;
         StartCoroutine(changeSceneScript.UnloadLevel());
+        continueButton.gameObject.SetActive(false);
+        mainMenuButton.gameObject.SetActive(false);
+
     }
 
    
 
     public void ReturnToMainMenu()
     {
+        changeSceneScript.unloadSceneName = "GameOver";
         changeSceneScript.loadSceneName = "Main_Menu";
         changeSceneScript.addScreenName = "LoadingLevel";
         changeSceneScript.startScene = SceneManager.GetActiveScene();

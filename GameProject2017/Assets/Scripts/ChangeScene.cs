@@ -21,6 +21,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     AsyncOperation async1;
     AsyncOperation async2;
     Scene loadScene;
+    public string unloadSceneName;
 
     public bool unloadLevel = false;
     public bool fadeOut = false;
@@ -50,7 +51,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public IEnumerator DisplayLoadingScreen(string sceneName)
     {
         
-        Scene newScene;
+
         if (!SceneManager.GetSceneByName(addScreenName).isLoaded)
         {
             async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
@@ -64,7 +65,6 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             if (!SceneManager.GetSceneByName(sceneName).isLoaded)
             {
                 async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                newScene = SceneManager.GetSceneByName(sceneName);
             }
 
             yield return new WaitForSecondsRealtime(1);
@@ -100,6 +100,17 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         yield return null;
     }
 
+    public IEnumerator DisplayGameWinScreen()
+    {
+        GameObject.FindWithTag("Player").GetComponent<PlayerController>().enabled = false;
+        SceneManager.LoadScene("Game_Win", LoadSceneMode.Additive);
+        loadScene = SceneManager.GetSceneByName("Game_Win");
+        yield return new WaitForSecondsRealtime(1);
+        
+
+        yield return null;
+    }
+
     public IEnumerator Return(string sceneName)
     {
 
@@ -128,7 +139,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
                 SceneManager.UnloadSceneAsync(loadScene);
 
-                SceneManager.UnloadSceneAsync("GameOver");
+                SceneManager.UnloadSceneAsync(unloadSceneName);
 
                 ChangeScene.doneLoading = false;
                 changeCamera = false;
@@ -177,6 +188,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
                 playerScript.newGame = true;
                 cameraScript.newGame = true;
             }
+
         }
         if (scene.name == "Main_Menu")
         {
@@ -188,7 +200,11 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             continueGameButton = GameObject.Find("Continue");
             EventSystem.current.SetSelectedGameObject(continueGameButton);
         }
-
+        if (scene.name == "Game_Win")
+        {
+            continueGameButton = GameObject.Find("Continue");
+            EventSystem.current.SetSelectedGameObject(continueGameButton);
+        }
 
     }
 

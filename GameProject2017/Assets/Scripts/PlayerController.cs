@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     float waitTime = 0;
     bool moving  = false;
-
+    ChangeScene changeSceneScript;
 
     // Use this for initialization
     void Start()
@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour
         {
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
         }
+
+        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
       //  SaveLoad.Save();
     }
 
@@ -80,7 +82,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
        
-        
 
         Vector3 forward = GameObject.Find("PlayerCamera").transform.TransformDirection(Vector3.forward);
         forward.y = 0;
@@ -232,7 +233,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-
+   
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Fountain")

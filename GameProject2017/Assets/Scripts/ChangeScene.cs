@@ -96,7 +96,6 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public IEnumerator Return(string sceneName)
     {
 
-        Scene newScene;
 
         async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
         loadScene = SceneManager.GetSceneByName(addScreenName);
@@ -107,7 +106,6 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         {
 
             async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            newScene = SceneManager.GetSceneByName(sceneName);
 
             yield return new WaitForSecondsRealtime(1);
 

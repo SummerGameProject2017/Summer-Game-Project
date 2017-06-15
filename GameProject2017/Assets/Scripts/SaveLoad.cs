@@ -50,7 +50,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         if (continueFromMain == true)
         {
             continueFromMain = false;
-            collectables = GameObject.FindGameObjectsWithTag("Collectable");
+            collectables = GameObject.FindGameObjectsWithTag("Collectible");
             dogs = GameObject.FindGameObjectsWithTag("Enemy");
             collectBot = GameObject.FindGameObjectsWithTag("CollectBot");
             }

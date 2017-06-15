@@ -15,15 +15,17 @@ using UnityEngine.SceneManagement;
 public class PlayerAnim : MonoBehaviour {
 
     // Movement animations controller
-    private float inputH; 
+    private float inputH;
     private float inputV;
 
     // Animator Component
     public Animator Anim;
 
     //Bools
-    public bool attacking = false;
+    [HideInInspector]
     public bool inTransition = false;
+
+    public bool attacking = false;
 
     // Refernced scripts
     CameraView cameraScript;
@@ -52,9 +54,10 @@ public class PlayerAnim : MonoBehaviour {
 
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
 
         Anim.SetFloat("inputV", PC.v); // Set Vertical Movement
         Anim.SetFloat("inputH", PC.h); // Set Horizontal Movement
@@ -65,13 +68,13 @@ public class PlayerAnim : MonoBehaviour {
 
             if (PC.jump < 1 && !Anim.IsInTransition(0) && Anim.GetBool("Jump"))
             {
-               
+
                 Anim.SetBool("DJump", true);
             }
 
 
 
-            if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9)  // if the animation is about to end
+            if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9)  // if the animation is about to end
             {
 
                 if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Jump") || Anim.GetCurrentAnimatorStateInfo(0).IsTag("Land"))
@@ -84,53 +87,40 @@ public class PlayerAnim : MonoBehaviour {
                     Anim.SetBool("DJump", false);
                     Anim.SetBool("Jump", false);
                 }
-
             }
-            
-            if (InputManager.GetButtonDown("Attack"))
-            {
-                if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-                {
-                    if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7)
-                    {
-                        Anim.Play("Attack", -1, 0);
-                    }
 
-                }
-                else
+            if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9)
+            {
+                if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
                 {
-                    Anim.Play("Attack", -1, 0);
+                    Anim.SetBool("Attack", false);
+                    PC.attacking = false;
+                    
                 }
 
             }
 
-            if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+
+
+
+
+
+            if (!PC.isActiveAndEnabled)
             {
-                attacking = true;
+                Anim.SetBool("Jump", false);
+                Anim.Play("Idle", -1, 0);
             }
-            else
+            if (Anim.IsInTransition(0))
             {
-                attacking = false;
+                inTransition = true;
+
+            }
+            if (!Anim.IsInTransition(0))
+            {
+                inTransition = false;
             }
 
         }
-
-
-        if (!PC.isActiveAndEnabled)
-        {
-            Anim.SetBool("Jump", false);
-            Anim.Play("Idle", -1, 0);
-        }
-        if (Anim.IsInTransition(0))
-        {
-            inTransition = true;
-
-        }
-        if(!Anim.IsInTransition(0))
-        {
-            inTransition = false;
-        }
-
     }
     private IEnumerator OnTriggerEnter(Collider other)
     {

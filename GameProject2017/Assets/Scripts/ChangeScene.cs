@@ -36,8 +36,15 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
 
     // Update is called once per frame
-    public override void OnUpdate () {
+    public override void OnUpdate() {
         SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  
+
+        if (InputManager.GetButtonDown("Pause"))
+        {
+            StartCoroutine(PauseMenu());
+            Time.timeScale = 0;
+            
+        }
     }
 
     public IEnumerator DisplayLoadingScreen(string sceneName)
@@ -138,6 +145,17 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         ChangeScene.doneLoading = false;
 
     }
+    IEnumerator PauseMenu()
+    {
+        SceneManager.LoadScene("PauseScene", LoadSceneMode.Additive);
+
+        yield return new WaitForSecondsRealtime(1);
+
+
+        yield return null;
+    }
+
+
     void LevelWasLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Junkyard_Level_VR")
@@ -161,6 +179,11 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             }
         }
         if (scene.name == "Main_Menu")
+        {
+            continueGameButton = GameObject.Find("Continue");
+            EventSystem.current.SetSelectedGameObject(continueGameButton);
+        }
+        if (scene.name == "PauseScene")
         {
             continueGameButton = GameObject.Find("Continue");
             EventSystem.current.SetSelectedGameObject(continueGameButton);

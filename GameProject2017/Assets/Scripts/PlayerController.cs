@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     CharacterController controller;
     PlayerAnim PA;
+    
 
     [Range(3.0f, 8.0f)]
     public float speed;
@@ -23,7 +24,11 @@ public class PlayerController : MonoBehaviour
     public bool attackMode = false;
     public bool newGame = true;
     public bool isTalking = false;
-    bool attacking = false;
+    public GameObject healingParticle;
+    public GameObject JumpParticle;
+
+    [HideInInspector]
+    public bool attacking = false;
     [HideInInspector]
     public Vector3 lastMove;
     [HideInInspector]
@@ -35,13 +40,14 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public GameObject enemy;
     Health healthScript;
-    public GameObject healingParticle;
+    
     [HideInInspector]
     public bool fallBack = false;
     [HideInInspector]
     public bool destroyHealingParticle;
     [HideInInspector]
     public GameObject healingEffect;
+    
 
     float waitTime = 0;
     bool moving  = false;
@@ -111,6 +117,7 @@ public class PlayerController : MonoBehaviour
                 PA.Anim.Play("Jump");
                 PA.Anim.SetBool("Jump", true);
                 PA.Anim.SetBool("Landed", false);
+                Instantiate(JumpParticle, transform.position, Quaternion.Euler(90.0f, 0.0f, 0.0f));
 
             }
 
@@ -138,20 +145,23 @@ public class PlayerController : MonoBehaviour
                 moveVector = (speed * (h * right + v * forward));
             }
 
-           
-
-
             moveAnim.x = InputManager.GetAxis("Horizontal"); 
             moveAnim.z = InputManager.GetAxis("Vertical");
+
+
             if (InputManager.GetButtonDown("Attack"))
             {
-                attacking = true;  
+                attacking = true;
+                PA.Anim.SetBool("Attack", true);
+                PA.Anim.Play("Attack");        
             }
        
-             if (attacking == true)
+             if (attacking == true && PA.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4 )
             {
-                transform.Rotate(Vector3.down * 360 * Time.deltaTime);
+                transform.Rotate(Vector3.down * 720 * Time.deltaTime);
             }
+
+            
             else if (attackMode == true && h == 0 && v == 0 && attacking == false)
               {
                 Vector3 direction;

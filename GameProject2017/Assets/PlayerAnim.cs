@@ -15,15 +15,17 @@ using UnityEngine.SceneManagement;
 public class PlayerAnim : MonoBehaviour {
 
     // Movement animations controller
-    private float inputH; 
+    private float inputH;
     private float inputV;
 
     // Animator Component
     public Animator Anim;
 
     //Bools
-    public bool attacking = false;
+    [HideInInspector]
     public bool inTransition = false;
+
+    public bool attacking = false;
 
     // Refernced scripts
     CameraView cameraScript;
@@ -93,6 +95,7 @@ public class PlayerAnim : MonoBehaviour {
                 {
                     Anim.SetBool("Attack", false);
                     PC.attacking = false;
+                    
                 }
 
             }

@@ -6,6 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     CharacterController controller;
     PlayerAnim PA;
+
+
+    
+    public GameObject jumpParticle;
     
 
     [Range(3.0f, 8.0f)]
@@ -25,9 +29,9 @@ public class PlayerController : MonoBehaviour
     public bool newGame = true;
     public bool isTalking = false;
     public GameObject healingParticle;
-    public GameObject JumpParticle;
 
-    [HideInInspector]
+
+   // [HideInInspector]
     public bool attacking = false;
     [HideInInspector]
     public Vector3 lastMove;
@@ -59,8 +63,10 @@ public class PlayerController : MonoBehaviour
         
         //   SaveLoad.Load();
         healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
+        
         controller = GetComponent<CharacterController>();
-        PA = GetComponent<PlayerAnim>(); 
+        PA = GetComponent<PlayerAnim>();
+       
         
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
@@ -115,9 +121,12 @@ public class PlayerController : MonoBehaviour
                 verticalVelocity = jumpForce;
                 isGrounded = false;
                 PA.Anim.Play("Jump");
+                PA.Anim.SetBool("Attack", false);
                 PA.Anim.SetBool("Jump", true);
                 PA.Anim.SetBool("Landed", false);
-                Instantiate(JumpParticle, transform.position, Quaternion.Euler(90.0f, 0.0f, 0.0f));
+                jumpParticle.transform.position = transform.position;
+                jumpParticle.GetComponent<ParticleSystem>().Emit(25);
+
 
             }
 
@@ -156,9 +165,11 @@ public class PlayerController : MonoBehaviour
                 PA.Anim.Play("Attack");        
             }
        
-             if (attacking == true && PA.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4 )
+             if (attacking == true && PA.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4 
+                && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+
             {
-                transform.Rotate(Vector3.down * 720 * Time.deltaTime);
+                transform.Rotate(Vector3.down * 1080 * Time.deltaTime);
             }
 
             
@@ -173,13 +184,14 @@ public class PlayerController : MonoBehaviour
            
              else if (h == 0 && v == 0 && attackMode == false && attacking == false)
               {
-                if (Time.time >= waitTime + 3)
+                if (Time.time >= waitTime + 3 && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Movement"))
                 {
                     Vector3 direction;
                     direction = (GameObject.Find("PlayerCamera").transform.position - transform.position).normalized;
                     direction.y = 0;
                     Quaternion lookRotation = Quaternion.LookRotation(direction);
                     transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
+                    
                 }
               }
              

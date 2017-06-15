@@ -50,7 +50,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public IEnumerator DisplayLoadingScreen(string sceneName)
     {
         
-        Scene newScene;
+
         if (!SceneManager.GetSceneByName(addScreenName).isLoaded)
         {
             async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
@@ -64,7 +64,6 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             if (!SceneManager.GetSceneByName(sceneName).isLoaded)
             {
                 async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                newScene = SceneManager.GetSceneByName(sceneName);
             }
 
             yield return new WaitForSecondsRealtime(1);

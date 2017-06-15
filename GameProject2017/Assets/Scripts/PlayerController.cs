@@ -55,7 +55,10 @@ public class PlayerController : MonoBehaviour
 
     float waitTime = 0;
     bool moving  = false;
-    ChangeScene changeSceneScript;
+
+
+    public GameObject collectableCount;
+    public bool showCollectable = false;
 
     // Use this for initialization
     void Start()
@@ -74,14 +77,20 @@ public class PlayerController : MonoBehaviour
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
         }
 
-        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
       //  SaveLoad.Save();
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        if (showCollectable == true)
+        {
+            collectableCount.SetActive(true);
+        }
+        else
+        {
+            collectableCount.SetActive(false);
+        }
 
         Vector3 forward = GameObject.Find("PlayerCamera").transform.TransformDirection(Vector3.forward);
         forward.y = 0;

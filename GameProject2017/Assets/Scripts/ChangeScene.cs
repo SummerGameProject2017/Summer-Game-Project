@@ -21,6 +21,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     AsyncOperation async1;
     AsyncOperation async2;
     Scene loadScene;
+    public string unloadSceneName;
 
     public bool unloadLevel = false;
     public bool fadeOut = false;
@@ -36,14 +37,21 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
 
     // Update is called once per frame
-    public override void OnUpdate () {
+    public override void OnUpdate() {
         SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  
+
+        if (InputManager.GetButtonDown("Pause"))
+        {
+            StartCoroutine(PauseMenu());
+            Time.timeScale = 0;
+            
+        }
     }
 
     public IEnumerator DisplayLoadingScreen(string sceneName)
     {
         
-        Scene newScene;
+
         if (!SceneManager.GetSceneByName(addScreenName).isLoaded)
         {
             async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
@@ -57,7 +65,6 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             if (!SceneManager.GetSceneByName(sceneName).isLoaded)
             {
                 async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                newScene = SceneManager.GetSceneByName(sceneName);
             }
 
             yield return new WaitForSecondsRealtime(1);
@@ -93,10 +100,20 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         yield return null;
     }
 
+    public IEnumerator DisplayGameWinScreen()
+    {
+        GameObject.FindWithTag("Player").GetComponent<PlayerController>().enabled = false;
+        SceneManager.LoadScene("Game_Win", LoadSceneMode.Additive);
+        loadScene = SceneManager.GetSceneByName("Game_Win");
+        yield return new WaitForSecondsRealtime(1);
+        
+
+        yield return null;
+    }
+
     public IEnumerator Return(string sceneName)
     {
 
-        Scene newScene;
 
         async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
         loadScene = SceneManager.GetSceneByName(addScreenName);
@@ -107,7 +124,6 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         {
 
             async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            newScene = SceneManager.GetSceneByName(sceneName);
 
             yield return new WaitForSecondsRealtime(1);
 
@@ -123,7 +139,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
                 SceneManager.UnloadSceneAsync(loadScene);
 
-                SceneManager.UnloadSceneAsync("GameOver");
+                SceneManager.UnloadSceneAsync(unloadSceneName);
 
                 ChangeScene.doneLoading = false;
                 changeCamera = false;
@@ -140,6 +156,17 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         ChangeScene.doneLoading = false;
 
     }
+    IEnumerator PauseMenu()
+    {
+        SceneManager.LoadScene("PauseScene", LoadSceneMode.Additive);
+
+        yield return new WaitForSecondsRealtime(1);
+
+
+        yield return null;
+    }
+
+
     void LevelWasLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Junkyard_Level_VR")
@@ -161,13 +188,23 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
                 playerScript.newGame = true;
                 cameraScript.newGame = true;
             }
+
         }
         if (scene.name == "Main_Menu")
         {
             continueGameButton = GameObject.Find("Continue");
             EventSystem.current.SetSelectedGameObject(continueGameButton);
         }
-
+        if (scene.name == "PauseScene")
+        {
+            continueGameButton = GameObject.Find("Continue");
+            EventSystem.current.SetSelectedGameObject(continueGameButton);
+        }
+        if (scene.name == "Game_Win")
+        {
+            continueGameButton = GameObject.Find("Continue");
+            EventSystem.current.SetSelectedGameObject(continueGameButton);
+        }
 
     }
 

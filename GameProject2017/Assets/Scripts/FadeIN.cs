@@ -9,17 +9,17 @@ public class FadeIN : MonoBehaviour {
     bool fadeIn = true;
     bool fadeOut = false;
     GameOverButtons gameOverScript;
+    public bool showRusty = false;
+
 
     // Use this for initialization
     void Start ()
     {
-
         gameOverScript = GameObject.Find("GAMEOVER").GetComponent<GameOverButtons>();
         image = GetComponent<Image>();
         Color c = image.color;
         c.a = 0;
         image.color = c;
-
     }
 	
 	// Update is called once per frame
@@ -36,6 +36,7 @@ public class FadeIN : MonoBehaviour {
             }
             else
             {
+                showRusty = true;
                 fadeIn = false;
             }
         }
@@ -58,6 +59,7 @@ public class FadeIN : MonoBehaviour {
 
         if (gameOverScript.continueButtonPushed == true || gameOverScript.fadeOut == true)
         {
+            showRusty = false;
             fadeIn = false;
             fadeOut = true;
         }

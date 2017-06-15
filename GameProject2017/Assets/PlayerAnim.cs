@@ -147,6 +147,14 @@ public class PlayerAnim : MonoBehaviour {
                 StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
             }
 
+
+        }
+        if (other.gameObject.name == "Collectables")
+        {
+            if (!SceneManager.GetSceneByName("Game_Win").isLoaded)
+            {
+                StartCoroutine(changeSceneScript.DisplayGameWinScreen());
+            }
         }
     }
 

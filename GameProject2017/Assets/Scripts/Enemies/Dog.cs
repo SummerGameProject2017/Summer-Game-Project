@@ -43,6 +43,11 @@ public class Dog : Enemy
     Health healthScript;
     public GameObject stunParticle;
 
+    public AudioSource GrowlSound;
+    public AudioSource isHurtSound;
+    public AudioSource AttackSound;
+    public AudioSource DeathExplosionSound;
+
   
 
     public override void OnStart()
@@ -123,6 +128,7 @@ public class Dog : Enemy
             {
                 idle = false;
                 aiState = States.Chase;
+                GrowlSound.Play();
             }
             if (Player.Instance.lives > 0)
             {
@@ -134,6 +140,7 @@ public class Dog : Enemy
                     if (angle < 20)
                     {
                         aiState = States.Attack;
+                        AttackSound.Play();
                     }
                     else
                     {
@@ -146,6 +153,7 @@ public class Dog : Enemy
                     agent.SetDestination(transform.position);
                     firstAttack = false;
                     aiState = States.Attack;
+                    AttackSound.Play();
                 }
             }
             if (offset > 15 && idle == false)
@@ -383,6 +391,7 @@ public class Dog : Enemy
 
                 aiStunned = true;
                 aiState = States.Stunned;
+                isHurtSound.Play();
                 StartCoroutine(DogStunned());
             }
         }
@@ -392,12 +401,14 @@ public class Dog : Enemy
             if (health > 1)
             {
                 health--;
+                isHurtSound.Play();
                 StartCoroutine(DogHit());
                 canBeHit = false;
                 
         }
         else
         {
+                isHurtSound.Play();
                 GetComponent<Collider>().enabled = false;
                 health--;
                 canBeHit = false;

@@ -67,21 +67,8 @@ public class GameOverButtons : MonoBehaviour {
 
 
 
-    private void Update()
-    {
-        if (InputManager.GetAxis("Horizontal") < 0)
-        {
-            mainMenuButton.Select();
-
-        }
-        if (InputManager.GetAxis("Horizontal") > 0)
-        {
-            continueButton.Select();
-        }
+   
 
 
-
-    }
-
-
+    
 }

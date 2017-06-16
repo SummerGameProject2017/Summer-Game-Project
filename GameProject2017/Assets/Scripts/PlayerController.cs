@@ -261,8 +261,17 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Tire")
+        {
+            animationScript.Anim.Play("GetHit", -1, 0);
+       //     Player.Instance.LoseLife();
+       //     healthScript.HealthChange();
+            transform.position = Vector3.Lerp(transform.position, other.transform.position - other.transform.forward * 10, Time.deltaTime * 2);
+        }
+    }
 
-   
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Fountain")

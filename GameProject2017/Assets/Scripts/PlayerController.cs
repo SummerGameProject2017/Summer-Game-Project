@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     public GameObject healingParticle;
 
 
-   // [HideInInspector]
+    [HideInInspector]
     public bool attacking = false;
     [HideInInspector]
     public Vector3 lastMove;
@@ -56,17 +57,19 @@ public class PlayerController : MonoBehaviour
     float waitTime = 0;
     bool moving  = false;
 
-
+    ChangeScene changeSceneScript;
     GameObject collectableCount;
     public bool showCollectable = false;
-
+    PlayerAnim animationScript;
     // Use this for initialization
     void Start()
     {
+        animationScript = GetComponent<PlayerAnim>();
+        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         collectableCount = GameObject.Find("GearCounter");
         //   SaveLoad.Load();
         healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
-        
+        jumpParticle = GameObject.Find("Player jump");
         controller = GetComponent<CharacterController>();
         PA = GetComponent<PlayerAnim>();
        
@@ -74,7 +77,6 @@ public class PlayerController : MonoBehaviour
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
         {
-            Debug.Log("newGame");
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
             SaveLoad.Save();
         }
@@ -85,6 +87,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        if (InputManager.GetButtonDown("Pause"))
+        {
+            if (!SceneManager.GetSceneByName("PauseScene").isLoaded)
+            {
+                StartCoroutine(changeSceneScript.PauseMenu());
+                animationScript.enabled = false;
+                this.enabled = false;
+                
+                Time.timeScale = 0;
+            }
+
+        }
+
+
         if (showCollectable == true)
         {
             collectableCount.SetActive(true);
@@ -181,7 +199,7 @@ public class PlayerController : MonoBehaviour
                 && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
 
             {
-                transform.Rotate(Vector3.down * 1080 * Time.deltaTime);
+               transform.Rotate(Vector3.down * (360 * (Time.deltaTime  * 2)));
             }
 
             
@@ -243,8 +261,17 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Tire")
+        {
+            animationScript.Anim.Play("GetHit", -1, 0);
+       //     Player.Instance.LoseLife();
+       //     healthScript.HealthChange();
+            transform.position = Vector3.Lerp(transform.position, other.transform.position - other.transform.forward * 10, Time.deltaTime * 2);
+        }
+    }
 
-   
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Fountain")

@@ -33,7 +33,6 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         dogs = GameObject.FindGameObjectsWithTag("Enemy");
         collectBot = GameObject.FindGameObjectsWithTag("CollectBot");
         playerScript = Player.Instance;
-        Debug.Log("Saved Game");
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");    //create a file or overwrite if exists to save data too
         

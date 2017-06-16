@@ -42,14 +42,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public override void OnUpdate() {
         SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  
 
-        if (InputManager.GetButtonDown("Pause") )
-        {
-            StartCoroutine(PauseMenu());
-            playerScript.enabled = false;
-            animationScript.enabled = false;
-            Time.timeScale = 0;
-            
-        }
+        
     }
 
     public IEnumerator DisplayLoadingScreen(string sceneName)
@@ -118,15 +111,14 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public IEnumerator Return(string sceneName)
     {
 
-
+        animationScript.Anim.enabled = false;
         async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
         loadScene = SceneManager.GetSceneByName(addScreenName);
 
         yield return new WaitForSecondsRealtime(1);
 
         if (async1.isDone)
-        {
-
+        { 
             async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             yield return new WaitForSecondsRealtime(1);
@@ -147,6 +139,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
                 ChangeScene.doneLoading = false;
                 changeCamera = false;
+                
             }
 
             yield return null;
@@ -167,7 +160,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         yield return null;
 
     }
-    IEnumerator PauseMenu()
+    public IEnumerator PauseMenu()
     {
         SceneManager.LoadScene("PauseScene", LoadSceneMode.Additive);
 

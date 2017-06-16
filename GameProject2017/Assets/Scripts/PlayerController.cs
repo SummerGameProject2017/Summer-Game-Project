@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     public GameObject healingParticle;
 
 
-   // [HideInInspector]
+    [HideInInspector]
     public bool attacking = false;
     [HideInInspector]
     public Vector3 lastMove;
@@ -56,13 +57,15 @@ public class PlayerController : MonoBehaviour
     float waitTime = 0;
     bool moving  = false;
 
-
+    ChangeScene changeSceneScript;
     GameObject collectableCount;
     public bool showCollectable = false;
-
+    PlayerAnim animationScript;
     // Use this for initialization
     void Start()
     {
+        animationScript = GetComponent<PlayerAnim>();
+        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         collectableCount = GameObject.Find("GearCounter");
         //   SaveLoad.Load();
         healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
@@ -84,6 +87,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        if (InputManager.GetButtonDown("Pause"))
+        {
+            if (!SceneManager.GetSceneByName("PauseScene").isLoaded)
+            {
+                StartCoroutine(changeSceneScript.PauseMenu());
+                animationScript.enabled = false;
+                this.enabled = false;
+                
+                Time.timeScale = 0;
+            }
+
+        }
+
+
         if (showCollectable == true)
         {
             collectableCount.SetActive(true);

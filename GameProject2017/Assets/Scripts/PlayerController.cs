@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour
                 && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
 
             {
-                transform.Rotate(Vector3.down * 360 * (Time.deltaTime*4));
+               transform.Rotate(Vector3.down * (360 * (Time.deltaTime  * 2)));
             }
 
             

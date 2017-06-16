@@ -74,10 +74,12 @@ public class PlayerController : MonoBehaviour
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
         {
+            Debug.Log("newGame");
             transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
+            SaveLoad.Save();
         }
 
-      //  SaveLoad.Save();
+        
     }
 
     // Update is called once per frame

@@ -25,11 +25,13 @@ public class DialogueSystem : MonoBehaviour
     bool yes = false;
     bool no = false;
     NPC npcScript;
+    PlayerAnim animationScript;
 
     void Awake()
     {
         npcScript = GameObject.Find("SaveBot").GetComponent<NPC>();
         playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        animationScript = GameObject.FindWithTag("Player").GetComponent<PlayerAnim>();
         dialogueText = dialoguePanel.transform.FindChild("Text").GetComponent<Text>();
  //       nameText = dialoguePanel.transform.FindChild("Name").GetChild(0).GetComponent<Text>();
         dialoguePanel.SetActive(false);
@@ -93,6 +95,7 @@ public class DialogueSystem : MonoBehaviour
         
       //  nameText.text = npcName;
         dialoguePanel.SetActive(true);
+        animationScript.talking = true;
     }
 
     public void ContinueDialogue()      
@@ -126,6 +129,8 @@ public class DialogueSystem : MonoBehaviour
             isTalking = false;
             playerScript.enabled = true;
             playerScript.isTalking = false;
+            animationScript.talking = false;
+
         }
     }
 
@@ -165,6 +170,7 @@ public class DialogueSystem : MonoBehaviour
         savePanel.SetActive(false);
         playerScript.enabled = true;
         playerScript.isTalking = false;
+        animationScript.talking = false;
         noButton.image.color = new Color(255, 255, 255);
         yesButton.image.color = new Color(255, 255, 255);
         no = false;
@@ -177,6 +183,7 @@ public class DialogueSystem : MonoBehaviour
         savePanel.SetActive(false);
         playerScript.enabled = true;
         playerScript.isTalking = false;
+        animationScript.talking = false;
         noButton.image.color = new Color(255, 255, 255);
         yesButton.image.color = new Color(255, 255, 255);
         yes = false;

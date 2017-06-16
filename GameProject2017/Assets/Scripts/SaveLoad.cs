@@ -32,7 +32,6 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         collectables = GameObject.FindGameObjectsWithTag("Collectible");
         dogs = GameObject.FindGameObjectsWithTag("Enemy");
         collectBot = GameObject.FindGameObjectsWithTag("CollectBot");
-        
         playerScript = Player.Instance;
         Debug.Log("Saved Game");
         BinaryFormatter bf = new BinaryFormatter();

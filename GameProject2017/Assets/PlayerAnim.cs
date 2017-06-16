@@ -26,6 +26,7 @@ public class PlayerAnim : MonoBehaviour {
     public bool inTransition = false;
 
     public bool attacking = false;
+    public bool talking = false;
 
     // Refernced scripts
     CameraView cameraScript;
@@ -105,10 +106,10 @@ public class PlayerAnim : MonoBehaviour {
 
 
 
-            if (!PC.isActiveAndEnabled)
+            if (!PC.isActiveAndEnabled || talking == true)
             {
                 Anim.SetBool("Jump", false);
-                Anim.Play("Idle", -1, 0);
+                Anim.Play("Idle", 0, 0);
             }
             if (Anim.IsInTransition(0))
             {

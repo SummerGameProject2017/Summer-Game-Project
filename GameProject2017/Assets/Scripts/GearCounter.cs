@@ -27,7 +27,7 @@ public class GearCounter : MonoBehaviour {
 
     IEnumerator turnOff()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         playerScript.showCollectable = false;
     }
 }

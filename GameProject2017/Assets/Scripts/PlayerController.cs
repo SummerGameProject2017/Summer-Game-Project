@@ -57,13 +57,13 @@ public class PlayerController : MonoBehaviour
     bool moving  = false;
 
 
-    public GameObject collectableCount;
+    GameObject collectableCount;
     public bool showCollectable = false;
 
     // Use this for initialization
     void Start()
     {
-        
+        collectableCount = GameObject.Find("GearCounter");
         //   SaveLoad.Load();
         healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
         

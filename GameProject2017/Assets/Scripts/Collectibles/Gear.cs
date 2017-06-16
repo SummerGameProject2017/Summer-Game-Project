@@ -7,10 +7,12 @@ public class Gear : Collectables {
 
     public bool collected;
     PlayerController playerScript;
+    AudioSource Chime;
 
     public override void OnStart()
     {
         playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        Chime = GetComponent<AudioSource>();
     }
 
     public override void OnUpdate()
@@ -26,6 +28,7 @@ public class Gear : Collectables {
             playerScript.showCollectable = true;
             Player player = Player.Instance;
             player.CollectGear();
+            Chime.Play();
 
             par_pickup.transform.position = transform.position;
             par_pickup.GetComponent<ParticleSystem>().Emit(particleCount);

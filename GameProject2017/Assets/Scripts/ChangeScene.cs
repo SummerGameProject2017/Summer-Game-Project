@@ -11,6 +11,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public string loadSceneName;
     public string addScreenName;
     PlayerController playerScript;
+    PlayerAnim animationScript;
     CameraView cameraScript;
     GameObject gameoverScreen;
     public static bool doneLoading = false;
@@ -30,6 +31,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
     public override void OnStart()
     {
+
         newGameButton = GameObject.Find("New Game");  
         EventSystem.current.firstSelectedGameObject = newGameButton;
          
@@ -40,12 +42,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public override void OnUpdate() {
         SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  
 
-        if (InputManager.GetButtonDown("Pause"))
-        {
-            StartCoroutine(PauseMenu());
-            Time.timeScale = 0;
-            
-        }
+        
     }
 
     public IEnumerator DisplayLoadingScreen(string sceneName)
@@ -114,15 +111,14 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public IEnumerator Return(string sceneName)
     {
 
-
+        animationScript.Anim.enabled = false;
         async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
         loadScene = SceneManager.GetSceneByName(addScreenName);
 
         yield return new WaitForSecondsRealtime(1);
 
         if (async1.isDone)
-        {
-
+        { 
             async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             yield return new WaitForSecondsRealtime(1);
@@ -143,6 +139,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
                 ChangeScene.doneLoading = false;
                 changeCamera = false;
+                
             }
 
             yield return null;
@@ -156,7 +153,14 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         ChangeScene.doneLoading = false;
 
     }
-    IEnumerator PauseMenu()
+    public IEnumerator UnloadImmediately()
+    {       
+        SceneManager.UnloadSceneAsync("PauseScene");
+        ChangeScene.doneLoading = false;
+        yield return null;
+
+    }
+    public IEnumerator PauseMenu()
     {
         SceneManager.LoadScene("PauseScene", LoadSceneMode.Additive);
 
@@ -173,6 +177,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         {
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(loadSceneName));
             playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            animationScript = GameObject.FindWithTag("Player").GetComponent<PlayerAnim>();
             cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
             if (loadGame == true)
             {

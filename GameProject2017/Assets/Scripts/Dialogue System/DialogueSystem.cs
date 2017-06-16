@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
@@ -38,7 +39,7 @@ public class DialogueSystem : MonoBehaviour
         savePanel.SetActive(false);
         yesButton.onClick.AddListener(delegate { YesButtonPushed(); });
         noButton.onClick.AddListener(delegate { NoButtonPushed(); });
-
+        
 
 
         if (Instance != null && Instance != this)
@@ -66,29 +67,7 @@ public class DialogueSystem : MonoBehaviour
         {
             playerScript.enabled = false;
             npcScript.enabled = false;
-            if (InputManager.GetKeyDown(KeyCode.A) || InputManager.GetKeyDown(KeyCode.LeftArrow) || InputManager.GetAxis("Horizontal") < 0)
-            {
-                yesButton.image.color = new Color(255, 0, 0);
-                noButton.image.color = new Color(255, 255, 255);
-                yes = true;
-                no = false;
-            }
-            if (InputManager.GetKeyDown(KeyCode.D) || InputManager.GetKeyDown(KeyCode.RightArrow) || InputManager.GetAxis("Horizontal") > 0)
-            {
-                noButton.image.color = new Color(255, 0, 0);
-                yesButton.image.color = new Color(255, 255, 255);
-                no = true;
-                yes = false;
-            }
-            if (yes == true && InputManager.GetButtonDown("Jump"))      //if the jump button is pushed on yes or no save game or not
-            {
-                YesButtonPushed();
-            }
-            if (no == true && InputManager.GetButtonDown("Jump"))
-            {
-                NoButtonPushed();
-            }
-
+            
         }
       
 
@@ -139,6 +118,7 @@ public class DialogueSystem : MonoBehaviour
             if (npcName == "SaveBot")
             {
                 savePanel.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(yesButton.gameObject);
             }
             currentCharacterIndex = 0;
             startTalking = true;

@@ -266,7 +266,7 @@ public class Dog : Enemy
                 animationScript.Anim.Play("Death-Enemy", -1, 0);
                 if (!SceneManager.GetSceneByName("GameOver").isLoaded)
                 {
-                    StartCoroutine(changeSceneScript.DisplayLoadingScreen("GameOver"));
+                    StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
                 }
             }
 
@@ -283,22 +283,10 @@ public class Dog : Enemy
 
             if (Player.Instance.lives <= 0)
             {
-  
-
-
-
-
-
-
-
-
-
-
-
-                animationScript.Anim.Play("Death-Enemy", -1, 0);
+                  animationScript.Anim.Play("Death-Enemy", -1, 0);
                 if (!SceneManager.GetSceneByName("GameOver").isLoaded)
                 {
-                    StartCoroutine(changeSceneScript.DisplayLoadingScreen("GameOver"));
+                    StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
                 }
             }
 

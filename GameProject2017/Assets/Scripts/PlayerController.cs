@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         collectableCount = GameObject.Find("GearCounter");
         //   SaveLoad.Load();
         healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
-        
+        jumpParticle = GameObject.Find("Player jump");
         controller = GetComponent<CharacterController>();
         PA = GetComponent<PlayerAnim>();
        
@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour
                 && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
 
             {
-                transform.Rotate(Vector3.down * 1080 * Time.deltaTime);
+                transform.Rotate(Vector3.down * 360 * (Time.deltaTime*4));
             }
 
             

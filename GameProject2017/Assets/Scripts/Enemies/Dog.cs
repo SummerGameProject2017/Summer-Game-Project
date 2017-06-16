@@ -433,7 +433,7 @@ public class Dog : Enemy
         
         yield return new WaitForSeconds(3);
         gameObject.SetActive(false);
-        Instantiate(DogExplosionParticle, transform.position, Quaternion.identity);
+        Instantiate(DogExplosionParticle, transform.position, Quaternion.Euler(90.0f, 0.0f, 0.0f));
         health = 2;
         anim.SetBool("Dead", false);
         canBeHit = true;

@@ -11,6 +11,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public string loadSceneName;
     public string addScreenName;
     PlayerController playerScript;
+    PlayerAnim animationScript;
     CameraView cameraScript;
     GameObject gameoverScreen;
     public static bool doneLoading = false;
@@ -30,6 +31,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
     public override void OnStart()
     {
+
         newGameButton = GameObject.Find("New Game");  
         EventSystem.current.firstSelectedGameObject = newGameButton;
          
@@ -40,9 +42,11 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public override void OnUpdate() {
         SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  
 
-        if (InputManager.GetButtonDown("Pause"))
+        if (InputManager.GetButtonDown("Pause") )
         {
             StartCoroutine(PauseMenu());
+            playerScript.enabled = false;
+            animationScript.enabled = false;
             Time.timeScale = 0;
             
         }
@@ -156,6 +160,13 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         ChangeScene.doneLoading = false;
 
     }
+    public IEnumerator UnloadImmediately()
+    {       
+        SceneManager.UnloadSceneAsync("PauseScene");
+        ChangeScene.doneLoading = false;
+        yield return null;
+
+    }
     IEnumerator PauseMenu()
     {
         SceneManager.LoadScene("PauseScene", LoadSceneMode.Additive);
@@ -173,6 +184,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         {
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(loadSceneName));
             playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            animationScript = GameObject.FindWithTag("Player").GetComponent<PlayerAnim>();
             cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
             if (loadGame == true)
             {

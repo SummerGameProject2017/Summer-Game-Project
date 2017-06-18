@@ -13,6 +13,7 @@ public class GameOverButtons : MonoBehaviour {
     public bool continueButtonPushed = false;
     
     PlayerController playerScript;
+    PlayerAnim animationScript;
     CameraView cameraScript;
     public bool unloadLevel = false;
     public bool fadeOut = false;
@@ -38,9 +39,11 @@ public class GameOverButtons : MonoBehaviour {
         SaveLoad.Load();
         playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
+        animationScript = GameObject.FindWithTag("Player").GetComponent<PlayerAnim>();
 
         playerScript.enabled = true;
         cameraScript.enabled = true;
+        animationScript.enabled = true;
         playerScript.newGame = false;
         cameraScript.newGame = false;
         continueButtonPushed = true;

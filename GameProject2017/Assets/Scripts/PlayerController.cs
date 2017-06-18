@@ -30,9 +30,8 @@ public class PlayerController : MonoBehaviour
     public bool newGame = true;
     public bool isTalking = false;
     public GameObject healingParticle;
+    float rotationAmount;
 
-
-    [HideInInspector]
     public bool attacking = false;
     [HideInInspector]
     public Vector3 lastMove;
@@ -77,7 +76,6 @@ public class PlayerController : MonoBehaviour
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
         {
-            transform.localPosition = new Vector3(124.0f,-93.0f,-247.7f);
             SaveLoad.Save();
         }
 
@@ -87,7 +85,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+ rotationAmount = transform.rotation.y;
 
         if (InputManager.GetButtonDown("Pause"))
         {
@@ -190,30 +188,37 @@ public class PlayerController : MonoBehaviour
 
             if (InputManager.GetButtonDown("Attack"))
             {
+                transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
                 attacking = true;
                 PA.Anim.SetBool("Attack", true);
                 PA.Anim.Play("Attack");        
             }
-       
-             if (attacking == true && PA.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4 
-                && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
 
-            {
-               transform.Rotate(Vector3.down * (360 * (Time.deltaTime  * 2)));
-            }
+            if (attacking == true && PA.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4
+               && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+                
+             {       Debug.Log(rotationAmount);         
+                if (rotationAmount < 0.1 || rotationAmount > 0.5)
+                {
+                    
+                    transform.Rotate(Vector3.down * (360 * (Time.deltaTime * 2)));
+                }
+                }
 
-            
+
+
+
             else if (attackMode == true && h == 0 && v == 0 && attacking == false)
-              {
+            {
                 Vector3 direction;
                 direction = (enemy.transform.position - transform.position).normalized;
                 direction.y = 0;
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
-              }
-           
-             else if (h == 0 && v == 0 && attackMode == false && attacking == false)
-              {
+            }
+
+            else if (h == 0 && v == 0 && attackMode == false && attacking == false)
+            {
                 if (Time.time >= waitTime + 3 && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Movement"))
                 {
                     Vector3 direction;
@@ -221,10 +226,10 @@ public class PlayerController : MonoBehaviour
                     direction.y = 0;
                     Quaternion lookRotation = Quaternion.LookRotation(direction);
                     transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
-                    
+
                 }
-              }
-             
+            }
+
             else
             {
                 transform.rotation = Quaternion.LookRotation(moveVector);

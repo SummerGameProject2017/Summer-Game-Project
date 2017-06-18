@@ -22,7 +22,7 @@ public class PauseMenuButtons : MonoBehaviour {
     public void Continue()
     {
         playerScript.enabled = true;
-        animationScript.enabled = true;
+   //     animationScript.enabled = true;
         Time.timeScale = 1;
         StartCoroutine(changeSceneScript.UnloadImmediately());
     }

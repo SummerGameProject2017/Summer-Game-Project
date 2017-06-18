@@ -28,10 +28,9 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public bool fadeOut = false;
     public bool changeCamera = false;
     GameObject continueGameButton;
-
+    GameObject player;
     public override void OnStart()
     {
-
         newGameButton = GameObject.Find("New Game");  
         EventSystem.current.firstSelectedGameObject = newGameButton;
          
@@ -89,7 +88,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public IEnumerator DisplayGameOverScreen(string sceneName)
     {
 
-        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         loadScene = SceneManager.GetSceneByName(sceneName);
         yield return new WaitForSecondsRealtime(1);
 
@@ -175,6 +174,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     {
         if (scene.name == "Junkyard_Level_VR")
         {
+            player = GameObject.FindWithTag("Player");
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(loadSceneName));
             playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             animationScript = GameObject.FindWithTag("Player").GetComponent<PlayerAnim>();
@@ -189,6 +189,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             }
             if (saveGame == true)
             {
+                player.transform.localPosition = new Vector3(124.0f, -93.0f, -247.7f);
                 saveGame = false;
                 playerScript.newGame = true;
                 cameraScript.newGame = true;

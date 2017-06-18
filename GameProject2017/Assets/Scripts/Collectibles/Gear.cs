@@ -25,10 +25,11 @@ public class Gear : Collectables {
         //Collectibles will disappear when player collides with them
         if (other.gameObject.CompareTag("Player"))
         {
+            Chime.Play();
             playerScript.showCollectable = true;
             Player player = Player.Instance;
             player.CollectGear();
-            Chime.Play();
+
 
             par_pickup.transform.position = transform.position;
             par_pickup.GetComponent<ParticleSystem>().Emit(particleCount);

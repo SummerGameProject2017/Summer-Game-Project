@@ -27,7 +27,7 @@ public class PlayerAnim : MonoBehaviour {
 
     public bool attacking = false;
     public bool talking = false;
-
+    WaterMovement water;
     // Refernced scripts
     CameraView cameraScript;
     PlayerController PC;
@@ -132,13 +132,15 @@ public class PlayerAnim : MonoBehaviour {
         //if the player falls in water play the falling in water animation then reset player to last save position
         if (other.gameObject.tag == "Water")
         {
-
-            cameraScript.enabled = false;
-            Anim.Play("Death-Water", -1, 0);
-            yield return new WaitForSeconds(1);
-            PC.enabled = false;
-            if (!SceneManager.GetSceneByName("GameOver").isLoaded)
+            water = other.gameObject.GetComponent<WaterMovement>();
+            if (water.playerCanFallIn == true)
             {
+                water.playerCanFallIn = false;
+                cameraScript.enabled = false;
+                Anim.Play("Death-Water", -1, 0);
+                yield return new WaitForSeconds(1);
+                PC.enabled = false;
+
                 StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
             }
            

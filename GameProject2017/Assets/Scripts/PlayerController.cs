@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     AudioSource chimes;
     public AudioClip chimeSound;
+    public AudioClip dogExplosion;
     public GameObject jumpParticle;
     public GameObject gear;
 
@@ -203,39 +204,38 @@ public class PlayerController : MonoBehaviour
             {
                 if (rotationAmount < 0.1 || rotationAmount > 0.5)
                 {
-                    
+
                     transform.Rotate(Vector3.down * (360 * (Time.deltaTime * 2)));
                 }
-                }
-
-
-
-
-            else if (attackMode == true && h == 0 && v == 0 && attacking == false)
-            {
-                Vector3 direction;
-                direction = (enemy.transform.position - transform.position).normalized;
-                direction.y = 0;
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
             }
-
-            else if (h == 0 && v == 0 && attackMode == false && attacking == false)
+            else if (attacking == false)
             {
-                if (Time.time >= waitTime + 3 && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Movement"))
+                if (attackMode == true && h == 0 && v == 0)
                 {
                     Vector3 direction;
-                    direction = (GameObject.Find("PlayerCamera").transform.position - transform.position).normalized;
+                    direction = (enemy.transform.position - transform.position).normalized;
                     direction.y = 0;
                     Quaternion lookRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
-
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
                 }
-            }
 
-            else
-            {
-                transform.rotation = Quaternion.LookRotation(moveVector);
+                else if (h == 0 && v == 0 && attackMode == false)
+                {
+                    if (Time.time >= waitTime + 3 && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Movement"))
+                    {
+                        Vector3 direction;
+                        direction = (GameObject.Find("PlayerCamera").transform.position - transform.position).normalized;
+                        direction.y = 0;
+                        Quaternion lookRotation = Quaternion.LookRotation(direction);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
+
+                    }
+                }
+
+                else
+                {
+                    transform.rotation = Quaternion.LookRotation(moveVector);
+                }
             }
 
 
@@ -267,7 +267,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, enemy.transform.position + enemy.transform.forward * 20, Time.deltaTime * 10);
         }
-        
+        if (enemy != null && enemy.GetComponent<Dog>().dogDead == true)
+        {
+            enemy.GetComponent<Dog>().dogDead = false;
+                 chimes.PlayOneShot(dogExplosion, 1);
+            
+        }
     }
     private void OnTriggerEnter(Collider other)
     {

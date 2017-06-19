@@ -47,7 +47,7 @@ public class Dog : Enemy
     public AudioSource isHurtSound;
     public AudioSource AttackSound;
     public AudioSource DeathExplosionSound;
-
+    public bool dogDead = false;
   
 
     public override void OnStart()
@@ -259,6 +259,7 @@ public class Dog : Enemy
 
         if (firstAttack == true)
         {
+            GrowlSound.Stop();
             AttackSound.Play();
             //for the first attack reset the animation timer and call the attack animation
             anim.Play("Bite", -1, 0);
@@ -283,6 +284,7 @@ public class Dog : Enemy
         
        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Combat Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
         {
+            GrowlSound.Stop();
             AttackSound.Play();
             //if the attack idle animation reaches 2 seconds in loop length change to attack animation and reset the timer. 
             animationScript.Anim.Play("GetHit", -1, 0);
@@ -393,6 +395,7 @@ public class Dog : Enemy
 
                 aiStunned = true;
                 aiState = States.Stunned;
+                GrowlSound.Stop();
                 isHurtSound.Play();
                 StartCoroutine(DogStunned());
             }
@@ -403,6 +406,7 @@ public class Dog : Enemy
             if (health > 1)
             {
                 health--;
+                GrowlSound.Stop();
                 isHurtSound.Play();
                 StartCoroutine(DogHit());
                 canBeHit = false;
@@ -431,6 +435,7 @@ public class Dog : Enemy
     //when the ai is out of health change to dead animation and after 3 seconds destroy the ai gameobject
     IEnumerator EnemyDead()
     {
+        
         if (playerScript.enemy == this.gameObject)
                 {
                     playerScript.attackMode = false;
@@ -445,8 +450,11 @@ public class Dog : Enemy
         anim.SetBool("Idle", false);
         
         yield return new WaitForSeconds(3);
-        gameObject.SetActive(false);
+        dogDead = true;
         DeathExplosionSound.Play();
+        gameObject.SetActive(false);
+        GrowlSound.Stop();
+
         Instantiate(DogExplosionParticle, transform.position, Quaternion.Euler(90.0f, 0.0f, 0.0f));
         health = 2;
         anim.SetBool("Dead", false);

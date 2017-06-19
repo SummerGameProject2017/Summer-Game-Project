@@ -90,18 +90,21 @@ public class PlayerAnim : MonoBehaviour {
                 }
             }
 
+            if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+                {
             if (Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9)
             {
-                if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
-                {
-                    Anim.SetBool("Attack", false);
+                   Anim.SetBool("Attack", false);
                     PC.attacking = false;
                     
                 }
 
             }
 
-
+            else
+            {
+                PC.attacking = false;
+            }
 
 
 

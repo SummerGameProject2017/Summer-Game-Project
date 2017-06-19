@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public bool isTalking = false;
     public GameObject healingParticle;
     float rotationAmount;
+    TireRolling tire;
 
     public bool attacking = false;
     [HideInInspector]
@@ -196,8 +197,8 @@ public class PlayerController : MonoBehaviour
 
             if (attacking == true && PA.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4
                && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
-                
-             {       Debug.Log(rotationAmount);         
+
+            {
                 if (rotationAmount < 0.1 || rotationAmount > 0.5)
                 {
                     
@@ -270,12 +271,29 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Tire")
         {
-            animationScript.Anim.Play("GetHit", -1, 0);
-            //     Player.Instance.LoseLife();
-            //     healthScript.HealthChange();
-            transform.position = Vector3.Lerp(transform.position, other.transform.position - other.transform.forward * 10, Time.deltaTime * 2);
-        }
+            tire = other.gameObject.GetComponent<TireRolling>();
+            if (tire.canHitPlayer == true)
+            {
+                tire.canHitPlayer = false;
+                
+                    animationScript.Anim.Play("GetHit", -1, 0);
 
+                AddMovement(other.transform.position - other.transform.right * 10);
+              //      transform.position = Vector3.Lerp(transform.position, other.transform.position - other.transform.forward * 10, Time.deltaTime * 5);
+
+                    Player.Instance.LoseLife();
+                    healthScript.HealthChange();
+                
+                if (Player.Instance.lives <= 0)
+                {
+                    animationScript.Anim.Play("Death-Enemy", -1, 0);
+                    if (!SceneManager.GetSceneByName("GameOver").isLoaded)
+                    {
+                        StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
+                    }
+                }
+           }
+}
         if (other.gameObject.tag == "RollingBalls")
         {
             animationScript.Anim.Play("GetHit", -1, 0);

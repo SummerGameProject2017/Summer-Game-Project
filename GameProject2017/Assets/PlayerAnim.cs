@@ -137,6 +137,7 @@ public class PlayerAnim : MonoBehaviour {
             {
                 StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
             }
+           
 
 
         }

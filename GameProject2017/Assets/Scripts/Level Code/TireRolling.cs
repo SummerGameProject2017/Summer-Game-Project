@@ -9,12 +9,15 @@ public class TireRolling : MonoBehaviour {
     public Transform Tire;
     Vector3 TireStartPos;
     Quaternion TireStartRot;
+    GameObject player;
+    public bool canHitPlayer = true;
 
 	// Use this for initialization
 	void Start ()
     {
         TireStartPos = transform.position;
         TireStartRot = transform.rotation;
+        player = GameObject.FindWithTag("Player");
     }
 	
 	// Update is called once per frame
@@ -24,9 +27,16 @@ public class TireRolling : MonoBehaviour {
 
         if (Timer >= RespawnTime)
         {
+            if (Player.Instance.lives > 0)
+            {
+                canHitPlayer = true;
+            }
             Instantiate(Tire, TireStartPos, TireStartRot);
             Destroy(gameObject);
             Timer = 0.0f;
         }
-    }
+
+
+       
+            }
 }

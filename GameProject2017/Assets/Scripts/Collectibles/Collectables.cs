@@ -11,6 +11,7 @@ public abstract class Collectables : MonoBehaviour, IChildEvents
     public int particleCount;
 
     public GameObject par_pickup;
+    public GameObject par_Glow;
     //public Text GearCountText;
     //public Text RobotCountText;
 
@@ -44,6 +45,9 @@ public abstract class Collectables : MonoBehaviour, IChildEvents
     {
         //Store starting position of collectible object
         PosOffset = transform.position;
+        par_Glow = GameObject.Find("Collectable_Glow");
+        par_pickup = GameObject.Find("Collectible_Pickup");
+        
 
         // Calls Start method on Childs
         OnStart();

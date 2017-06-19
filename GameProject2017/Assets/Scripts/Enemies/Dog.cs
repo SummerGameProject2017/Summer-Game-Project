@@ -140,7 +140,7 @@ public class Dog : Enemy
                     if (angle < 20)
                     {
                         aiState = States.Attack;
-                        AttackSound.Play();
+                       
                     }
                     else
                     {
@@ -153,7 +153,7 @@ public class Dog : Enemy
                     agent.SetDestination(transform.position);
                     firstAttack = false;
                     aiState = States.Attack;
-                    AttackSound.Play();
+                   
                 }
             }
             if (offset > 15 && idle == false)
@@ -259,6 +259,7 @@ public class Dog : Enemy
 
         if (firstAttack == true)
         {
+            AttackSound.Play();
             //for the first attack reset the animation timer and call the attack animation
             anim.Play("Bite", -1, 0);
             anim.SetBool("Walk", false);
@@ -282,6 +283,7 @@ public class Dog : Enemy
         
        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Combat Idle") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2)
         {
+            AttackSound.Play();
             //if the attack idle animation reaches 2 seconds in loop length change to attack animation and reset the timer. 
             animationScript.Anim.Play("GetHit", -1, 0);
             Player.Instance.LoseLife();
@@ -408,7 +410,7 @@ public class Dog : Enemy
         }
         else
         {
-                isHurtSound.Play();
+                
                 GetComponent<Collider>().enabled = false;
                 health--;
                 canBeHit = false;
@@ -444,6 +446,7 @@ public class Dog : Enemy
         
         yield return new WaitForSeconds(3);
         gameObject.SetActive(false);
+        DeathExplosionSound.Play();
         Instantiate(DogExplosionParticle, transform.position, Quaternion.Euler(90.0f, 0.0f, 0.0f));
         health = 2;
         anim.SetBool("Dead", false);

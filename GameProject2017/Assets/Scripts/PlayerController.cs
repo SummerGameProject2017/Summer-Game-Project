@@ -8,10 +8,10 @@ public class PlayerController : MonoBehaviour
     CharacterController controller;
     PlayerAnim PA;
 
-
-    
+    AudioSource chimes;
+    public AudioClip chimeSound;
     public GameObject jumpParticle;
-    
+    public GameObject gear;
 
     [Range(3.0f, 8.0f)]
     public float speed;
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        chimes = GetComponent<AudioSource>();
         animationScript = GetComponent<PlayerAnim>();
         changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         collectableCount = GameObject.Find("GearCounter");
@@ -321,8 +322,18 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        if (other.gameObject.tag == "Collectible")
+            {
+            gear = other.gameObject;
 
+            if (gear.GetComponent<Gear>().collected == true)
+            {
+                Debug.Log("Play");
+                gear.GetComponent<Gear>().collected = false;
+                chimes.PlayOneShot(chimeSound, 1);
+            }
 
+        }
     }
 
     private void OnTriggerStay(Collider other)

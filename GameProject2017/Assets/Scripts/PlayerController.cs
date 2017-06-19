@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public GameObject healingParticle;
     float rotationAmount;
     TireRolling tire;
+    WreckingBall rollingBall;
 
     public bool attacking = false;
     [HideInInspector]
@@ -187,7 +188,7 @@ public class PlayerController : MonoBehaviour
             moveAnim.z = InputManager.GetAxis("Vertical");
 
 
-            if (InputManager.GetButtonDown("Attack"))
+            if (InputManager.GetButtonDown("Attack") && attacking == false)
             {
                 transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
                 attacking = true;
@@ -215,7 +216,7 @@ public class PlayerController : MonoBehaviour
                 direction = (enemy.transform.position - transform.position).normalized;
                 direction.y = 0;
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
             }
 
             else if (h == 0 && v == 0 && attackMode == false && attacking == false)
@@ -263,7 +264,7 @@ public class PlayerController : MonoBehaviour
 
         if (fallBack == true)
         {
-            transform.position = Vector3.Lerp(transform.position, enemy.transform.position + enemy.transform.forward * 20, Time.deltaTime * 5);
+            transform.position = Vector3.Lerp(transform.position, enemy.transform.position + enemy.transform.forward * 20, Time.deltaTime * 10);
         }
         
     }
@@ -276,10 +277,9 @@ public class PlayerController : MonoBehaviour
             {
                 tire.canHitPlayer = false;
                 
-                    animationScript.Anim.Play("GetHit", -1, 0);
-
-                AddMovement(other.transform.position - other.transform.right * 10);
-              //      transform.position = Vector3.Lerp(transform.position, other.transform.position - other.transform.forward * 10, Time.deltaTime * 5);
+                animationScript.Anim.Play("GetHit", -1, 0);
+                transform.LookAt(tire.transform.position);
+                AddMovement(Vector3.right * 200);
 
                     Player.Instance.LoseLife();
                     healthScript.HealthChange();
@@ -287,19 +287,39 @@ public class PlayerController : MonoBehaviour
                 if (Player.Instance.lives <= 0)
                 {
                     animationScript.Anim.Play("Death-Enemy", -1, 0);
-                    if (!SceneManager.GetSceneByName("GameOver").isLoaded)
-                    {
+                   
                         StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
-                    }
+                    
                 }
            }
 }
         if (other.gameObject.tag == "RollingBalls")
         {
-            animationScript.Anim.Play("GetHit", -1, 0);
-            //     Player.Instance.LoseLife();
-            //     healthScript.HealthChange();
-            transform.position = Vector3.Lerp(transform.position, other.transform.position - other.transform.forward * 10, Time.deltaTime * 2);
+            rollingBall = other.gameObject.GetComponent<WreckingBall>();
+
+            if (rollingBall.canHitPlayer == true)
+            {
+                rollingBall.canHitPlayer = false;
+                animationScript.Anim.Play("GetHit", -1, 0);
+
+
+           //     transform.position = Vector3.Lerp(transform.position, other.transform.forward * 10, Time.deltaTime * 2);
+
+                AddMovement(new Vector3(200, 0, 10f));
+                
+
+                Player.Instance.LoseLife();
+                healthScript.HealthChange();
+
+                if (Player.Instance.lives <= 0)
+                {
+                    animationScript.Anim.Play("Death-Enemy", -1, 0);
+
+                    StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
+
+                }
+            }
+
         }
 
 

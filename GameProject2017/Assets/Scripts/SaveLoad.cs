@@ -56,8 +56,6 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
           
-
-            Debug.Log("lOAD2");
             playerScript = Player.Instance;
             //if the file exists open and load
             BinaryFormatter bf = new BinaryFormatter();

@@ -29,12 +29,16 @@ public class TireRolling : MonoBehaviour {
             {
                 canHitPlayer = true;
             }
+           
             Instantiate(Tire, TireStartPos, TireStartRot);
             Destroy(gameObject);
             Timer = 0.0f;
         }
 
-
+        if (Player.Instance.lives <= 0)
+        {
+            canHitPlayer = false;
+        }
        
             }
 }

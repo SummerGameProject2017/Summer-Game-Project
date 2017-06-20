@@ -24,8 +24,7 @@ public class CameraView : MonoBehaviour
     {
 
         Vector3 desiredPosition = target.transform.position + offset;
-
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2f);
+       transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2f);
 
     }
 

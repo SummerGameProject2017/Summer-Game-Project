@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         chimes = GetComponent<AudioSource>();
         animationScript = GetComponent<PlayerAnim>();
         changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();

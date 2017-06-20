@@ -63,11 +63,10 @@ public class PlayerController : MonoBehaviour
     GameObject collectableCount;
     public bool showCollectable = false;
     PlayerAnim animationScript;
-    VRController VR;
 
     void Start()
     {
-        VR = GameObject.Find("SceneManager").GetComponent<VRController>();
+
         chimes = GetComponent<AudioSource>();
         animationScript = GetComponent<PlayerAnim>();
         changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();

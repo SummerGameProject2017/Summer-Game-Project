@@ -89,6 +89,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (!chimes.isPlaying)
+        {
+            gear = null;
+        }
  rotationAmount = transform.rotation.y;
 
         if (InputManager.GetButtonDown("Pause"))
@@ -327,7 +332,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        if (other.gameObject.tag == "Collectible")
+       if (other.gameObject.tag == "Collectible")
             {
             gear = other.gameObject;
 

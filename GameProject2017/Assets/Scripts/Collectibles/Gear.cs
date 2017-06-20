@@ -28,6 +28,7 @@ public class Gear : Collectables {
 
             gameObject.SetActive(false);
             collected = true;
+            
         }
     }
 

@@ -63,10 +63,11 @@ public class PlayerController : MonoBehaviour
     GameObject collectableCount;
     public bool showCollectable = false;
     PlayerAnim animationScript;
-    // Use this for initialization
+    VRController vive;
+
     void Start()
     {
-
+        vive = GameObject.Find("SceneManager").GetComponent<VRController>();
         chimes = GetComponent<AudioSource>();
         animationScript = GetComponent<PlayerAnim>();
         changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
@@ -187,7 +188,7 @@ public class PlayerController : MonoBehaviour
                 waitTime = Time.time;
             }
 
-            else
+            else if (vive == false || (vive == true && InputManager.GetButtonDown("VRTrackPadPushed")))
             {
                 moveVector = (speed * (h * right + v * forward));
             }

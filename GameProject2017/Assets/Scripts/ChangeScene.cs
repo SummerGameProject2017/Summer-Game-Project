@@ -58,10 +58,9 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
         if (async1.isDone)
         {
-            if (!SceneManager.GetSceneByName(sceneName).isLoaded)
-            {
+           
                 async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            }
+           
 
             yield return new WaitForSecondsRealtime(1);
 

@@ -63,9 +63,10 @@ public class PlayerController : MonoBehaviour
     GameObject collectableCount;
     public bool showCollectable = false;
     PlayerAnim animationScript;
-    // Use this for initialization
+
     void Start()
     {
+
         chimes = GetComponent<AudioSource>();
         animationScript = GetComponent<PlayerAnim>();
         changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
@@ -89,6 +90,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!chimes.isPlaying)
+        {
+            gear = null;
+        }
  rotationAmount = transform.rotation.y;
 
         if (InputManager.GetButtonDown("Pause"))
@@ -118,18 +123,9 @@ public class PlayerController : MonoBehaviour
         forward.y = 0;
         forward = forward.normalized;
         Vector3 right = new Vector3(forward.z, 0, -forward.x);
-        h = InputManager.GetAxis("Horizontal");
-        v = InputManager.GetAxis("Vertical");
-
-
-        if (h > 0.65 || h < -0.65 || v > 0.65 || v < -0.65)
-        {
-            speed = 10;
-        }
-        else
-        {
-            speed = 5;
-        }
+       
+       
+       
        
         if (Player.Instance.lives > 0)
         {
@@ -161,43 +157,48 @@ public class PlayerController : MonoBehaviour
 
 
             }
+            
+                h = InputManager.GetAxis("Horizontal");
+                v = InputManager.GetAxis("Vertical");
 
 
-            // Change Speed 
-            if ((h > 0.65 || h < -0.65) && (v > 0.65 || v < -0.65))
-            {
-                speed = 7.5f;
-                moveVector = (speed * (h * right + v * forward));
-            }
+                
 
-            if (h != 0 || v != 0)
-            {
-                moving = true;
-            }
+                // Change Speed 
+               
+             if (h > 0.3 || h < -0.3 || v > 0.3|| v < -0.3)
+                {
+                    speed = 10;
+                }
+                else
+                {
+                    speed = 5;
+                }
+                
+                if (h != 0 || v != 0)
+                {
+                    moving = true;
+                }
+                
+                if (h == 0 && v == 0 && moving == true)
+                {
+                    moving = false;
+                    waitTime = Time.time;
+                }
 
-            if (h == 0 && v == 0 && moving == true)
-            {
-                moving = false;
-                waitTime = Time.time;
-            }
+                    moveVector = (speed * (h * right + v * forward));
+                          
+            
 
-            else
-            {
-                moveVector = (speed * (h * right + v * forward));
-            }
-
-            moveAnim.x = InputManager.GetAxis("Horizontal"); 
-            moveAnim.z = InputManager.GetAxis("Vertical");
-
-
-            if (InputManager.GetButtonDown("Attack") && attacking == false)
-            {
-                transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
-                attacking = true;
-                PA.Anim.SetBool("Attack", true);
-                PA.Anim.Play("Attack");        
-            }
-
+                if (InputManager.GetButtonDown("Attack") && attacking == false)
+                {
+                    transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+                    attacking = true;
+                    PA.Anim.SetBool("Attack", true);
+                    PA.Anim.Play("Attack");
+                }
+            
+           
             if (attacking == true && PA.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4
                && PA.Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
 
@@ -258,8 +259,9 @@ public class PlayerController : MonoBehaviour
             moveVector.y = verticalVelocity;
 
 
-
-            controller.Move(moveVector * Time.deltaTime);
+            
+                controller.Move(moveVector * Time.deltaTime);
+          
             lastMove = moveVector;
         }
 
@@ -327,7 +329,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        if (other.gameObject.tag == "Collectible")
+       if (other.gameObject.tag == "Collectible")
             {
             gear = other.gameObject;
 

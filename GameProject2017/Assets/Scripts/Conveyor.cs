@@ -23,7 +23,7 @@ public class Conveyor : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider obj)
+    private void OnTriggerStay(Collider obj)
     {
         if (obj.tag == "Player")
         {

@@ -55,20 +55,7 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             }
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
-            foreach (GameObject gear in collectables)
-            {
-                gear.SetActive(true);
-            }
-            foreach (GameObject enemy in dogs)
-            {
-                enemy.SetActive(true);
-            }
-            foreach (GameObject robot in collectBot)
-            {
-                robot.SetActive(true);
-            }
-
-            Debug.Log("Load");
+          
             playerScript = Player.Instance;
             //if the file exists open and load
             BinaryFormatter bf = new BinaryFormatter();
@@ -82,6 +69,19 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             GameObject.FindWithTag("Player").transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
             GameObject.Find("PlayerCamera").transform.position = new Vector3(data.cameraPositionX, data.cameraPositionY, data.cameraPositionZ);
             GameObject.Find("PlayerCamera").transform.rotation = Quaternion.Euler(data.cameraRotationX, data.cameraRotationY, data.cameraRotationZ);
+
+            foreach (GameObject gear in collectables)
+            {
+                gear.SetActive(true);
+            }
+            foreach (GameObject enemy in dogs)
+            {
+                enemy.SetActive(true);
+            }
+            foreach (GameObject robot in collectBot)
+            {
+                robot.SetActive(true);
+            }
         }
     }
 }

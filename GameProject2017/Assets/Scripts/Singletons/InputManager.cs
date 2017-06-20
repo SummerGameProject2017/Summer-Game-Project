@@ -6,7 +6,7 @@ using UnityEngine;
 public class InputManager : MonoSingleton<InputManager> {
 
 
-    static readonly float DEADZONE = 0.5f;
+    static readonly float DEADZONE = 0.2f;
 
     // Read or not from player
     static bool active;// {

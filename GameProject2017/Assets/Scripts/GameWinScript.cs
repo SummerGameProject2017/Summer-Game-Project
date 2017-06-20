@@ -32,7 +32,7 @@ public class GameWinScript : MonoBehaviour
     public void ContinueButton()
     {
         changeSceneScript.unloadSceneName = "Game_Win";
-        changeSceneScript.loadSceneName = "Main_Menu";
+        changeSceneScript.loadSceneName = "Splash_Screen";
         changeSceneScript.addScreenName = "LoadingLevel";
         changeSceneScript.startScene = SceneManager.GetActiveScene();
         StartCoroutine(changeSceneScript.Return(changeSceneScript.loadSceneName));

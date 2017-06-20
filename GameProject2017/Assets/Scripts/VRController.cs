@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.VR;
 
 public class VRController : MonoBehaviour {
+    public string VRDeviceName;
     public bool vive = false;
 	// Use this for initialization
 	void Start () {
 		if (VRDevice.isPresent)
         {
-            Debug.Log(VRDevice.model);
-            if (VRDevice.model == "Vive MV")
+            VRDeviceName = VRDevice.model;
+            if (VRDeviceName.Contains("Vive"))
             {
                 Debug.Log("Vive Connected");
                     vive = true;
@@ -25,6 +26,9 @@ public class VRController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (vive == true)
+        {
+
+        }
 	}
 }

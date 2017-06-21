@@ -190,6 +190,9 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             }
             if (saveGame == true)
             {
+                Player.Instance.gear = 0;
+                Player.Instance.lives = Player.Instance.maxLives;
+                Player.Instance.robot = 0;
                 player.transform.localPosition = new Vector3(124.0f, -93.0f, -247.7f);
                 saveGame = false;
                 playerScript.newGame = true;

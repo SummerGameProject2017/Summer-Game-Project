@@ -10,12 +10,13 @@ public class Fading : MonoBehaviour {
     public bool fadeIn = false;
     Image image;
     GameObject loadingCamera;
+    Color c;
 
     // Use this for initialization
     void Start () {
         fadeIn = true;
         image = GetComponent<Image>();
-        Color c = image.color;
+        c = image.color;
         c.a = 0;
         image.color = c;
         loadingCamera = GameObject.Find("LoadingCamera");
@@ -25,7 +26,6 @@ public class Fading : MonoBehaviour {
 	void Update () {
 		if (fadeIn == true)
         {
-            Color c = image.color;
             if (c.a < 1)
             {
                 c.a += Time.deltaTime;
@@ -37,12 +37,12 @@ public class Fading : MonoBehaviour {
         {
             loadingCamera.transform.position = GameObject.Find("PlayerCamera").transform.position;
             fadeIn = false;
-            Color c = image.color;
             if (c.a > 0)
             {
                 c.a -= Time.deltaTime;
                 image.color = c;
             }
+           
         }
 	}
    

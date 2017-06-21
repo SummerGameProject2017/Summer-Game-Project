@@ -68,7 +68,6 @@ public class MovePlatform : MonoBehaviour
         {
             newVel = (transform.position - oldPos) / Time.deltaTime;
             Vector3 direction = transform.TransformDirection(speedVector );
-            Debug.Log(direction);
             PlayerScript.AddMovement(newVel);
         }
         oldPos = transform.position;

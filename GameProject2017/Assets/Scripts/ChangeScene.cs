@@ -29,6 +29,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     public bool changeCamera = false;
     GameObject continueGameButton;
     GameObject player;
+    GameObject playerCamera;
     public override void OnStart()
     {
         newGameButton = GameObject.Find("New Game");  
@@ -172,6 +173,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     {
         if (scene.name == "Junkyard_Level_VR")
         {
+            playerCamera = GameObject.Find("PlayerCamera");
             player = GameObject.FindWithTag("Player");
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(loadSceneName));
             playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
@@ -190,7 +192,8 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
                 player.transform.localPosition = new Vector3(124.0f, -93.0f, -247.7f);
                 saveGame = false;
                 playerScript.newGame = true;
-                cameraScript.newGame = true;
+                playerCamera.transform.localPosition = new Vector3(6.87f, 5.94f, -9.3f);
+                playerCamera.transform.localRotation = Quaternion.Euler(25.7f, -51.13f, 0.0f);
             }
 
         }
@@ -208,6 +211,33 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         {
             continueGameButton = GameObject.Find("Continue");
             EventSystem.current.SetSelectedGameObject(continueGameButton);
+        }
+        if (scene.name == "Forest_Level_VR")
+        {
+            playerCamera = GameObject.Find("PlayerCamera");
+            player = GameObject.FindWithTag("Player");
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Forest_Level_VR"));
+            playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            animationScript = GameObject.FindWithTag("Player").GetComponent<PlayerAnim>();
+            cameraScript = GameObject.Find("PlayerCamera").GetComponent<CameraView>();
+            if (loadGame == true)
+            {
+                loadGame = false;
+                playerScript.newGame = false;
+                cameraScript.newGame = false;
+                SaveLoad.continueFromMain = true;
+                SaveLoad.Load();
+            }
+            if (saveGame == true)
+            {
+                Debug.Log("new Game");
+                player.transform.localPosition = new Vector3(-418.8f, 302.31f, 59.65f);
+                playerCamera.transform.localPosition = new Vector3(113.7f, 7f, -12.73f);
+                playerCamera.transform.localRotation = Quaternion.Euler(11.335f, -131.29f, 0f);
+                saveGame = false;
+                playerScript.newGame = true;
+                cameraScript.newGame = true;
+            }
         }
 
     }

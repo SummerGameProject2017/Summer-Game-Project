@@ -32,7 +32,7 @@ public class PlayerAnim : MonoBehaviour {
     CameraView cameraScript;
     PlayerController PC;
     ChangeScene changeSceneScript;
-
+    bool canWinLevel = true; 
 
 
     // Use this for initialization
@@ -149,8 +149,9 @@ public class PlayerAnim : MonoBehaviour {
         }
         if (other.gameObject.name == "Collectables")
         {
-            if (!SceneManager.GetSceneByName("Game_Win").isLoaded)
+            if (canWinLevel == true)
             {
+                canWinLevel = false;
                 StartCoroutine(changeSceneScript.DisplayGameWinScreen());
             }
         }

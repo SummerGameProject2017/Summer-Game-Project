@@ -12,6 +12,8 @@ public class GameWinScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        SceneManager.UnloadSceneAsync("Junkyard_Level_VR");
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Game_Win"));
         changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         text1 = transform.FindChild("CollectionText").GetComponent<Text>();
         text2 = transform.FindChild("OilsworthText").GetComponent<Text>();
@@ -31,12 +33,12 @@ public class GameWinScript : MonoBehaviour
 
     public void ContinueButton()
     {
-        changeSceneScript.unloadSceneName = "Game_Win";
-        changeSceneScript.loadSceneName = "Splash_Screen";
-        changeSceneScript.addScreenName = "LoadingLevel";
         changeSceneScript.startScene = SceneManager.GetActiveScene();
-        StartCoroutine(changeSceneScript.Return(changeSceneScript.loadSceneName));
-       
+        changeSceneScript.saveGame = true;
+        changeSceneScript.loadSceneName = "Forest_Level_VR";
+        changeSceneScript.addScreenName = "LoadingLevel";
+        StartCoroutine(changeSceneScript.DisplayLoadingScreen(changeSceneScript.loadSceneName));
+        changeSceneScript.saveGame = true;
         GameObject.Find("Continue").SetActive(false);
     }
 }

@@ -35,16 +35,20 @@ public class Fading : MonoBehaviour {
 
         if (ChangeScene.doneLoading == true)
         {
-            loadingCamera.transform.position = GameObject.Find("PlayerCamera").transform.position;
+            if (SceneManager.GetSceneByName("Junkyard_Level_VR").isLoaded)
+            {
+                loadingCamera.transform.position = GameObject.Find("PlayerCamera").transform.position;
+                loadingCamera.transform.rotation = GameObject.Find("PlayerCamera").transform.rotation;
+            }
             fadeIn = false;
             if (c.a > 0)
             {
                 c.a -= Time.deltaTime;
                 image.color = c;
             }
-           
+
         }
-	}
+    }
    
 
 

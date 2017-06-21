@@ -80,7 +80,9 @@ public class PlayerController : MonoBehaviour
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
         {
-            Debug.Log("new Game 2");
+            Player.Instance.gear = 0;
+            Player.Instance.lives = Player.Instance.maxLives;
+            Player.Instance.robot = 0;
             SaveLoad.Save();
         }
             

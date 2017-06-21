@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.VR;
 
 public class ChangeScene : MonoSingleton<ChangeScene> {
     public bool loadGame = false;
@@ -33,10 +32,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     GameObject playerCamera;
     public override void OnStart()
     {
-        if (VRDevice.isPresent)
-        {
-            Cursor.visible = false;
-        }
+       
         newGameButton = GameObject.Find("New Game");  
         EventSystem.current.firstSelectedGameObject = newGameButton;
          

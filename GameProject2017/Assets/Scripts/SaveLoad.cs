@@ -4,16 +4,18 @@ using UnityEngine;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated when needed. Doesnt need to be attached to anything
 {
 
-
+    
     public static bool continueFromMain = false;
     static GameObject[] collectables;
     static GameObject[] dogs;
     static GameObject[] collectBot;
     static Player playerScript;
+    
     // Use this for initialization
 
 
@@ -36,8 +38,9 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
         playerScript = Player.Instance;
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");    //create a file or overwrite if exists to save data too
-        
-        PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.FindWithTag("Player").transform.position, GameObject.Find("PlayerCamera").transform.position, GameObject.Find("PlayerCamera").transform.eulerAngles);
+        Scene scene = SceneManager.GetActiveScene();
+        PlayerData playerInfo = new PlayerData(playerScript.maxLives, playerScript.gear, playerScript.robot, GameObject.FindWithTag("Player").transform.position, GameObject.Find("PlayerCamera").transform.position, 
+            GameObject.Find("PlayerCamera").transform.eulerAngles, scene.name);
         bf.Serialize(file, playerInfo);       //serialize and save the data
         
         file.Close();
@@ -55,14 +58,15 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             }
         if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
-          
             playerScript = Player.Instance;
             //if the file exists open and load
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/SaveFile.dat", FileMode.Open);   
             PlayerData data = (PlayerData)bf.Deserialize(file);     //load the data from the class
             file.Close();
+
             
+
             playerScript.lives = data.maxLives;       //set health and collectibles to saved data
             playerScript.gear = data.collectibles;
             playerScript.robot = data.robotsCollected;
@@ -84,6 +88,17 @@ public class SaveLoad : MonoSingleton<SaveLoad> //allows script to be activated 
             }
         }
     }
+
+    public static string GetLevelName()
+    {
+        
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(Application.persistentDataPath + "/SaveFile.dat", FileMode.Open);
+        PlayerData data = (PlayerData)bf.Deserialize(file);     //load the data from the class
+        file.Close();
+        Debug.Log(data.sceneName);
+        return data.sceneName;
+    }
 }
 [Serializable]      //serialize the data to be saved to file
 public class PlayerData
@@ -101,8 +116,9 @@ public class PlayerData
     public float cameraRotationY;
     public float cameraRotationZ;
     public string[] collectedGears;
+    public string sceneName;
 
-    public PlayerData(int _maxLives, int _collectibles, int _robotsCollected, Vector3 _position, Vector3 _cameraPosition, Vector3 _cameraRotation)
+    public PlayerData(int _maxLives, int _collectibles, int _robotsCollected, Vector3 _position, Vector3 _cameraPosition, Vector3 _cameraRotation, string _sceneName)
     {
         maxLives = _maxLives;
         collectibles = _collectibles;
@@ -116,7 +132,7 @@ public class PlayerData
         cameraRotationX = _cameraRotation.x;
         cameraRotationY = _cameraRotation.y;
         cameraRotationZ = _cameraRotation.z;
-
+        sceneName = _sceneName;
 
     }
 }

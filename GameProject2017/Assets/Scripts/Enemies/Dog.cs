@@ -449,7 +449,7 @@ public class Dog : Enemy
         anim.SetBool("Bite", false);
         anim.SetBool("Idle", false);
         
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         dogDead = true;
         DeathExplosionSound.Play();
         gameObject.SetActive(false);

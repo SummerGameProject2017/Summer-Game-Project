@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     GameObject loadButton;
     GameObject newGameButton;
     GameObject quitButton;
+    public string loadLevelName;
 
 
     private void Start()
@@ -37,7 +38,7 @@ public class MainMenu : MonoBehaviour
     {
         changeSceneScript.startScene = SceneManager.GetActiveScene();
         changeSceneScript.loadGame = true;
-        changeSceneScript.loadSceneName = "Junkyard_Level_VR";
+        changeSceneScript.loadSceneName = SaveLoad.GetLevelName();
         changeSceneScript.addScreenName = "LoadingLevel";
         loadButton.SetActive(false);
         newGameButton.SetActive(false);
@@ -48,7 +49,7 @@ public class MainMenu : MonoBehaviour
 
     public void ExitButton()
     {
-        Application.Quit();
+        SceneManager.LoadSceneAsync("Splash_Screen");
     }
 
 

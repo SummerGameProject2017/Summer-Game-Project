@@ -36,6 +36,7 @@ public class Fading : MonoBehaviour {
         if (ChangeScene.doneLoading == true)
         {
             loadingCamera.transform.position = GameObject.Find("PlayerCamera").transform.position;
+            loadingCamera.transform.rotation = GameObject.Find("PlayerCamera").transform.rotation;
             fadeIn = false;
             if (c.a > 0)
             {

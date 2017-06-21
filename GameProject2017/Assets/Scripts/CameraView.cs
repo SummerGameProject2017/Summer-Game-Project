@@ -8,20 +8,21 @@ public class CameraView : MonoBehaviour
     public Transform target;
     string VRName;
     Vector3 offset;
-    public float speed;
+    public float speed = 2;
     public bool newGame = true;
     void Start()
     {
         if (VRDevice.isPresent)
         {
-            VRName = VRDevice.model;
-        }
+            VRName = VRDevice.model;   
+        
         if (VRName.Contains("Vive"))
         {
-            speed = 4;
+            speed = 3.5f;
         }
         else
             speed = 2;
+        }
         target = GameObject.FindWithTag("Player").transform;
 
         if (newGame == true)
@@ -33,7 +34,6 @@ public class CameraView : MonoBehaviour
             }
     void LateUpdate()
     {
-
         Vector3 desiredPosition = target.transform.position + offset;
         transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * speed);
 

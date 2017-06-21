@@ -25,11 +25,7 @@ public class CameraView : MonoBehaviour
         }
         target = GameObject.FindWithTag("Player").transform;
 
-        if (newGame == true)
-        {
-            transform.localPosition = new Vector3(6.87f, 5.94f, -9.3f);
-            transform.localRotation = Quaternion.Euler(25.7f, -51.13f, 0.0f);
-        } 
+        
         offset = transform.position - target.transform.position;
             }
     void LateUpdate()

@@ -62,34 +62,35 @@ public class PlayerController : MonoBehaviour
     ChangeScene changeSceneScript;
     GameObject collectableCount;
     public bool showCollectable = false;
-    PlayerAnim animationScript;
 
     void Start()
     {
-
+        PA = GetComponent<PlayerAnim>();
+        controller = GetComponent<CharacterController>();
         chimes = GetComponent<AudioSource>();
-        animationScript = GetComponent<PlayerAnim>();
         changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         collectableCount = GameObject.Find("GearCounter");
         //   SaveLoad.Load();
         healthScript = GameObject.Find("HealthBar").GetComponent<Health>();
         jumpParticle = GameObject.Find("Player jump");
-        controller = GetComponent<CharacterController>();
-        PA = GetComponent<PlayerAnim>();
+        
+        
        
         
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
         {
+            Debug.Log("new Game 2");
             SaveLoad.Save();
         }
-
+            
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (!chimes.isPlaying)
         {
             gear = null;
@@ -101,7 +102,7 @@ public class PlayerController : MonoBehaviour
             if (!SceneManager.GetSceneByName("PauseScene").isLoaded)
             {
                 StartCoroutine(changeSceneScript.PauseMenu());
-                animationScript.enabled = false;
+                PA.enabled = false;
                 this.enabled = false;
                 
                 Time.timeScale = 0;
@@ -284,8 +285,8 @@ public class PlayerController : MonoBehaviour
             if (tire.canHitPlayer == true)
             {
                 tire.canHitPlayer = false;
-                
-                animationScript.Anim.Play("GetHit", -1, 0);
+
+                PA.Anim.Play("GetHit", -1, 0);
                 transform.LookAt(tire.transform.position);
                 AddMovement(Vector3.right * 200);
 
@@ -294,7 +295,7 @@ public class PlayerController : MonoBehaviour
                 
                 if (Player.Instance.lives <= 0)
                 {
-                    animationScript.Anim.Play("Death-Enemy", -1, 0);
+                    PA.Anim.Play("Death-Enemy", -1, 0);
                    
                         StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
                     
@@ -308,7 +309,7 @@ public class PlayerController : MonoBehaviour
             if (rollingBall.canHitPlayer == true)
             {
                 rollingBall.canHitPlayer = false;
-                animationScript.Anim.Play("GetHit", -1, 0);
+                PA.Anim.Play("GetHit", -1, 0);
 
 
            //     transform.position = Vector3.Lerp(transform.position, other.transform.forward * 10, Time.deltaTime * 2);
@@ -321,7 +322,7 @@ public class PlayerController : MonoBehaviour
 
                 if (Player.Instance.lives <= 0)
                 {
-                    animationScript.Anim.Play("Death-Enemy", -1, 0);
+                    PA.Anim.Play("Death-Enemy", -1, 0);
 
                     StartCoroutine(changeSceneScript.DisplayGameOverScreen("GameOver"));
 

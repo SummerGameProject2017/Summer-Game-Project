@@ -26,7 +26,7 @@ public class Fading : MonoBehaviour {
 	void Update () {
 		if (fadeIn == true)
         {
-       //     if (c.a < 1)
+            if (c.a < 1)
             {
                 c.a += Time.deltaTime;
                 image.color = c;
@@ -35,8 +35,11 @@ public class Fading : MonoBehaviour {
 
         if (ChangeScene.doneLoading == true)
         {
-            loadingCamera.transform.position = GameObject.Find("PlayerCamera").transform.position;
-            loadingCamera.transform.rotation = GameObject.Find("PlayerCamera").transform.rotation;
+            if (SceneManager.GetSceneByName("Junkyard_Level_VR").isLoaded)
+            {
+                loadingCamera.transform.position = GameObject.Find("PlayerCamera").transform.position;
+                loadingCamera.transform.rotation = GameObject.Find("PlayerCamera").transform.rotation;
+            }
             fadeIn = false;
             if (c.a > 0)
             {

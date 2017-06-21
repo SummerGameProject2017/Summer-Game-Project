@@ -26,7 +26,7 @@ public class Fading : MonoBehaviour {
 	void Update () {
 		if (fadeIn == true)
         {
-            if (c.a < 1)
+       //     if (c.a < 1)
             {
                 c.a += Time.deltaTime;
                 image.color = c;
@@ -42,9 +42,9 @@ public class Fading : MonoBehaviour {
                 c.a -= Time.deltaTime;
                 image.color = c;
             }
-           
+
         }
-	}
+    }
    
 
 

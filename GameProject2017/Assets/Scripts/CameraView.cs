@@ -1,16 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VR;
 
 public class CameraView : MonoBehaviour
 {
     public Transform target;
-
+    string VRName;
     Vector3 offset;
-
+    public float speed;
     public bool newGame = true;
     void Start()
     {
+        if (VRDevice.isPresent)
+        {
+            VRName = VRDevice.model;
+        }
+        if (VRName.Contains("Vive"))
+        {
+            speed = 4;
+        }
+        else
+            speed = 2;
         target = GameObject.FindWithTag("Player").transform;
 
         if (newGame == true)
@@ -24,7 +35,7 @@ public class CameraView : MonoBehaviour
     {
 
         Vector3 desiredPosition = target.transform.position + offset;
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2f);
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * speed);
 
     }
 

@@ -48,11 +48,10 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     {
         
 
-        if (!SceneManager.GetSceneByName(addScreenName).isLoaded)
-        {
+      
             async1 = SceneManager.LoadSceneAsync(addScreenName, LoadSceneMode.Additive);
             loadScene = SceneManager.GetSceneByName(addScreenName);
-        }
+        
         
         yield return new WaitForSecondsRealtime(1);
 

@@ -335,7 +335,6 @@ public class PlayerController : MonoBehaviour
 
             if (gear.GetComponent<Gear>().collected == true)
             {
-                Debug.Log("Play");
                 gear.GetComponent<Gear>().collected = false;
                 chimes.PlayOneShot(chimeSound, 1);
             }

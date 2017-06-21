@@ -49,7 +49,7 @@ public class MainMenu : MonoBehaviour
 
     public void ExitButton()
     {
-        Application.Quit();
+        SceneManager.LoadSceneAsync("Splash_Screen");
     }
 
 

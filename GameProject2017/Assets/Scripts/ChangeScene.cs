@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.VR;
 
 public class ChangeScene : MonoSingleton<ChangeScene> {
     public bool loadGame = false;
@@ -32,6 +33,10 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     GameObject playerCamera;
     public override void OnStart()
     {
+        if (VRDevice.isPresent)
+        {
+            Cursor.visible = false;
+        }
         newGameButton = GameObject.Find("New Game");  
         EventSystem.current.firstSelectedGameObject = newGameButton;
          
@@ -231,9 +236,9 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             if (saveGame == true)
             {
                 Debug.Log("new Game");
-                player.transform.localPosition = new Vector3(-418.8f, 302.31f, 59.65f);
-                playerCamera.transform.localPosition = new Vector3(113.7f, 7f, -12.73f);
-                playerCamera.transform.localRotation = Quaternion.Euler(11.335f, -131.29f, 0f);
+                player.transform.localPosition = new Vector3(-342.48f, 310.95f, 59.65f);
+                playerCamera.transform.localPosition = new Vector3(182.09f, 14.33f, -7.91f);
+                playerCamera.transform.localRotation = Quaternion.Euler(6.933001f, -175.238f, 0f);
                 saveGame = false;
                 playerScript.newGame = true;
                 cameraScript.newGame = true;

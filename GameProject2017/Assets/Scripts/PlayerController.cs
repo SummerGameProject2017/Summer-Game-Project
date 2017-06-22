@@ -90,14 +90,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         if (!chimes.isPlaying)
         {
             gear = null;
         }
  rotationAmount = transform.rotation.y;
 
-        if (InputManager.GetButtonDown("Pause") || InputManager.GetAxis("GripPause") >= 0.5)
+        if (InputManager.GetButtonDown("Pause") || Input.GetAxis("GripPause") != 0)
         {
             if (!SceneManager.GetSceneByName("PauseScene").isLoaded)
             {

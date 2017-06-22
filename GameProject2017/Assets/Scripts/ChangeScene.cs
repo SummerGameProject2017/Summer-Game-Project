@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.VR;
 
 public class ChangeScene : MonoSingleton<ChangeScene> {
     public bool loadGame = false;
@@ -32,13 +33,14 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     GameObject playerCamera;
     public override void OnStart()
     {
-       
+       if (VRDevice.isPresent)
+        {
+      //      Cursor.visible = false;
+       //     Cursor.lockState = CursorLockMode.Locked;
+        }
         newGameButton = GameObject.Find("New Game");  
         EventSystem.current.firstSelectedGameObject = newGameButton;
-         
     }
-
-
     // Update is called once per frame
     public override void OnUpdate() {
         SceneManager.sceneLoaded += LevelWasLoaded;//in Unity 5 have to add function call to Scene manager. scene loaded  

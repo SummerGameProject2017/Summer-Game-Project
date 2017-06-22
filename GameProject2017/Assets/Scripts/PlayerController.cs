@@ -80,9 +80,7 @@ public class PlayerController : MonoBehaviour
         //    collectable = GetComponent<Gear>();
         if (newGame == true)
         {
-            Player.Instance.gear = 0;
-            Player.Instance.lives = Player.Instance.maxLives;
-            Player.Instance.robot = 0;
+            
             SaveLoad.Save();
         }
             
@@ -165,11 +163,15 @@ public class PlayerController : MonoBehaviour
                 v = InputManager.GetAxis("Vertical");
 
 
-                
 
-                // Change Speed 
-               
-             if (h > 0.3 || h < -0.3 || v > 0.3|| v < -0.3)
+
+            // Change Speed 
+            if ((h > 0.65 || h < -0.65) && (v > 0.65 || v < -0.65))
+            {
+                speed = 7.5f;
+                moveVector = (speed * (h * right + v * forward));
+            }
+            else if (h > 0.3 || h < -0.3 || v > 0.3|| v < -0.3)
                 {
                     speed = 10;
                 }
@@ -290,7 +292,7 @@ public class PlayerController : MonoBehaviour
 
                 PA.Anim.Play("GetHit", -1, 0);
                 transform.LookAt(tire.transform.position);
-                AddMovement(Vector3.right * 200);
+                AddMovement(Vector3.right * 400);
 
                     Player.Instance.LoseLife();
                     healthScript.HealthChange();

@@ -9,7 +9,6 @@ public class CameraView : MonoBehaviour
     string VRName;
     Vector3 offset;
     public float speed = 2;
-    public bool newGame = true;
     void Start()
     {
         if (VRDevice.isPresent)

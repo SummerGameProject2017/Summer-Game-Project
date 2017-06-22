@@ -129,7 +129,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             if (async2.isDone)
             {
                 changeCamera = true;
-                ChangeScene.doneLoading = true;
+                doneLoading = true;
                 fadeOut = true;
 
                 yield return new WaitForSeconds(1);
@@ -138,7 +138,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
                 SceneManager.UnloadSceneAsync(unloadSceneName);
 
-                ChangeScene.doneLoading = false;
+                doneLoading = false;
                 changeCamera = false;
                 
             }
@@ -186,7 +186,6 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             {
                 loadGame = false;
                 playerScript.newGame = false;
-                cameraScript.newGame = false;
                 SaveLoad.continueFromMain = true;
                 SaveLoad.Load();
             }
@@ -230,7 +229,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             {
                 loadGame = false;
                 playerScript.newGame = false;
-                cameraScript.newGame = false;
+
                 SaveLoad.continueFromMain = true;
                 SaveLoad.Load();
             }
@@ -242,7 +241,6 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
                 playerCamera.transform.localRotation = Quaternion.Euler(6.933001f, -175.238f, 0f);
                 saveGame = false;
                 playerScript.newGame = true;
-                cameraScript.newGame = true;
             }
         }
 

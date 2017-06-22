@@ -45,7 +45,6 @@ public class GameOverButtons : MonoBehaviour {
         cameraScript.enabled = true;
         animationScript.enabled = true;
         playerScript.newGame = false;
-        cameraScript.newGame = false;
         continueButtonPushed = true;
         StartCoroutine(changeSceneScript.UnloadLevel());
         continueButton.gameObject.SetActive(false);

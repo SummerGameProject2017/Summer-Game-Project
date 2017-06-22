@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
         }
  rotationAmount = transform.rotation.y;
 
-        if (InputManager.GetButtonDown("Pause"))
+        if (InputManager.GetButtonDown("Pause") || InputManager.GetAxis("GripPause") >= 0.5)
         {
             if (!SceneManager.GetSceneByName("PauseScene").isLoaded)
             {

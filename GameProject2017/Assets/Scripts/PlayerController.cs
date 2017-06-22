@@ -288,7 +288,7 @@ public class PlayerController : MonoBehaviour
 
                 PA.Anim.Play("GetHit", -1, 0);
                 transform.LookAt(tire.transform.position);
-                AddMovement(Vector3.right * 200);
+                AddMovement(Vector3.right * 400);
 
                     Player.Instance.LoseLife();
                     healthScript.HealthChange();

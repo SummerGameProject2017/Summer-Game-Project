@@ -237,8 +237,8 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             {
                 Debug.Log("new Game");
                 player.transform.localPosition = new Vector3(-342.48f, 310.95f, 59.65f);
-                playerCamera.transform.localPosition = new Vector3(182.09f, 14.33f, -7.91f);
-                playerCamera.transform.localRotation = Quaternion.Euler(6.933001f, -175.238f, 0f);
+                playerCamera.transform.localPosition = new Vector3(184.8f, 16.87f, -9.36f);
+                playerCamera.transform.localRotation = Quaternion.Euler(23.621f, -165.605f, 0f);
                 saveGame = false;
                 playerScript.newGame = true;
             }

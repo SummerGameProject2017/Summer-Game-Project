@@ -163,11 +163,15 @@ public class PlayerController : MonoBehaviour
                 v = InputManager.GetAxis("Vertical");
 
 
-                
 
-                // Change Speed 
-               
-             if (h > 0.3 || h < -0.3 || v > 0.3|| v < -0.3)
+
+            // Change Speed 
+            if ((h > 0.65 || h < -0.65) && (v > 0.65 || v < -0.65))
+            {
+                speed = 7.5f;
+                moveVector = (speed * (h * right + v * forward));
+            }
+            else if (h > 0.3 || h < -0.3 || v > 0.3|| v < -0.3)
                 {
                     speed = 10;
                 }

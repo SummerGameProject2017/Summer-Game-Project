@@ -48,7 +48,6 @@ public class MovePlatform : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("true");
             onplatform = true;
         }
     }
@@ -57,7 +56,6 @@ public class MovePlatform : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("false");
             onplatform = false;
         }
     }

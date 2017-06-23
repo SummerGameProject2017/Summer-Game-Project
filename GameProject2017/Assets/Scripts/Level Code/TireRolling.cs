@@ -12,6 +12,7 @@ public class TireRolling : MonoBehaviour {
     Quaternion TireStartRot;
     public bool canHitPlayer = true;
     Rigidbody rb;
+    float scale;
 	// Use this for initialization
 	void Start ()
     {
@@ -19,6 +20,7 @@ public class TireRolling : MonoBehaviour {
         TireStartPos = transform.position;
         TireStartRot = transform.rotation;
         rb.useGravity = false;
+
     }
 	
 	// Update is called once per frame
@@ -37,6 +39,7 @@ public class TireRolling : MonoBehaviour {
             {
                 canHitPlayer = true;
             }
+            scale = Random.Range(10, 20);
             GetComponent<MeshCollider>().enabled = false;
             rb.useGravity = false;
             rb.ResetInertiaTensor();
@@ -45,6 +48,7 @@ public class TireRolling : MonoBehaviour {
             rb.velocity = new Vector3(0f, 0f, 0f);
             rb.angularVelocity = new Vector3(0f, 0f, 0f);
             Timer = startTime;
+            transform.localScale = new Vector3(scale, scale, 30);
         }
 
         if (Player.Instance.lives <= 0)

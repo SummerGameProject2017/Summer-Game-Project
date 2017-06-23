@@ -1,22 +1,47 @@
 fileFormatVersion: 2
-guid: c620ce60b46f834418a86607ae78ee86
-timeCreated: 1498227327
+guid: c7c981c9de3ce1a4aa4dd09ce38dc9b8
+timeCreated: 1498227322
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Cube
-    100002: Cube.001
-    100004: //RootNode
-    400000: Cube
-    400002: Cube.001
-    400004: //RootNode
-    2300000: Cube
-    2300002: Cube.001
-    3300000: Cube
-    3300002: Cube.001
-    4300000: Cube.001
-    4300002: Cube
+    100000: branch1
+    100002: branch2
+    100004: branch3
+    100006: branch4
+    100008: branch5
+    100010: stump
+    100012: top
+    100014: //RootNode
+    400000: branch1
+    400002: branch2
+    400004: branch3
+    400006: branch4
+    400008: branch5
+    400010: stump
+    400012: top
+    400014: //RootNode
+    2300000: branch1
+    2300002: branch2
+    2300004: branch3
+    2300006: branch4
+    2300008: branch5
+    2300010: stump
+    2300012: top
+    3300000: branch1
+    3300002: branch2
+    3300004: branch3
+    3300006: branch4
+    3300008: branch5
+    3300010: stump
+    3300012: top
+    4300000: branch2
+    4300002: branch4
+    4300004: branch5
+    4300006: branch1
+    4300008: branch3
+    4300010: top
+    4300012: stump
   materials:
     importMaterials: 1
     materialName: 0

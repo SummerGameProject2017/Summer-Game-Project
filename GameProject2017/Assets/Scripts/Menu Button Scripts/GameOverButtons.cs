@@ -29,7 +29,6 @@ public class GameOverButtons : MonoBehaviour {
         gameOverCanvas = GameObject.Find("GAMEOVER");
         mainMenuButton = gameOverCanvas.transform.FindChild("Menu_Button").GetComponent<Button>();
         continueButton = gameOverCanvas.transform.FindChild("Continue_Button").GetComponent<Button>();
-        EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
     }
    
 

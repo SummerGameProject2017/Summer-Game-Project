@@ -40,6 +40,11 @@ public class Fading : MonoBehaviour {
                 loadingCamera.transform.position = GameObject.Find("PlayerCamera").transform.position;
                 loadingCamera.transform.rotation = GameObject.Find("PlayerCamera").transform.rotation;
             }
+            if (SceneManager.GetSceneByName("Forest_Level_VR").isLoaded)
+            {
+                loadingCamera.transform.position = GameObject.Find("PlayerCamera").transform.position;
+                loadingCamera.transform.rotation = GameObject.Find("PlayerCamera").transform.rotation;
+            }
             fadeIn = false;
             if (c.a > 0)
             {

@@ -171,8 +171,7 @@ public class DialogueSystem : MonoBehaviour
         playerScript.enabled = true;
         playerScript.isTalking = false;
         animationScript.talking = false;
-        noButton.image.color = new Color(255, 255, 255);
-        yesButton.image.color = new Color(255, 255, 255);
+  
         no = false;
         
     }
@@ -184,8 +183,7 @@ public class DialogueSystem : MonoBehaviour
         playerScript.enabled = true;
         playerScript.isTalking = false;
         animationScript.talking = false;
-        noButton.image.color = new Color(255, 255, 255);
-        yesButton.image.color = new Color(255, 255, 255);
+        
         yes = false;
         
     }

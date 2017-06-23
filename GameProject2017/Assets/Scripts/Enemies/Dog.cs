@@ -124,7 +124,7 @@ public class Dog : Enemy
 
         if (health > 0 && aiStunned == false)
         {
-            if (offset <= 15 && offset > 3.9)
+            if (offset <= 15 && offset > 4.5)
             {
                 idle = false;
                 aiState = States.Chase;
@@ -135,7 +135,7 @@ public class Dog : Enemy
                 Vector3 direction = (player.position - transform.position).normalized;
                 direction.y = 0;
                 float angle = Vector3.Angle(direction, this.transform.forward);
-                if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && playerScript.attacking == false)
+                if (offset <= 4.5 && (player.transform.position.y - 1.25) <= transform.position.y && playerScript.attacking == false)
                 {
                     if (angle < 20)
                     {
@@ -148,7 +148,7 @@ public class Dog : Enemy
                         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
                     }
                 }
-                if (offset <= 3.9 && (player.transform.position.y - 1.25) <= transform.position.y && playerScript.attacking == true)
+                if (offset <= 4.5 && (player.transform.position.y - 1.25) <= transform.position.y && playerScript.attacking == true)
                 {
                     agent.SetDestination(transform.position);
                     firstAttack = false;
@@ -401,7 +401,7 @@ public class Dog : Enemy
             }
         }
         //damage the robot
-        if (other.gameObject.name == "Hammer" && canBeHit == true)
+        if (other.gameObject.name == "Hammer" && canBeHit == true && playerScript.attacking == true)
         {
             if (health > 1)
             {

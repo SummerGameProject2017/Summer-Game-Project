@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
                 if (rotationAmount < 0.1 || rotationAmount > 0.5)
                 {
 
-                    transform.Rotate(Vector3.down * (360 * (Time.deltaTime * 2)));
+                    transform.Rotate(Vector3.down * (360 * (Time.deltaTime * 4)));
                 }
             }
             else if (attacking == false)

@@ -11,9 +11,11 @@ public class Fading : MonoBehaviour {
     Image image;
     GameObject loadingCamera;
     Color c;
+    ChangeScene changeSceneScript;
 
     // Use this for initialization
     void Start () {
+        changeSceneScript = GameObject.Find("SceneManager").GetComponent<ChangeScene>();
         fadeIn = true;
         image = GetComponent<Image>();
         c = image.color;
@@ -33,7 +35,7 @@ public class Fading : MonoBehaviour {
             }
         }
 
-        if (ChangeScene.doneLoading == true)
+        if (changeSceneScript.doneLoading == true)
         {
             if (SceneManager.GetSceneByName("Junkyard_Level_VR").isLoaded)
             {

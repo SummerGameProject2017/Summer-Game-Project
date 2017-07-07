@@ -15,7 +15,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     PlayerAnim animationScript;
     CameraView cameraScript;
     GameObject gameoverScreen;
-    public static bool doneLoading = false;
+    public bool doneLoading = false;
     public bool startGame = false;
     public Scene startScene;
     GameObject myEventSystem;
@@ -68,7 +68,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             yield return new WaitForSecondsRealtime(1);
 
 
-            if (async2.progress > 0.9f)
+            if (async2.progress > 0.5f)
             {
 
                 doneLoading = true;
@@ -126,7 +126,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
 
             SceneManager.UnloadSceneAsync(startScene);
-            if (async2.progress > 0.9f)
+            if (async2.progress > 0.5f)
             {
                 changeCamera = true;
                 doneLoading = true;
@@ -151,13 +151,13 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
         yield return new WaitForSeconds(2);
         SceneManager.UnloadSceneAsync("GameOver");
-        ChangeScene.doneLoading = false;
+        doneLoading = false;
 
     }
     public IEnumerator UnloadImmediately()
     {       
         SceneManager.UnloadSceneAsync("PauseScene");
-        ChangeScene.doneLoading = false;
+        doneLoading = false;
         yield return null;
 
     }

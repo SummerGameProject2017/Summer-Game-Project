@@ -35,8 +35,8 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
     {
        if (VRDevice.isPresent)
         {
-      //      Cursor.visible = false;
-       //     Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
         newGameButton = GameObject.Find("New Game");  
         EventSystem.current.firstSelectedGameObject = newGameButton;

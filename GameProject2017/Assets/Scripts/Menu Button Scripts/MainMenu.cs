@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     GameObject newGameButton;
     GameObject quitButton;
     public string loadLevelName;
-
+    bool canLoadExitScreen = true;
 
     private void Start()
     {
@@ -49,7 +49,11 @@ public class MainMenu : MonoBehaviour
 
     public void ExitButton()
     {
-        SceneManager.LoadSceneAsync("Splash_Screen");
+        if (canLoadExitScreen == true)
+        {
+            canLoadExitScreen = false;
+            SceneManager.LoadSceneAsync("Splash_Screen");
+        }
     }
 
 

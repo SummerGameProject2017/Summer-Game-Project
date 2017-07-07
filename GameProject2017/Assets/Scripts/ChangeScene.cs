@@ -59,7 +59,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
         
         yield return new WaitForSecondsRealtime(1);
 
-        if (async1.isDone)
+        if (async1.progress > 0.9f)
         {
            
                 async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);

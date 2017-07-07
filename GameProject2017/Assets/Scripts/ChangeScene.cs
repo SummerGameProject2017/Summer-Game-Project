@@ -118,7 +118,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
         yield return new WaitForSecondsRealtime(1);
 
-        if (async1.isDone)
+        if (async1.progress > 0.9f)
         { 
             async2 = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
@@ -126,7 +126,7 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
 
 
             SceneManager.UnloadSceneAsync(startScene);
-            if (async2.isDone)
+            if (async2.progress > 0.9f)
             {
                 changeCamera = true;
                 doneLoading = true;
@@ -236,8 +236,8 @@ public class ChangeScene : MonoSingleton<ChangeScene> {
             if (saveGame == true)
             {
                 player.transform.localPosition = new Vector3(-342.48f, 310.95f, 59.65f);
-                playerCamera.transform.localPosition = new Vector3(186.78f, 13.62f, -10.56f);
-                playerCamera.transform.localRotation = Quaternion.Euler(6.746f, -145.452f, 0f);
+                playerCamera.transform.localPosition = new Vector3(181.51f, 15.57f, -29.2f);
+                playerCamera.transform.localRotation = Quaternion.Euler(21.005f, -3.204f, 0f);
                 saveGame = false;
                 playerScript.newGame = true;
             }
